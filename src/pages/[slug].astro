@@ -1,0 +1,185 @@
+---
+import { SITE } from "../config";
+import Layout from "@layouts/Layout.astro";
+import { parseStringPromise } from "xml2js";
+
+export async function getStaticPaths() {
+  const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
+
+  const fetchRssData = async () => {
+    try {
+      const response = await fetch(xmlUrl);
+      const xmlText = await response.text();
+
+      // `xml2js` を使用して XML を解析
+      const result = await parseStringPromise(xmlText);
+      const items = result.rss.channel[0].item; // RSS の item を取得
+
+      // エピソードを新しい順にするために逆順にソート
+      const reversedItems = items.reverse();
+
+      const pages = reversedItems.map((item, index) => {
+        const slug = `episode-${index + 1}`; // スラグを生成（例: episode-1, episode-2）
+        const title = item.title[0] || "No Title";
+        const text = item.description[0] || "No Description";
+
+        // enclosure タグから URL を取得
+        const enclosure = item.enclosure ? item.enclosure[0].$.url : null;
+
+        return {
+          slug,
+          title,
+          text,
+          audioUrl: enclosure,
+        };
+      });
+
+      return pages;
+    } catch (error) {
+      console.error("Error fetching or parsing XML:", error);
+      return [];
+    }
+  };
+
+  const pages = await fetchRssData();
+
+  return pages.map(({ slug, title, text, audioUrl }) => {
+    return {
+      params: { slug },
+      props: { title, text, audioUrl },
+    };
+  });
+}
+
+const { title, text, audioUrl } = Astro.props;
+---
+
+<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+  <main>
+    <div class="detail-content">
+      <div class="detail-content--inner">
+        <h1 class="detail-title">{title}</h1>
+        {
+          audioUrl && (
+            <div class="custom-audio-player">
+              <div class="player-controls">
+                <button class="play-button" id="playButton">
+                  <span class="play-icon">
+                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M1 15.7523V1.33262C1.0001 1.27286 1.01627 1.21422 1.04682 1.16286C1.07737 1.1115 1.12117 1.0693 1.17363 1.04068C1.2261 1.01207 1.28529 0.998087 1.34501 1.00021C1.40473 1.00233 1.46279 1.02048 1.51309 1.05275L12.8476 8.2626C12.8944 8.2928 12.9328 8.33424 12.9594 8.38313C12.9861 8.43202 13 8.4868 13 8.54246C13 8.59813 12.9861 8.65291 12.9594 8.7018C12.9328 8.75069 12.8944 8.79212 12.8476 8.82233L1.50309 16.0322C1.45299 16.0619 1.39597 16.078 1.33773 16.0788C1.27948 16.0796 1.22204 16.0651 1.17114 16.0368C1.12023 16.0085 1.07764 15.9673 1.04761 15.9174C1.01759 15.8675 1.00117 15.8105 1 15.7523Z"
+                        stroke="#685339"
+                        stroke-width="2"
+                      />
+                    </svg>
+                  </span>
+                  <span class="pause-icon hidden">
+                    <svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.51311 1H1V16H3.51311V1Z" stroke="#685339" stroke-width="1.4" />
+                      <path d="M9.18279 1H6.66968V16H9.18279V1Z" stroke="#685339" stroke-width="1.4" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <div class="progress-container">
+                <div class="current-time time">0:00</div>
+                <div class="progress-bar">
+                  <div class="progress" />
+                </div>
+                <div class="duration time">0:00</div>
+                <audio id="audioElement" src={audioUrl} preload="metadata" />
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .custom-audio-player {
+    margin: 20px 0;
+  }
+
+  .player-controls {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  function initializeAudioPlayer() {
+    const audioElement = document.getElementById("audioElement");
+    const playButton = document.getElementById("playButton");
+    const playIcon = playButton?.querySelector(".play-icon");
+    const pauseIcon = playButton?.querySelector(".pause-icon");
+    const progressBar = document.querySelector(".progress-bar");
+    const progress = document.querySelector(".progress");
+    const currentTimeElement = document.querySelector(".current-time");
+    const durationElement = document.querySelector(".duration");
+
+    // 要素が見つからない場合は早期リターン
+    if (
+      !audioElement ||
+      !playButton ||
+      !playIcon ||
+      !pauseIcon ||
+      !progressBar ||
+      !progress ||
+      !currentTimeElement ||
+      !durationElement
+    ) {
+      return;
+    }
+
+    const formatTime = (seconds) => {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+    };
+
+    playButton.addEventListener("click", () => {
+      if (audioElement.paused) {
+        audioElement.play();
+        playIcon.classList.add("hidden");
+        pauseIcon.classList.remove("hidden");
+      } else {
+        audioElement.pause();
+        playIcon.classList.remove("hidden");
+        pauseIcon.classList.add("hidden");
+      }
+    });
+
+    audioElement.addEventListener("timeupdate", () => {
+      const progressPercent = (audioElement.currentTime / audioElement.duration) * 100;
+      progress.style.width = `${progressPercent}%`;
+      currentTimeElement.textContent = formatTime(audioElement.currentTime);
+    });
+
+    audioElement.addEventListener("loadedmetadata", () => {
+      durationElement.textContent = formatTime(audioElement.duration);
+    });
+
+    progressBar.addEventListener("click", (e) => {
+      const progressBarRect = progressBar.getBoundingClientRect();
+      const percent = (e.clientX - progressBarRect.left) / progressBarRect.width;
+      audioElement.currentTime = percent * audioElement.duration;
+    });
+
+    audioElement.addEventListener("ended", () => {
+      playIcon.classList.remove("hidden");
+      pauseIcon.classList.add("hidden");
+    });
+  }
+
+  // Astroの View Transitions対応
+  document.addEventListener("astro:page-load", initializeAudioPlayer);
+
+  // 初回ロード時の初期化
+  initializeAudioPlayer();
+</script>

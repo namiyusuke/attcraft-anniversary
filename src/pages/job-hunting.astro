@@ -1,0 +1,166 @@
+---
+import { SITE } from "../config";
+import Layout from "@layouts/Layout.astro";
+import menu from "@assets/img/menu-title.svg";
+import light01 from "@assets/img/light_01.png";
+import chockArt from "@assets/img/chock-art.png";
+import jobHuntingPeople from "@assets/img/job-hunting_people.png";
+import categoryPeople1 from "@assets/img/category_people1.png";
+import categoryPeople2 from "@assets/img/category_people2.png";
+import bar_10 from "@assets/img/bar_10.png";
+import categoryTable1 from "@assets/img/category_table1.png";
+import fukidasi from "@assets/img/fukidasi.png";
+import { Image } from "astro:assets";
+---
+
+<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+  <main class="hunting category">
+    <div class="heading-wrapper">
+      <div class="heading__border">
+        <h1 class="-border heading">
+          <span class="heading-inline">
+            <span class="-lg -sp">エピソード一覧</span>
+            <span class="-line">
+              <span class="-sm">を</span>
+              <span class="-lg -inline">盗</span>
+              <span class="-sm">みぎき</span>
+            </span>
+          </span>
+        </h1>
+      </div>
+      <!-- <div class="category-comment1 category-comment">
+        <div>
+          <Image class="category-fukidasi1 category-fukidasi" src={fukidasi} alt="吹き出し" />
+          <p class="category-comment--inner">経験は浅くても、<br />ものづくりに対する熱量では負けない！！</p>
+        </div>
+      </div> -->
+      <!-- <div class="category-comment2 category-comment">
+        <Image class="category-fukidasi category-fukidasi2" src={fukidasi} alt="吹き出し" />
+        <p class="category-comment--inner">
+          転職をポジティブに捉えて、スッテップアップしていく！ いつでも、いまが楽しい！！
+        </p>
+      </div> -->
+      <!-- <div class="category-comment3 category-comment">
+        <Image class="category-fukidasi category-fukidasi3" src={fukidasi} alt="吹き出し" />
+        <p class="category-comment--inner">一晩寝て、起きて<br />それでも醒めない熱は本物！！</p>
+      </div> -->
+      <figure class="heading__light1">
+        <Image src={light01} alt="ライト" />
+      </figure>
+      <div class="category-top">
+        <figure class="hunting-image">
+          <Image src={jobHuntingPeople} alt="就活中の人々" />
+        </figure>
+        <figure class="hunting-art">
+          <Image src={chockArt} alt="" />
+        </figure>
+      </div>
+      <figure class="category-people3">
+        <Image src={bar_10} alt="就活中の人々" />
+      </figure>
+    </div>
+    <section class="menu-section">
+      <figure class="category-people1">
+        <Image src={categoryPeople1} alt="就活中の人々" />
+      </figure>
+      <figure class="category-people2">
+        <Image src={categoryPeople2} alt="就活中の人々" />
+      </figure>
+      <figure class="category-table1">
+        <Image src={categoryTable1} alt="就活中の人々" />
+      </figure>
+      <h2 class="menu-title">
+        <span class="menu-title--inner">
+          <span class="-ja">盗みぎき</span>
+          <span class="-en"><Image src={menu} alt="menu" /></span>
+        </span>
+      </h2>
+      <div class="menu-article--wrap">
+        <div class="menu-article--list" id="summary-display">
+          <!-- ここに動的にRSSデータが表示されます -->
+        </div>
+      </div>
+    </section>
+    <div class="category-bottom">
+      <p class="category-button">
+        <a href="#">
+          <span class="category-triangle">ほかの盗みぎきへ</span>
+        </a>
+      </p>
+    </div>
+    <p class="footer-copy">
+      <small>©2024 ︎Shibajuku.</small>
+    </p>
+  </main>
+  <script>
+    const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
+
+    async function fetchAndDisplayFilteredEpisodes() {
+      try {
+        const response = await fetch(xmlUrl);
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+        const items = xmlDoc.getElementsByTagName("item");
+        const filteredSummaries = [];
+        const maxTitleLength = 46; // タイトルの最大文字数
+
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const url = `/episode-${items.length - i}`;
+          const titleElement = item.getElementsByTagName("title")[0];
+          const pubDateElement = item.getElementsByTagName("pubDate")[0];
+          const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
+
+          let summary = "No summary";
+          const summaryElements = item.getElementsByTagNameNS("*", "summary");
+          if (summaryElements.length > 0) {
+            summary = summaryElements[0].textContent;
+          }
+
+          let title = titleElement ? titleElement.textContent : "No title";
+
+          // タイトルが最大文字数を超えた場合に「...」を付ける
+          if (title.length > maxTitleLength) {
+            title = title.slice(0, maxTitleLength) + "...";
+          }
+
+          let duration = durationElement ? durationElement.textContent : "Unknown duration";
+
+          // duration のフォーマット変更: "00:13:37" を "13:37" に変換
+          if (duration.startsWith("00:")) {
+            duration = duration.slice(3); // "00:" の部分を削除
+          }
+
+          // フィルタリング条件：「就職」または「転職」が含まれる
+          if (
+            title.includes("就職") ||
+            title.includes("転職") ||
+            summary.includes("就職") ||
+            summary.includes("転職")
+          ) {
+            filteredSummaries.push(
+              `<article class="menu-article--item">
+            <div class="menu-article--body">
+              <a href=${url}>
+                <h3 class="menu-article--number">${title}</h3>
+                <p class="menu-article--time">${duration}</p>
+              </a>
+            </div>
+          </article>`,
+            );
+          }
+        }
+
+        document.getElementById("summary-display").innerHTML =
+          filteredSummaries.length > 0 ? filteredSummaries.join("") : "該当するエピソードはありません。";
+      } catch (error) {
+        console.error("Error fetching or parsing the XML:", error);
+        document.getElementById("summary-display").textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
+      }
+    }
+
+    fetchAndDisplayFilteredEpisodes();
+  </script>
+</Layout>

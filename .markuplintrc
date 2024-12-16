@@ -1,0 +1,48 @@
+{
+  "parser": {
+    "\\.astro$": "@markuplint/astro-parser"
+  },
+  "extends": [
+    "markuplint:recommended"
+  ],
+  "nodeRules": [
+    {
+      "selector": "[async]",
+      "rules": {
+        "required-attr": false
+      }
+    },
+    {
+      "selector": "link[href^='https://fonts.googleapis.com']",
+      "rules": {
+        "character-reference": false
+      }
+    }
+  ],
+  "overrides": {
+    "./src/components/parts/*": {
+      "rules": {
+        "permitted-contents": [
+          {
+            "tag": "picture",
+            "contents": [
+              {
+                "oneOrMore": "source"
+              },
+              {
+                "choice": [
+                  {
+                    "optional": "img"
+                  },
+                  {
+                    "optional": "Image"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

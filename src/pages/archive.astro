@@ -1,0 +1,146 @@
+---
+import { SITE } from "../config";
+import Layout from "@layouts/Layout.astro";
+import light01 from "@assets/img/light_01.png";
+import { Image } from "astro:assets";
+---
+
+<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+  <main class="hunting">
+    <div class="lower">
+      <div class="heading-wrapper -archive">
+        <div class="heading__border">
+          <h1 class="-border heading">
+            <span class="heading-inline">
+              <span class="-lg -sp">エピソード一覧</span>
+              <span class="-line">
+                <span class="-sm">を</span>
+                <span class="-lg -inline">盗</span>
+                <span class="-sm">みぎき</span>
+              </span>
+            </span>
+          </h1>
+        </div>
+        <figure class="heading__light1">
+          <Image src={light01} alt="ライト" />
+        </figure>
+
+        <div class="menu-article--wrap">
+          <div class="search-wrap">
+            <!-- フリーワード検索用の入力フォーム -->
+            <p class="search-text">フリーワード検索</p>
+            <div class="search-input--wrap">
+              <input
+                type="text"
+                class="search-input"
+                id="search-input"
+                class="search-input"
+                oninput="filterEpisodes()"
+              />
+            </div>
+          </div>
+          <div class="" id="summary-display">
+            <!-- ここに動的にRSSデータが表示されます -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    const xmlUrl: string = "https://anchor.fm/s/132fb79c/podcast/rss";
+    let allEpisodes: Array<{ html: string; title: string; summary: string }> = []; // 全エピソードを保存
+
+    // 全エピソードをフェッチして表示する
+    async function fetchAndDisplayFilteredEpisodes(): Promise<void> {
+      try {
+        const response = await fetch(xmlUrl);
+        const xmlText: string = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc: Document = parser.parseFromString(xmlText, "text/xml");
+        const items: HTMLCollectionOf<Element> = xmlDoc.getElementsByTagName("item");
+        allEpisodes = []; // リセット
+
+        for (let i = 0; i < items.length; i++) {
+          const item: Element = items[i];
+          const url: string = `episode-${items.length - i}`;
+          const titleElement: Element | null = item.getElementsByTagName("title")[0];
+          const pubDateElement: Element | null = item.getElementsByTagName("pubDate")[0];
+          const durationElement: Element | null = item.getElementsByTagNameNS("*", "duration")[0];
+
+          // summaryの処理
+          let summary: string = "No summary";
+          const summaryElements: NodeListOf<Element> = item.getElementsByTagNameNS("*", "summary");
+          if (summaryElements.length > 0) {
+            summary = summaryElements[0].textContent || "No summary";
+          }
+
+          // itunes:summaryの処理
+          let itunesSummary: string = "";
+          const itunesSummaryElements: NodeListOf<Element> = item.getElementsByTagName("itunes:summary");
+          if (itunesSummaryElements.length > 0) {
+            itunesSummary = itunesSummaryElements[0].textContent || "";
+          }
+
+          const title: string = titleElement?.textContent || "No title";
+          const duration: string = durationElement?.textContent || "Unknown duration";
+
+          // 日付のフォーマット変換
+          let formattedDate: string = "Unknown date";
+          if (pubDateElement) {
+            const pubDate: Date = new Date(pubDateElement.textContent || "");
+            const year: number = pubDate.getFullYear();
+            const month: string = String(pubDate.getMonth() + 1).padStart(2, "0");
+            const day: string = String(pubDate.getDate()).padStart(2, "0");
+            formattedDate = `${year}年${month}月${day}日`;
+          }
+
+          allEpisodes.push({
+            html: `<article class="archive-list--item">
+          <div class="archive-list--body">
+            <a href="/${url}">
+            <h3 class="archive-list--number">${title}</h3>
+            <div class="archive-list--flex">
+              <p class="archive-list--date">公開日: ${formattedDate}</p>
+              <p class="archive-list--time">${duration}</p>
+            </div>
+
+            </a>
+          </div>
+        </article>`,
+            title: title.toLowerCase(), // 小文字に変換して検索しやすくする
+            summary: (itunesSummary || summary).toLowerCase(), // itunes:summary優先で小文字に変換
+          });
+        }
+
+        // 初期表示
+        renderEpisodes(allEpisodes);
+      } catch (error) {
+        console.error("Error fetching or parsing the XML:", error);
+        const summaryDisplay: HTMLElement | null = document.getElementById("summary-display");
+        if (summaryDisplay) {
+          summaryDisplay.textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
+        }
+      }
+    }
+
+    // エピソードをDOMにレンダリング
+    function renderEpisodes(episodes: Array<{ html: string }>): void {
+      const summaryDisplay: HTMLElement | null = document.getElementById("summary-display");
+      if (summaryDisplay) {
+        summaryDisplay.innerHTML =
+          episodes.length > 0 ? episodes.map((ep) => ep.html).join("") : "該当するエピソードはありません。";
+      }
+    }
+
+    // フリーワード検索関数
+    (window as any).filterEpisodes = function (): void {
+      const searchInput: string = (document.getElementById("search-input") as HTMLInputElement).value.toLowerCase();
+      const filteredEpisodes = allEpisodes.filter(
+        (ep) => ep.title.includes(searchInput) || ep.summary.includes(searchInput),
+      );
+      renderEpisodes(filteredEpisodes);
+    };
+
+    fetchAndDisplayFilteredEpisodes();
+  </script>
+</Layout>

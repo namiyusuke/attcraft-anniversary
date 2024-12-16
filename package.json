@@ -1,0 +1,47 @@
+{
+  "name": "orelop-astro-with-tailwind",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "concurrently --raw \"npm:dev:*\"",
+    "dev:astro": "astro dev",
+    "dev:css": "chokidar \"src/assets/css/{base,components,utilities}.*.css\" -c \"touch tailwind.config.mjs\" -d 0 --silent",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "markuplint \"./src/**/*.astro\""
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.9.1",
+    "lenis": "^1.0.45",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@hilosiva/oreroll": "^0.1.0",
+    "@markuplint/astro-parser": "^4.6.1",
+    "@types/xml2js": "^0.4.14",
+    "autoprefixer": "^10.4.19",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
+    "css-declaration-sorter": "^7.2.0",
+    "gsap": "^3.12.5",
+    "markuplint": "^4.8.0",
+    "node-fetch": "^3.3.2",
+    "postcss-html": "^1.6.0",
+    "postcss-nesting": "^12.1.2",
+    "postcss-sort-media-queries": "^5.2.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "sharp": "^0.33.5",
+    "stylelint": "^16.5.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recess-order": "^5.0.1",
+    "swiper": "^11.1.1",
+    "xml2js": "^0.6.2"
+  }
+}

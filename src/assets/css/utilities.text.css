@@ -1,0 +1,16 @@
+.pkna {
+  font-feature-settings: "pkna";
+}
+
+.keep {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.writing-rl {
+  writing-mode: vertical-rl;
+}
+
+.writing-tb {
+  writing-mode: horizontal-tb;
+}

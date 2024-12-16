@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": "explicit",
+    "source.fixAll": "explicit"
+  },
+  "less.validate": false,
+  "scss.validate": false,
+  "css.validate": false,
+  "stylelint.validate": ["css", "less", "postcss", "scss", "sass", "astro"],
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  }
+}

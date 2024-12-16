@@ -1,0 +1,10 @@
+---
+const { href, icon, ...props } = Astro.props;
+
+const { pathname } = Astro.url;
+const isCurrent = href === pathname || href === pathname.replace(/\/$/, "");
+---
+
+<a href={href} aria-current={isCurrent ? "page" : false} {...props}>
+  <slot />
+</a>

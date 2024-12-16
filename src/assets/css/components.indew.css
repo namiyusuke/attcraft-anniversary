@@ -1,0 +1,44 @@
+:where(:not([data-script])) {
+  [data-trigger] {
+    --duration: 0.6s;
+    --easing: ease-out;
+    --property: opacity;
+
+    transition: var(--duration) var(--easing);
+    transition-property: var(--property);
+  }
+
+
+  [data-trigger="fadeIn"] {
+
+    &[data-inview="false"] {
+      opacity: 0;
+    }
+    &[data-inview="true"] {
+      opacity: 1;
+    }
+  }
+
+
+  [data-trigger="blurIn"] {
+     --property: opacity, filter;
+
+    &[data-inview="false"] {
+      filter: blur(8px);
+      opacity: 0;
+    }
+    &[data-inview="true"] {
+       filter: blur(0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-effect="parallax"] {
+      --range: 300;
+      --translate: calc((var(--range) * -1px) + (var(--range) * 2px) * var(--progress, 0));
+
+      translate: 0 var(--translate);
+    }
+  }
+}

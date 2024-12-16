@@ -1,0 +1,315 @@
+---
+import { SITE } from "../config";
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import wine_tool from "@assets/img/wine_tool.png";
+import photo from "@assets/img/photo.png";
+import drinkMenu from "@assets/img/drink-menu.png";
+import direction from "@assets/img/direction.png";
+import coding from "@assets/img/coding.png";
+import design from "@assets/img/design.png";
+import bar from "@assets/img/bar.png";
+import jobHunting from "@assets/img/job-hunting.png";
+import company from "@assets/img/company.png";
+import freeLance from "@assets/img/free-lance.png";
+import work from "@assets/img/work.png";
+import web from "@assets/img/web.png";
+import study from "@assets/img/study.png";
+import portfolio from "@assets/img/portfolio.png";
+import chockArt from "@assets/img/chock-art.png";
+import mvBg from "@assets/img/bg_mv.png";
+import kanpai from "@assets/img/kanpai.png";
+import green from "@assets/img/green.png";
+import bar_01 from "@assets/img/bar_01.png";
+import bar_02 from "@assets/img/bar_02.png";
+import bar_03 from "@assets/img/bar_03.png";
+import bar_04 from "@assets/img/bar_04.png";
+import bar_05 from "@assets/img/bar_05.png";
+import bar_06 from "@assets/img/bar_06.png";
+import bar_07 from "@assets/img/bar_07.png";
+import bar_08 from "@assets/img/bar_08.png";
+import bar_09 from "@assets/img/bar_09.png";
+import bar_10 from "@assets/img/bar_10.png";
+import bar_11 from "@assets/img/bar_11.png";
+---
+
+<Layout title={`${SITE.name} | Welcome to Orelop Astro.`} description="これは俺流スターターキット">
+  <main>
+    <div id="scroll-container">
+      <div id="scroll-content">
+        <div class="mv-kanpai">
+          <Image src={kanpai} alt="乾杯" />
+        </div>
+        <div class="mv-bg">
+          <Image src={mvBg} alt="メインビジュアル" />
+        </div>
+        <div class="mv-title">
+          <h2 class="mv-title--center">
+            <span>
+              <span class="mv-title--sm">ここは</span>
+              <span class="mv-title--lg">シバジュク酒場</span>
+              <span class="mv-title--white">隣の人の会話を盗みぎき</span>
+            </span>
+          </h2>
+        </div>
+        <div class="scroll-body">
+          <div class="bg-wine">
+            <Image src={wine_tool} alt="ワイン６本" />
+          </div>
+          <div class="bg-photo">
+            <Image src={photo} alt="メニューの写真" />
+          </div>
+          <div class="bg-drinkMenu">
+            <Image src={drinkMenu} alt="メニューの写真" />
+          </div>
+          <div class="bg-direction">
+            <audio controls data-auto-play data-audio="direction"></audio>
+            <Image src={direction} alt="ディレクション" />
+          </div>
+          <div class="bg-coding">
+            <audio controls data-auto-play data-audio="coding"></audio>
+            <Image src={coding} alt="コーディング" />
+          </div>
+          <div class="bg-design">
+            <a href="/design/">
+              <audio controls data-auto-play data-audio="design"></audio>
+              <Image src={design} alt="コーディング" />
+            </a>
+          </div>
+          <div class="bg-bar">
+            <Image src={bar} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar1">
+            <Image src={bar_01} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar2">
+            <Image src={bar_02} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar3">
+            <Image src={bar_03} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar4">
+            <Image src={bar_04} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar5">
+            <Image src={bar_05} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar6">
+            <Image src={bar_06} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar7">
+            <Image src={bar_07} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar8">
+            <Image src={bar_08} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar9">
+            <Image src={bar_09} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar10">
+            <Image src={bar_10} alt="バーカウンター" />
+          </div>
+          <div class="bg-bar11">
+            <Image src={bar_11} alt="バーカウンター" />
+          </div>
+          <div class="bg-jobHunting">
+            <a href="/job-hunting/">
+              <Image src={jobHunting} alt="バーカウンター" />
+            </a>
+            <audio controls data-auto-play data-audio="jobHunting"></audio>
+          </div>
+        </div>
+        <div class="bg-jobHunting">
+          <a href="/job-hunting/">
+            <Image src={jobHunting} alt="就活転職" />
+          </a>
+        </div>
+        <div class="bg-company">
+          <audio controls data-auto-play data-audio="company"></audio>
+          <Image src={company} alt="制作会社" />
+        </div>
+        <div class="bg-freeLance">
+          <Image src={freeLance} alt="フリーランス" />
+          <audio controls data-auto-play data-audio="freeLance"></audio>
+        </div>
+        <div class="bg-work">
+          <audio controls data-auto-play data-audio="work"></audio>
+          <Image src={work} alt="仕事" />
+        </div>
+        <div class="bg-web">
+          <audio controls data-auto-play data-audio="web"></audio>
+          <Image src={web} alt="ウェブ" />
+        </div>
+        <div class="bg-study">
+          <audio controls data-auto-play data-audio="study"></audio>
+          <Image src={study} alt="勉強法" />
+        </div>
+        <div class="bg-portfolio">
+          <audio controls data-auto-play data-audio="portfolio"></audio>
+          <Image src={portfolio} alt="勉強法" />
+        </div>
+        <div class="bg-chockArt">
+          <Image src={chockArt} alt="絵" />
+        </div>
+        <div class="bg-green">
+          <Image src={green} alt="草木" />
+        </div>
+      </div>
+      <div class="light"></div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
+
+  // 検索キーワードの設定
+  const SEARCH_CONFIGS = {
+    jobHunting: ["就職", "転職"],
+    freeLance: ["フリーランス", "フリランス", "個人事業主"],
+    company: ["制作会社"],
+    work: ["仕事"],
+    web: ["Web"],
+    study: ["勉強"],
+    portfolio: ["ポートフォリオ"],
+    direction: ["ディレクター"],
+    coding: ["コーディング"],
+    design: ["デザイン"],
+    // 必要に応じて他のカテゴリーを追加
+  };
+
+  async function fetchAndDisplayFilteredEpisodes() {
+    try {
+      const response = await fetch(xmlUrl);
+      const xmlText = await response.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+      const items = xmlDoc.getElementsByTagName("item");
+      const results = {};
+
+      // data-audio属性を持つ要素をすべて取得
+      const audioElements = document.querySelectorAll("[data-audio]");
+      const targetCategories = Array.from(audioElements).map((el) => el.dataset.audio);
+
+      // 各カテゴリーごとにURLの配列を初期化
+      targetCategories.forEach((category) => {
+        results[category] = [];
+      });
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const titleElement = item.getElementsByTagName("title")[0];
+        const enclosureElement = item.getElementsByTagName("enclosure")[0];
+        const summaryElements = item.getElementsByTagNameNS("*", "summary");
+
+        const title = titleElement ? titleElement.textContent : "";
+        const summary = summaryElements.length > 0 ? summaryElements[0].textContent : "";
+        const audioUrl = enclosureElement ? enclosureElement.getAttribute("url") : "";
+
+        // 各カテゴリーごとにキーワードチェック
+        targetCategories.forEach((category) => {
+          const keywords = SEARCH_CONFIGS[category] || [];
+          if (keywords.some((keyword) => title.includes(keyword) || summary.includes(keyword))) {
+            results[category].push(audioUrl);
+          }
+        });
+      }
+
+      return results;
+    } catch (error) {
+      console.error("Error fetching or parsing the XML:", error);
+      return {};
+    }
+  }
+
+  // 使用例
+  fetchAndDisplayFilteredEpisodes().then((categoryResults) => {
+    // 各カテゴリーの要素にURLを設定
+    Object.entries(categoryResults).forEach(([category, urls]) => {
+      const elements = document.querySelectorAll(`[data-audio="${category}"]`);
+      elements.forEach((element) => {
+        if (urls.length > 0) {
+          // 最初のURLを使用する場合
+          element.setAttribute("src", urls[0]);
+          // または全てのURLを保存する場合
+          element.setAttribute("data-urls", JSON.stringify(urls));
+        }
+      });
+    });
+  });
+
+  class ProximityAudioPlayer {
+    constructor(audioElement, triggerElement, options = {}) {
+      this.audioElement = audioElement;
+      this.triggerElement = triggerElement;
+      this.maxDistance = options.maxDistance || 300;
+      this.minVolume = options.minVolume || 0;
+      this.maxVolume = options.maxVolume || 1;
+
+      // 初回インタラクション待機
+      this.setupAutoplay();
+
+      // マウスの移動を監視
+      document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+    }
+
+    setupAutoplay() {
+      const enableAudio = async () => {
+        try {
+          this.audioElement.loop = true;
+          this.audioElement.volume = this.minVolume;
+          this.audioElement.muted = true; // 最初はミュートで開始
+          await this.audioElement.play();
+          this.audioElement.muted = false; // ミュートを解除
+        } catch (error) {
+          console.warn("Autoplay failed:", error);
+        }
+
+        document.removeEventListener("click", enableAudio); // イベントリスナーを削除
+      };
+
+      document.addEventListener("click", enableAudio); // 初回クリックをトリガーに
+    }
+
+    handleMouseMove(event) {
+      if (this.animationFrame) {
+        cancelAnimationFrame(this.animationFrame);
+      }
+
+      this.animationFrame = requestAnimationFrame(() => {
+        const rect = this.triggerElement.getBoundingClientRect();
+        const elementCenter = {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+        };
+
+        const distance = Math.sqrt(
+          Math.pow(event.clientX - elementCenter.x, 2) + Math.pow(event.clientY - elementCenter.y, 2),
+        );
+
+        if (distance > this.maxDistance) {
+          this.audioElement.volume = this.minVolume;
+        } else {
+          const volumeLevel = Math.pow(1 - distance / this.maxDistance, 2);
+          this.audioElement.volume = this.minVolume + (this.maxVolume - this.minVolume) * volumeLevel;
+        }
+      });
+    }
+
+    stop() {
+      this.audioElement.pause();
+      this.audioElement.currentTime = 0;
+    }
+  }
+
+  // 使用例
+  document.querySelectorAll("[data-auto-play]").forEach((audio) => {
+    const triggerElement = audio.closest("div"); // 対応する要素を取得
+    new ProximityAudioPlayer(audio, triggerElement, {
+      maxDistance: 300,
+      minVolume: 0,
+      maxVolume: 0.1,
+    });
+  });
+</script>

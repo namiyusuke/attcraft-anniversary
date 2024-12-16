@@ -1,0 +1,61 @@
+---
+import { getImage, Image } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"img"> {
+  img: ImageMetadata;
+  imgLarge?: ImageMetadata;
+  widths?: number[];
+  sizes?: string;
+  formats?: string[];
+  alt: string;
+  loading?: "eager" | "lazy" | null | undefined;
+  media?: string;
+  quality?: string | number;
+}
+
+const { img, imgLarge, widths = [], sizes = "", formats = ["webp"], alt, quality, media = "(min-width: 1024px)", class: className, loading, ...attr } = Astro.props;
+
+const optimizedImages: any[] = [];
+const optimizedLargeImages: any[] = [];
+
+const processImages = async () => {
+  for (const format of formats) {
+    optimizedImages.push(await getImage({ src: img, format: format, widths: widths, sizes: sizes, quality: quality }));
+
+    imgLarge && optimizedLargeImages.push(await getImage({ src: imgLarge, format: format, widths: widths, sizes: sizes, quality: quality }));
+  }
+
+  imgLarge && optimizedLargeImages.push(await getImage({ src: imgLarge, format: imgLarge.format, widths: widths, sizes: sizes, quality: quality }));
+};
+
+await processImages();
+---
+
+<picture {...attr}>
+  {
+    optimizedLargeImages &&
+      optimizedLargeImages.map((optimizedImage) => (
+        <source
+          srcset={optimizedImage.srcSet.attribute}
+          type={`image/${optimizedImage.options.format}`}
+          sizes={optimizedImage.options.sizes}
+          width={optimizedImage.attributes.width}
+          height={optimizedImage.attributes.height}
+          media={media}
+        />
+      ))
+  }
+  {
+    optimizedImages.map((optimizedImage) => (
+      <source
+        srcset={optimizedImage.srcSet.attribute}
+        type={`image/${optimizedImage.options.format}`}
+        sizes={optimizedImage.options.sizes}
+        width={optimizedImage.attributes.width}
+        height={optimizedImage.attributes.height}
+      />
+    ))
+  }
+  <Image src={img} alt={alt} widths={widths} sizes={sizes} format={img.format} class={className} loading={loading} />
+</picture>
