@@ -230,8 +230,14 @@ import bar_11 from "@assets/img/bar_11.png";
       const elements = document.querySelectorAll(`[data-audio="${category}"]`);
       elements.forEach((element) => {
         if (urls.length > 0) {
-          // 最初のURLを使用する場合
-          element.setAttribute("src", urls[0]);
+          // ランダムにURLを選ぶ関数
+          const getRandomUrl = (urlArray) => urlArray[Math.floor(Math.random() * urlArray.length)];
+
+          // ランダムなURLを取得
+          const randomUrl = getRandomUrl(urls);
+
+          // 選ばれたURLを使用
+          element.setAttribute("src", randomUrl);
           // または全てのURLを保存する場合
           element.setAttribute("data-urls", JSON.stringify(urls));
         }
@@ -246,6 +252,7 @@ import bar_11 from "@assets/img/bar_11.png";
       this.maxDistance = options.maxDistance || 300;
       this.minVolume = options.minVolume || 0;
       this.maxVolume = options.maxVolume || 1;
+      this.startTime = options.startTime || 0; // 追加: 再生開始時間
 
       // 初回インタラクション待機
       this.setupAutoplay();
@@ -260,6 +267,7 @@ import bar_11 from "@assets/img/bar_11.png";
           this.audioElement.loop = true;
           this.audioElement.volume = this.minVolume;
           this.audioElement.muted = true; // 最初はミュートで開始
+          this.audioElement.currentTime = this.startTime; // 追加: 再生開始位置を設定
           await this.audioElement.play();
           this.audioElement.muted = false; // ミュートを解除
         } catch (error) {
@@ -309,7 +317,8 @@ import bar_11 from "@assets/img/bar_11.png";
     new ProximityAudioPlayer(audio, triggerElement, {
       maxDistance: 300,
       minVolume: 0,
-      maxVolume: 0.1,
+      maxVolume: 0.6,
+      startTime: 30, // 追加: 30秒から再生を開始
     });
   });
 </script>
