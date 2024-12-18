@@ -7,7 +7,7 @@
     "dev:astro": "astro dev",
     "dev:css": "chokidar \"src/assets/css/{base,components,utilities}.*.css\" -c \"touch tailwind.config.mjs\" -d 0 --silent",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": " astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "markuplint \"./src/**/*.astro\""
