@@ -1,0 +1,111 @@
+---
+import menu from "@assets/img/menu-title.svg";
+import light01 from "@assets/img/light_01.png";
+import onMisic from "@assets/img/onMisic.png";
+import offMisic from "@assets/img/offMisic.png";
+import logo from "@assets/img/pj_logo.png";
+import { Image } from "astro:assets";
+---
+
+<div class="loading-wrap">
+  <div class="loading">
+    <div class="loading-layer1">
+      <p class="loading-text">
+        <span class="js-text-target loading-text--top"
+          >「シバジュク酒場」… それはShibajukuサロンメンバーが集まるポッドキャスト</span
+        >
+        <span class="loading-text--bottom js-text-target"
+          >バーで隣に座っているひとの会話を<em class="loading-text--em">「こっそり盗み聴き」</em
+          >をコンセプトにお届けしています
+        </span>
+      </p>
+    </div>
+    <div class="loading-layer2">
+      <div class="loading-relative">
+        <div class="loading-perspective">
+          <div class="loading-group">
+            <div class="loading-front">
+              <div class="loading-front--inner"></div>
+              <div class="loading-front--word">
+                <Image src={logo} alt="シバジュク酒場" />
+              </div>
+              <div class="loading-front--back">fdsfafa</div>
+            </div>
+            <div class="loading-band"></div>
+            <div class="loading-back">
+              <h2 class="loading-heading">初学者さまへ</h2>
+              <p class="loading-back--text">シバジュク酒場でWeb制作界隈の話を「盗みぎき」<br />してみませんか？</p>
+              <div class="loading-back--inner"></div>
+            </div>
+            <div class="loading-spine"></div>
+          </div>
+        </div>
+      </div>
+      <div class="loading-message">
+        <p class="loading-message--text">音声をONにすると、ラジオの一部が流れます！</p>
+        <div class="loading-btn--wrap">
+          <button type="button" class="js-loading--on js-loading--open loading-btn">
+            <span class="loading-btn--inner">
+              <sapn class="loading-btn--text">ON</sapn>
+              <Image class="loading-btn--icon1" src={onMisic} alt="音あり" />
+            </span>
+          </button>
+          <button type="button" class="js-loading--open loading-btn">
+            <span class="loading-btn--inner">
+              <span class="loading-btn--text">OFF</span>
+              <Image class="loading-btn--icon2" src={offMisic} alt="音なし" />
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  import { gsap } from "gsap";
+  import spanWrap from "@assets/js/utils/spanWrap";
+  const counter = { value: 0 };
+  document.querySelectorAll(".js-text-target").forEach((el) => spanWrap(el, counter));
+  const tl = gsap.timeline({});
+  tl.to(".js-text", {
+    duration: 1.5,
+    autoAlpha: 1,
+    ease: "power2.inOut",
+    stagger: 0.04,
+  })
+    .to(".loading-layer1", {
+      duration: 1.5,
+      autoAlpha: 0,
+      ease: "power2.inOut",
+    })
+    .to(".loading-layer2", {
+      duration: 1.5,
+      autoAlpha: 1,
+      ease: "power1.inOut",
+    })
+    .to(".loading-front", {
+      rotateY: "-160deg",
+      duration: 1,
+      ease: "linear",
+    })
+    .to(
+      ".loading-group",
+      {
+        translateX: "50%",
+        duration: 1.3,
+        ease: "linear",
+      },
+      "<"
+    );
+  const loadingBtn = document.querySelectorAll(".js-loading--open");
+  const loadingOn = document.querySelector(".js-loading--on");
+  loadingBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      gsap.to(".loading", {
+        autoAlpha: 0,
+        duration: 0.5,
+        ease: "power1.inOut",
+      });
+    });
+  });
+</script>

@@ -100,8 +100,16 @@ const jsonLd = schema(description);
   import { gsap } from "gsap";
   import Loading from "@assets/js/libs/Loading";
   import Toggle from "@assets/js/libs/Toggle";
+  import Observer from "@assets/js/libs/Observer";
+  new Observer(".js-observer");
   new Loading();
   new Toggle(".js-toggle");
+  const htmlElement = document.documentElement;
+  const addHiddenClass = () => {
+    if (!htmlElement.classList.contains("is-hidden")) {
+      htmlElement.classList.add("is-hidden");
+    }
+  };
   const container = document.getElementById("scroll-container");
   const content = document.getElementById("scroll-content");
   let isDragging = false;
@@ -127,6 +135,7 @@ const jsonLd = schema(description);
     const walkY = (y - startY) * -1;
     container.scrollLeft = scrollLeft + walkX;
     container.scrollTop = scrollTop + walkY;
+    addHiddenClass();
   });
 
   // マウスアップ（ドラッグ終了）
@@ -148,6 +157,7 @@ const jsonLd = schema(description);
     startY = e.touches[0].pageY - container.offsetTop;
     scrollLeft = container.scrollLeft;
     scrollTop = container.scrollTop;
+    addHiddenClass();
   });
 
   container.addEventListener("touchmove", (e) => {
@@ -174,6 +184,7 @@ const jsonLd = schema(description);
     // スクロール量を適用
     container.scrollLeft += deltaX;
     container.scrollTop += deltaY;
+    addHiddenClass();
   });
   function onHover() {
     const hoverTarget = document.querySelectorAll(".js-hover");
@@ -196,4 +207,192 @@ const jsonLd = schema(description);
       "--y": `${y}%`,
     });
   });
+
+  class CircularLightEffect {
+    constructor(element) {
+      this.element = element;
+      this.isVisible = false;
+      this.currentOpacity = 0;
+      this.pulsePhase = 0;
+
+      // オリジナルのスタイルを保存
+      this.originalPosition = window.getComputedStyle(element).position;
+
+      // 固定サイズを設定
+      this.FIXED_SIZE = Math.min(element.offsetWidth * 1.5, element.offsetHeight * 1.5);
+
+      // Canvasの設定
+      this.canvas = document.createElement("canvas");
+      this.canvas.className = "light-effect-canvas";
+      this.ctx = this.canvas.getContext("2d");
+
+      // Canvasのスタイルを設定
+      Object.assign(this.canvas.style, {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -60%)",
+        pointerEvents: "none",
+        zIndex: "0",
+      });
+
+      // Canvasのサイズ設定（Retina対応）
+      this.canvas.width = this.FIXED_SIZE * 2.5;
+      this.canvas.height = this.FIXED_SIZE * 2.5;
+      this.canvas.style.width = `${this.FIXED_SIZE}px`;
+      this.canvas.style.height = `${this.FIXED_SIZE}px`;
+
+      // 要素のスタイル設定
+      if (this.originalPosition === "static") {
+        this.element.style.position = "relative";
+      }
+
+      // overflow設定の保存
+      const originalOverflow = window.getComputedStyle(element).overflow;
+      if (originalOverflow !== "hidden") {
+        this._originalOverflow = originalOverflow;
+      }
+
+      // Canvasを要素に追加
+      element.appendChild(this.canvas);
+
+      // イベントハンドラーのバインド
+      this._handleMouseEnter = this._handleMouseEnter.bind(this);
+      this._handleMouseLeave = this._handleMouseLeave.bind(this);
+      this._handleIntersection = this._handleIntersection.bind(this);
+
+      // デバイスタイプの検出
+      this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      if (this.isMobile) {
+        // モバイルの場合はIntersection Observerを設定
+        this.observer = new IntersectionObserver(this._handleIntersection, {
+          threshold: 0.5, // 50%以上表示された時にトリガー
+        });
+        this.observer.observe(element);
+      } else {
+        // PCの場合はマウスイベントを設定
+        element.addEventListener("mouseenter", this._handleMouseEnter);
+        element.addEventListener("mouseleave", this._handleMouseLeave);
+      }
+
+      // アニメーション開始
+      this.animate();
+    }
+
+    _handleIntersection(entries) {
+      entries.forEach((entry) => {
+        this.isVisible = entry.isIntersecting;
+      });
+    }
+
+    _handleMouseEnter() {
+      this.isVisible = true;
+    }
+
+    _handleMouseLeave() {
+      this.isVisible = false;
+    }
+
+    drawLight(time) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      const targetOpacity = this.isVisible ? 0.6 : 0;
+      this.currentOpacity += (targetOpacity - this.currentOpacity) * 0.1;
+
+      if (this.currentOpacity > 0.01) {
+        this.pulsePhase = (time / 700) % (2 * Math.PI);
+        const pulseScale = 1 + Math.sin(this.pulsePhase) * 0.15;
+
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const maxRadius = this.FIXED_SIZE * 0.8 * pulseScale;
+
+        // メインの光の円
+        const mainGradient = this.ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius * 2);
+
+        mainGradient.addColorStop(0, `rgba(255, 255, 255, ${this.currentOpacity})`);
+        mainGradient.addColorStop(0.3, `rgba(255, 255, 255, ${this.currentOpacity * 0.7})`);
+        mainGradient.addColorStop(0.6, `rgba(255, 255, 255, ${this.currentOpacity * 0.3})`);
+        mainGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.fillStyle = mainGradient;
+        this.ctx.filter = "blur(30px)";
+        this.ctx.arc(centerX, centerY, maxRadius, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.restore();
+
+        // 内側の明るい部分
+        const innerGradient = this.ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius);
+
+        innerGradient.addColorStop(0, `rgba(255, 255, 220, ${this.currentOpacity * 0.8})`);
+        innerGradient.addColorStop(0.4, `rgba(255, 255, 180, ${this.currentOpacity * 0.4})`);
+        innerGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.fillStyle = innerGradient;
+        this.ctx.filter = "blur(15px)";
+        this.ctx.arc(centerX, centerY, maxRadius * 0.7, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.restore();
+
+        // 中心の輝点
+        const glowGradient = this.ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius * 0.3);
+
+        glowGradient.addColorStop(0, `rgba(255, 255, 255, ${this.currentOpacity * 0.9})`);
+        glowGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.fillStyle = glowGradient;
+        this.ctx.filter = "blur(5px)";
+        this.ctx.arc(centerX, centerY, maxRadius * 0.2, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.restore();
+      }
+    }
+
+    animate(time) {
+      this.drawLight(time);
+      requestAnimationFrame((t) => this.animate(t));
+    }
+
+    destroy() {
+      if (this.isMobile) {
+        this.observer.disconnect();
+      } else {
+        this.element.removeEventListener("mouseenter", this._handleMouseEnter);
+        this.element.removeEventListener("mouseleave", this._handleMouseLeave);
+      }
+
+      this.canvas.remove();
+
+      if (this.originalPosition === "static") {
+        this.element.style.position = "static";
+      }
+
+      if (this._originalOverflow) {
+        this.element.style.overflow = this._originalOverflow;
+      }
+    }
+  }
+
+  // 使用例
+  function initLightEffects() {
+    const effects = new Map();
+
+    document.querySelectorAll(".js-spotlight").forEach((element) => {
+      effects.set(element, new CircularLightEffect(element));
+    });
+
+    return function cleanup() {
+      effects.forEach((effect) => effect.destroy());
+      effects.clear();
+    };
+  }
+
+  const cleanupLightEffects = initLightEffects();
 </script>

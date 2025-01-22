@@ -1,8 +1,36 @@
 ---
 import { SITE } from "../config";
+import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import { parseStringPromise } from "xml2js";
-
+import archive_light from "@assets/img/archive_light.png";
+import light_parts2 from "@assets/img/light_parts2.png";
+import detail_wine from "@assets/img/detail_wine.png";
+import detail_beer from "@assets/img/detail_beer.png";
+import bar from "@assets/img/bar.png";
+import bar_01 from "@assets/img/bar_01.png";
+import bar_02 from "@assets/img/bar_02.png";
+import bar_03 from "@assets/img/bar_03.png";
+import bar_04 from "@assets/img/bar_04.png";
+import bar_05 from "@assets/img/bar_05.png";
+import bar_06 from "@assets/img/bar_06.png";
+import bar_09 from "@assets/img/bar_09.png";
+import bar_10 from "@assets/img/bar_07.png";
+import bar_11 from "@assets/img/bar_08.png";
+import bar_12 from "@assets/img/bar_12.png";
+import twitter from "@assets/img/logo-x.svg";
+import facebook from "@assets/img/logo-facebook.svg";
+import instagram from "@assets/img/logo-Instagram.svg";
+import bar_counter_people4 from "@assets/img/bar_counter_people4.png";
+import bar_counter_people5 from "@assets/img/bar_counter_people5.png";
+import detail_people1 from "@assets/img/detail_people1.png";
+import detail_people2 from "@assets/img/detail-people2.png";
+import detail_people2_wine from "@assets/img/detail_people2_wine.png";
+import detail_wine_table from "@assets/img/detail-wine-table.png";
+import detail_photo from "@assets/img/detail-photo.png";
+import detail_green from "@assets/img/archive_green.png";
+import detail_people4 from "@assets/img/detail-people4.png";
+import detail_people5 from "@assets/img/detail-people5.png";
 export async function getStaticPaths() {
   const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
 
@@ -55,43 +83,82 @@ const { title, text, audioUrl } = Astro.props;
 ---
 
 <Layout title={`About | ${SITE.name}`} description="これはAboutページ">
-  <main>
-    <div class="detail-content">
-      <div class="detail-content--inner">
-        <h1 class="detail-title">{title}</h1>
-        {
-          audioUrl && (
-            <div class="custom-audio-player">
-              <div class="player-controls">
-                <button class="play-button" id="playButton">
-                  <span class="play-icon">
-                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M1 15.7523V1.33262C1.0001 1.27286 1.01627 1.21422 1.04682 1.16286C1.07737 1.1115 1.12117 1.0693 1.17363 1.04068C1.2261 1.01207 1.28529 0.998087 1.34501 1.00021C1.40473 1.00233 1.46279 1.02048 1.51309 1.05275L12.8476 8.2626C12.8944 8.2928 12.9328 8.33424 12.9594 8.38313C12.9861 8.43202 13 8.4868 13 8.54246C13 8.59813 12.9861 8.65291 12.9594 8.7018C12.9328 8.75069 12.8944 8.79212 12.8476 8.82233L1.50309 16.0322C1.45299 16.0619 1.39597 16.078 1.33773 16.0788C1.27948 16.0796 1.22204 16.0651 1.17114 16.0368C1.12023 16.0085 1.07764 15.9673 1.04761 15.9174C1.01759 15.8675 1.00117 15.8105 1 15.7523Z"
-                        stroke="#685339"
-                        stroke-width="2"
-                      />
-                    </svg>
-                  </span>
-                  <span class="pause-icon hidden">
-                    <svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M3.51311 1H1V16H3.51311V1Z" stroke="#685339" stroke-width="1.4" />
-                      <path d="M9.18279 1H6.66968V16H9.18279V1Z" stroke="#685339" stroke-width="1.4" />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-              <div class="progress-container">
-                <div class="current-time time">0:00</div>
-                <div class="progress-bar">
-                  <div class="progress" />
+  <main class="detail-main detail-wrap">
+    <div class="detail-content--wrap">
+      <div class="detail-bar--wrap">
+        <Image class="detail-bar--people1" src={bar_01} alt="バーカウンター" />
+        <Image class="detail-bar--people2" src={bar_02} alt="バーカウンター" />
+        <Image class="detail-bar--people3" src={bar_03} alt="バーカウンター" />
+        <Image class="detail-bar--people4" src={bar_04} alt="バーカウンター" />
+        <Image class="detail-bar--people6" src={bar_05} alt="バーカウンター" />
+        <Image class="detail-bar--people8" src={bar_06} alt="バーカウンター" />
+        <Image class="detail-bar--people7" src={bar_counter_people4} alt="バーカウンター" />
+        <Image class="detail-bar--people5" src={bar_counter_people5} alt="バーカウンター" />
+        <Image class="detail-bar--people9" src={bar_09} alt="バーカウンター" />
+        <Image class="detail-bar--people10" src={bar_10} alt="バーカウンター" />
+        <Image class="detail-bar--people11" src={bar_11} alt="バーカウンター" />
+        <Image class="detail-bar--people12" src={bar_12} alt="バーカウンター" />
+        <Image class="detail-bar--winetable" src={detail_wine_table} alt="バーカウンター" />
+        <Image class="detail-bar" src={bar} alt="ディナーライト" />
+      </div>
+      <Image class="detail-wine" src={detail_wine} alt="ディナーライト" />
+      <Image class="detail-photo" src={detail_photo} alt="ディナーライト" />
+      <div class="detail-beer--wrap">
+        <div class="archive-category-art--inner--content">
+          <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
+          <ul class="category-bottom-share--list">
+            <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+            <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+            <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+          </ul>
+        </div>
+        <Image class="detail-beer" src={detail_beer} alt="ディナーライト" />
+      </div>
+      <Image class="detail-people1" src={detail_people1} alt="ディナーライト" />
+      <Image class="detail-people2" src={detail_people2} alt="ディナーライト" />
+      <Image class="detail-people2-wine" src={detail_people2_wine} alt="ディナーライト" />
+      <div class="archive-light--wrap">
+        <Image class="detail-light" src={archive_light} alt="アーカイブライト" />
+        <Image class="detail-light-parts2" src={light_parts2} alt="ライトパーツ2" />
+        <Image class="detail-green" src={detail_green} alt="ライトパーツ2" />
+      </div>
+      <div class="detail-content">
+        <div class="detail-content--inner">
+          <h1 class="detail-title">{title}</h1>
+          {
+            audioUrl && (
+              <div class="custom-audio-player">
+                <div class="player-controls">
+                  <button class="play-button" id="playButton">
+                    <span class="play-icon">
+                      <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M1 15.7523V1.33262C1.0001 1.27286 1.01627 1.21422 1.04682 1.16286C1.07737 1.1115 1.12117 1.0693 1.17363 1.04068C1.2261 1.01207 1.28529 0.998087 1.34501 1.00021C1.40473 1.00233 1.46279 1.02048 1.51309 1.05275L12.8476 8.2626C12.8944 8.2928 12.9328 8.33424 12.9594 8.38313C12.9861 8.43202 13 8.4868 13 8.54246C13 8.59813 12.9861 8.65291 12.9594 8.7018C12.9328 8.75069 12.8944 8.79212 12.8476 8.82233L1.50309 16.0322C1.45299 16.0619 1.39597 16.078 1.33773 16.0788C1.27948 16.0796 1.22204 16.0651 1.17114 16.0368C1.12023 16.0085 1.07764 15.9673 1.04761 15.9174C1.01759 15.8675 1.00117 15.8105 1 15.7523Z"
+                          stroke="#685339"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </span>
+                    <span class="pause-icon hidden">
+                      <svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.51311 1H1V16H3.51311V1Z" stroke="#685339" stroke-width="1.4" />
+                        <path d="M9.18279 1H6.66968V16H9.18279V1Z" stroke="#685339" stroke-width="1.4" />
+                      </svg>
+                    </span>
+                  </button>
                 </div>
-                <div class="duration time">0:00</div>
-                <audio id="audioElement" src={audioUrl} preload="metadata" />
+                <div class="progress-container">
+                  <div class="time current-time">0:00</div>
+                  <div class="progress-bar">
+                    <div class="progress" />
+                  </div>
+                  <div class="time duration">0:00</div>
+                  <audio id="audioElement" src={audioUrl} preload="metadata" />
+                </div>
               </div>
-            </div>
-          )
-        }
+            )
+          }
+        </div>
       </div>
     </div>
   </main>

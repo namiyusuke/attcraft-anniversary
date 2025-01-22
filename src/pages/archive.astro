@@ -2,13 +2,45 @@
 import { SITE } from "../config";
 import Layout from "@layouts/Layout.astro";
 import light01 from "@assets/img/light_01.png";
+import archive_people1 from "@assets/img/archive_people1.png";
+import archive_people2 from "@assets/img/archive_people2.png";
+import archive_people3 from "@assets/img/archive_people3.png";
+import archive_people4 from "@assets/img/archive_people4.png";
+import archive_people5 from "@assets/img/bar_10.png";
+import archive_people6 from "@assets/img/archive_people6.png";
+import archive_table1 from "@assets/img/archive_table1.png";
+import archive_table2 from "@assets/img/archive_table2.png";
+import categoryPeople1 from "@assets/img/category_people1.png";
+import categoryPeople2 from "@assets/img/category_people2.png";
+import categoryTable1 from "@assets/img/category_table1.png";
+import archive_footer_bench from "@assets/img/archive_footer_bench.png";
+import archive_footer_people1 from "@assets/img/archive_footer_people1.png";
+import archive_footer_people2 from "@assets/img/archive_footer_people2.png";
+import archive_footer_people3 from "@assets/img/archive_footer_people3.png";
+import archive_footer_people4 from "@assets/img/archive_footer_people4.png";
+import archive_footer_people5 from "@assets/img/archive_footer_people5.png";
+import archive_footer_people6 from "@assets/img/archive_footer_people6.png";
+import archive_footer_people7 from "@assets/img/archive_footer_people7.png";
+import archive_footer_table1 from "@assets/img/archive_footer_table1.png";
+import archive_wine_table from "@assets/img/archive_wine_table.png";
+import archive_footer_table2 from "@assets/img/archive_footer_table2.png";
+import archive_footer_table3 from "@assets/img/archive_footer_table3.png";
+import archive_footer_table4 from "@assets/img/archive_footer_table4.png";
+import archive_footer_table5 from "@assets/img/archive_footer_table5.png";
+import category_art from "@assets/img/chock-art.png";
+import twitter from "@assets/img/logo-x.svg";
+import facebook from "@assets/img/logo-facebook.svg";
+import instagram from "@assets/img/logo-Instagram.svg";
+import spotify_icon from "@assets/img/spotify_icon.png";
+import podcast_icon from "@assets/img/podcast_icon.png";
+import archive_green from "@assets/img/archive_green.png";
 import { Image } from "astro:assets";
 ---
 
 <Layout title={`About | ${SITE.name}`} description="これはAboutページ">
-  <main class="hunting">
+  <main class="hunting archive">
     <div class="lower">
-      <div class="heading-wrapper -archive">
+      <div class="-archive heading-wrapper">
         <div class="heading__border">
           <h1 class="-border heading">
             <span class="heading-inline">
@@ -21,7 +53,7 @@ import { Image } from "astro:assets";
             </span>
           </h1>
         </div>
-        <figure class="heading__light1">
+        <figure class="heading__light1 -archive">
           <Image src={light01} alt="ライト" />
         </figure>
 
@@ -39,58 +71,181 @@ import { Image } from "astro:assets";
               />
             </div>
           </div>
-          <div class="" id="summary-display">
-            <!-- ここに動的にRSSデータが表示されます -->
+          <div class="archive-list--wrap">
+            <div class="archive-people--wrap">
+              <div class="archive-list--text"><p>あなたは、<br />どのエピソードを<br />盗みぎきしたい？</p></div>
+              <figure class="archive_people1">
+                <Image src={archive_people1} alt="アーカイブ" />
+              </figure>
+            </div>
+            <figure class="archive_people2">
+              <Image src={archive_people2} alt="アーカイブ" />
+            </figure>
+            <figure class="archive-table1">
+              <Image src={archive_table1} alt="テーブル" />
+            </figure>
+            <div class="archive-list--inner" id="summary-display">
+              <!-- ここに動的にRSSデータが表示されます -->
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="category-button more-button-wrapper" style=" margin-top: 2rem;text-align: center;">
+      <a id="load-more" class="more-button" style="display: none;">
+        <span class="category-triangle">もっと見る</span></a
+      >
+    </div>
+    <div class="category-bottom-archive--wrap">
+      <figure class="archive_wine_table">
+        <Image src={archive_wine_table} alt="就活中の人々" />
+      </figure>
+      <figure class="archive-people3">
+        <Image src={archive_people3} alt="就活中の人々" />
+      </figure>
+      <figure class="archive-table2">
+        <Image src={archive_table2} alt="テーブル" />
+      </figure>
+      <figure class="archive-category-people1">
+        <Image src={categoryPeople1} alt="カテゴリ" />
+      </figure>
+      <figure class="archive-category-people2">
+        <Image src={categoryPeople2} alt="カテゴリ" />
+      </figure>
+      <figure class="archive-category-table1">
+        <Image src={categoryTable1} alt="カテゴリ" />
+      </figure>
+    </div>
+    <div class="archive-footer">
+      <div class="archive-category-art">
+        <Image src={category_art} alt="カテゴリ" />
+      </div>
+      <figure class="js-observer archive-people4">
+        <div class="archive-category-art--inner">
+          <div class="is-observer-comment">
+            <div class="archive-category-art--inner--content">
+              <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
+              <ul class="category-bottom-share--list">
+                <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+                <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+                <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <Image src={archive_people4} alt="アーカイブ" />
+      </figure>
+      <div class="js-observer archive-people5--wrap">
+        <div class="is-observer-comment">
+          <div class="archive-category-art--inner">
+            <div class="archive-category-art--inner--content">
+              <p class="archive-category-art--txt">ポッドキャストで<br />配信中！</p>
+              <ul class="category-bottom-share--list -podcast">
+                <li class="category-bottom-share--list--item">
+                  <a href="#"><Image src={spotify_icon} alt="spotify" /></a>
+                </li>
+                <li class="category-bottom-share--list--item">
+                  <a href="#"><Image src={podcast_icon} alt="podcast" /></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <figure class="archive-people5">
+          <Image src={archive_people5} alt="アーカイブ" />
+        </figure>
+      </div>
+      <div class="archive-footer-object">
+        <figure class="archive-footer-bench">
+          <Image src={archive_footer_bench} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people1">
+          <Image src={archive_footer_people1} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people2">
+          <Image src={archive_footer_people2} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people3">
+          <Image src={archive_footer_people3} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people4">
+          <Image src={archive_footer_people4} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people5">
+          <Image src={archive_footer_people5} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people6">
+          <Image src={archive_footer_people6} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-people7">
+          <Image src={archive_footer_people7} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-table1">
+          <Image src={archive_footer_table1} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-table2">
+          <Image src={archive_footer_table2} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-table3">
+          <Image src={archive_footer_table3} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-table4">
+          <Image src={archive_footer_table4} alt="アーカイブ" />
+        </figure>
+        <figure class="archive-footer-table5">
+          <Image src={archive_footer_table5} alt="アーカイブ" />
+        </figure>
+        <Image class="archive-green" src={archive_green} alt="アーカイブ" />
+      </div>
+    </div>
   </main>
-  <script>
-    const xmlUrl: string = "https://anchor.fm/s/132fb79c/podcast/rss";
-    let allEpisodes: Array<{ html: string; title: string; summary: string }> = []; // 全エピソードを保存
+  <script client:load>
+    let xmlUrl2 = "https://anchor.fm/s/132fb79c/podcast/rss";
+    let allEpisodes = []; // 全エピソードを保存
+    let currentPage = 1;
+    const episodesPerPage = 10; // 1ページあたりの表示数
 
     // 全エピソードをフェッチして表示する
-    async function fetchAndDisplayFilteredEpisodes(): Promise<void> {
+    async function fetchAndDisplayFilteredEpisodes() {
       try {
-        const response = await fetch(xmlUrl);
-        const xmlText: string = await response.text();
+        const response = await fetch(xmlUrl2);
+        const xmlText = await response.text();
         const parser = new DOMParser();
-        const xmlDoc: Document = parser.parseFromString(xmlText, "text/xml");
-        const items: HTMLCollectionOf<Element> = xmlDoc.getElementsByTagName("item");
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const items = xmlDoc.getElementsByTagName("item");
         allEpisodes = []; // リセット
 
         for (let i = 0; i < items.length; i++) {
-          const item: Element = items[i];
-          const url: string = `episode-${items.length - i}`;
-          const titleElement: Element | null = item.getElementsByTagName("title")[0];
-          const pubDateElement: Element | null = item.getElementsByTagName("pubDate")[0];
-          const durationElement: Element | null = item.getElementsByTagNameNS("*", "duration")[0];
+          const item = items[i];
+          const url = `episode-${items.length - i}`;
+          const titleElement = item.getElementsByTagName("title")[0];
+          const pubDateElement = item.getElementsByTagName("pubDate")[0];
+          const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
 
           // summaryの処理
-          let summary: string = "No summary";
-          const summaryElements: NodeListOf<Element> = item.getElementsByTagNameNS("*", "summary");
+          let summary = "No summary";
+          const summaryElements = item.getElementsByTagNameNS("*", "summary");
           if (summaryElements.length > 0) {
             summary = summaryElements[0].textContent || "No summary";
           }
 
           // itunes:summaryの処理
-          let itunesSummary: string = "";
-          const itunesSummaryElements: NodeListOf<Element> = item.getElementsByTagName("itunes:summary");
+          let itunesSummary = "";
+          const itunesSummaryElements = item.getElementsByTagName("itunes:summary");
           if (itunesSummaryElements.length > 0) {
             itunesSummary = itunesSummaryElements[0].textContent || "";
           }
 
-          const title: string = titleElement?.textContent || "No title";
-          const duration: string = durationElement?.textContent || "Unknown duration";
+          const title = titleElement?.textContent || "No title";
+          const duration = durationElement?.textContent || "Unknown duration";
 
           // 日付のフォーマット変換
-          let formattedDate: string = "Unknown date";
+          let formattedDate = "Unknown date";
           if (pubDateElement) {
-            const pubDate: Date = new Date(pubDateElement.textContent || "");
-            const year: number = pubDate.getFullYear();
-            const month: string = String(pubDate.getMonth() + 1).padStart(2, "0");
-            const day: string = String(pubDate.getDate()).padStart(2, "0");
+            const pubDate = new Date(pubDateElement.textContent || "");
+            const year = pubDate.getFullYear();
+            const month = String(pubDate.getMonth() + 1).padStart(2, "0");
+            const day = String(pubDate.getDate()).padStart(2, "0");
             formattedDate = `${year}年${month}月${day}日`;
           }
 
@@ -112,11 +267,11 @@ import { Image } from "astro:assets";
           });
         }
 
-        // 初期表示
-        renderEpisodes(allEpisodes);
+        // 初期表示（最初の10件のみ）
+        renderEpisodes(allEpisodes, true);
       } catch (error) {
         console.error("Error fetching or parsing the XML:", error);
-        const summaryDisplay: HTMLElement | null = document.getElementById("summary-display");
+        const summaryDisplay = document.getElementById("summary-display");
         if (summaryDisplay) {
           summaryDisplay.textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
         }
@@ -124,23 +279,66 @@ import { Image } from "astro:assets";
     }
 
     // エピソードをDOMにレンダリング
-    function renderEpisodes(episodes: Array<{ html: string }>): void {
-      const summaryDisplay: HTMLElement | null = document.getElementById("summary-display");
+    function renderEpisodes(episodes, isInitialLoad = false) {
+      const summaryDisplay = document.getElementById("summary-display");
+      const loadMoreButton = document.getElementById("load-more");
+
       if (summaryDisplay) {
-        summaryDisplay.innerHTML =
-          episodes.length > 0 ? episodes.map((ep) => ep.html).join("") : "該当するエピソードはありません。";
+        if (isInitialLoad) {
+          // 初期表示または検索時
+          currentPage = 1;
+          summaryDisplay.innerHTML = episodes
+            .slice(0, episodesPerPage)
+            .map((ep) => ep.html)
+            .join("");
+        } else {
+          // もっと見るボタンクリック時
+          const nextEpisodes = episodes
+            .slice(currentPage * episodesPerPage, (currentPage + 1) * episodesPerPage)
+            .map((ep) => ep.html)
+            .join("");
+          summaryDisplay.innerHTML += nextEpisodes;
+        }
+
+        // もっと見るボタンの表示制御
+        if (episodes.length > currentPage * episodesPerPage) {
+          loadMoreButton.style.display = "inline-block";
+        } else {
+          loadMoreButton.style.display = "none";
+        }
       }
     }
 
     // フリーワード検索関数
-    (window as any).filterEpisodes = function (): void {
-      const searchInput: string = (document.getElementById("search-input") as HTMLInputElement).value.toLowerCase();
+    window.filterEpisodes = function () {
+      const searchInput = document.getElementById("search-input").value.toLowerCase();
       const filteredEpisodes = allEpisodes.filter(
-        (ep) => ep.title.includes(searchInput) || ep.summary.includes(searchInput),
+        (ep) => ep.title.includes(searchInput) || ep.summary.includes(searchInput)
       );
-      renderEpisodes(filteredEpisodes);
+      renderEpisodes(filteredEpisodes, true); // 検索時は初期表示として扱う
     };
+
+    // もっと見るボタンのイベントリスナー
+    document.getElementById("load-more")?.addEventListener("click", () => {
+      currentPage++;
+      renderEpisodes(allEpisodes, false);
+    });
 
     fetchAndDisplayFilteredEpisodes();
   </script>
+  <style>
+    /* .more-button {
+      padding: 1rem 2rem;
+      color: white;
+      cursor: pointer;
+      background-color: #333;
+      border: none;
+      border-radius: 4px;
+      transition: opacity 0.3s;
+    } */
+
+    .more-button:hover {
+      opacity: 0.8;
+    }
+  </style>
 </Layout>

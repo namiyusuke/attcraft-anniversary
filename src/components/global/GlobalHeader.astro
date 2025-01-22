@@ -5,6 +5,12 @@ import GlobalNavLink from "./GlobalNavLink.astro";
 import logo from "@assets/img/sakaba_logo_white.svg";
 import beerOpen from "@assets/img/beer_open.svg";
 import beerClose from "@assets/img/beer_close.svg";
+import light_parts1 from "@assets/img/light_parts1.png";
+import light_parts2 from "@assets/img/light_parts2.png";
+import globalNav_people1 from "@assets/img/globalNav_people1.png";
+import globalNav_people2 from "@assets/img/globalNav_people2.png";
+import globalNav_table from "@assets/img/globalNav_table.png";
+import close from "@assets/img/close.svg";
 const navLists = [
   {
     name: "About",
@@ -15,7 +21,7 @@ const navLists = [
 
 <header class="l-header">
   <div>
-    <h1>
+    <h1 class="l-header--logo">
       <a href={`${SITE.base}`}>
         <img src={logo.src} alt="" />
       </a>
@@ -147,51 +153,53 @@ const navLists = [
             <span class="icon__close"> <Image src={beerClose} alt="ビール中身なし" /></span>
           </figure>
         </a>
-        <div class="globalNav-wrapper" aria-hidden="false" id="globalNav">
-          <nav class="globalNav-body">
-            <div class="globalNav-inner">
-              <div class="globalNav-inner--scroll">
-                <p class="globalNav-title -first">カテゴリー別盗みぎき</p>
-                <ul class="globalNav-list">
-                  <li class="globalNav-item">
-                    <a href="/about">制作会社</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/blog">フリーランス</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">就活 / 転職</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">勉強法</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">仕事</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">Web制作</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">ポートフォリオ</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">デザイン</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">コーディング</a>
-                  </li>
-                  <li class="globalNav-item">
-                    <a href="/contact">ディレクション</a>
-                  </li>
-                </ul>
-                <p class="globalNav-title -second">
-                  <a href="/archive/">すべての盗みぎき</a>
-                </p>
-              </div>
-            </div>
-          </nav>
-        </div>
       </button>
+      <div class="globalNav-wrapper" aria-hidden="false" id="globalNav">
+        <nav class="globalNav-body">
+          <div class="globalNav-inner">
+            <div class="globalNav-inner--scroll">
+              <p class="globalNav-title -first">カテゴリー別盗みぎき</p>
+              <ul class="globalNav-list">
+                <li class="globalNav-item">
+                  <a href="/company/">制作会社</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/free-lance/">フリーランス</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/study/">勉強法</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/work/">仕事</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/web/">Web制作</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/portfolio/">ポートフォリオ</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/design/">デザイン</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/coding/">コーディング</a>
+                </li>
+                <li class="globalNav-item">
+                  <a href="/direction/">ディレクション</a>
+                </li>
+              </ul>
+              <p class="globalNav-title -second">
+                <a href="/archive/">すべての盗みぎき</a>
+              </p>
+            </div>
+          </div>
+          <Image class="light-parts1" src={light_parts1} alt="ライトパーツ1" />
+          <Image class="light-parts2" src={light_parts2} alt="ライトパーツ2" />
+          <Image class="globalNav-people1" src={globalNav_people1} alt="グローバルナビゲーションの人1" />
+          <Image class="globalNav-people2" src={globalNav_people2} alt="グローバルナビゲーションの人2" />
+          <Image class="globalNav-table" src={globalNav_table} alt="グローバルナビゲーションのテーブル" />
+        </nav>
+      </div>
     </div>
   </div>
 </header>

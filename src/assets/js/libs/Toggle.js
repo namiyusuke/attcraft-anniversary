@@ -65,9 +65,9 @@ export default class Toggle {
     }
 
     // bodyで閉じるボタン
-    if (this.options.isCloseBody) {
-      document.body.addEventListener("click", this._closePanel.bind(this), { passive: true });
-    }
+    // if (this.options.isCloseBody) {
+    //   document.body.addEventListener("click", this._closePanel.bind(this), { passive: true });
+    // }
 
     // リサイズでPCサイズになったら閉じる
     if (this.options.mobileOnly) {

@@ -2,20 +2,31 @@
 import { SITE } from "../config";
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
+import LoadingPage from "@components/parts/Loading.astro";
 import wine_tool from "@assets/img/wine_tool.png";
 import photo from "@assets/img/photo.png";
 import drinkMenu from "@assets/img/drink-menu.png";
-import direction from "@assets/img/direction.png";
-import coding from "@assets/img/coding.png";
-import design from "@assets/img/design.png";
+import direction_people from "@assets/img/direction_people.png";
+import direction_menu from "@assets/img/direction_menu.png";
+import coding_people from "@assets/img/coding_people.png";
+import coding_menu from "@assets/img/coding_menu.png";
+import design_people from "@assets/img/design_people.png";
+import design_menu from "@assets/img/design_menu.png";
 import bar from "@assets/img/bar.png";
-import jobHunting from "@assets/img/job-hunting.png";
-import company from "@assets/img/company.png";
-import freeLance from "@assets/img/free-lance.png";
-import work from "@assets/img/work.png";
-import web from "@assets/img/web.png";
-import study from "@assets/img/study.png";
-import portfolio from "@assets/img/portfolio.png";
+import jobHunting_people from "@assets/img/jobHunting_people.png";
+import jobHunting_menu from "@assets/img/jobHunting_menu.png";
+import company_people from "@assets/img/company_people.png";
+import company_menu from "@assets/img/company_menu.png";
+import freeLance_people from "@assets/img/freeLance_people.png";
+import freeLance_menu from "@assets/img/freeLance_menu.png";
+import work_people from "@assets/img/work_people.png";
+import work_menu from "@assets/img/work_menu.png";
+import web_people from "@assets/img/web_people.png";
+import web_menu from "@assets/img/web_menu.png";
+import study_people from "@assets/img/study_people.png";
+import study_menu from "@assets/img/study_menu.png";
+import portfolio_people from "@assets/img/portfolio_people.png";
+import portfolio_menu from "@assets/img/portfolio_menu.png";
 import chockArt from "@assets/img/chock-art.png";
 import mvBg from "@assets/img/bg_mv.png";
 import kanpai from "@assets/img/kanpai.png";
@@ -31,10 +42,37 @@ import bar_08 from "@assets/img/bar_08.png";
 import bar_09 from "@assets/img/bar_09.png";
 import bar_10 from "@assets/img/bar_10.png";
 import bar_11 from "@assets/img/bar_11.png";
+import beer from "@assets/img/beer.png";
+import bar_counter_people3 from "@assets/img/bar_counter_people3.png";
+import bar_counter_people4 from "@assets/img/bar_counter_people4.png";
+import bar_counter_people5 from "@assets/img/bar_counter_people5.png";
+import bar_bottomTable from "@assets/img/bar_bottomTable.png";
+import bar_bottomTable_stand from "@assets/img/bar_bottomTable_stand.png";
+import bar_bottomTable_char1 from "@assets/img/bar_bottomTable_chra1.png";
+import bar_bottomTable_char2 from "@assets/img/bar_bottomTable_chra2.png";
+import bar_bottomTable_char3 from "@assets/img/bar_bottomTable_chra3.png";
+import bar_bottomTable_char4 from "@assets/img/bar_bottomTable_chra4.png";
+import bar_bottomTable_char5 from "@assets/img/bar_bottomTable_chra5.png";
+import Loading from "@assets/js/libs/Loading";
+import bar_table1 from "@assets/img/bar_table1.png";
+import bar_table2 from "@assets/img/detail_beer.png";
+import gesture_icon from "@assets/img/gesture_icon.svg";
+import bgm from "@assets/audio/bgm.mp3";
 ---
 
 <Layout title={`${SITE.name} | Welcome to Orelop Astro.`} description="これは俺流スターターキット">
+  <!-- <LoadingPage /> -->
   <main>
+    <div class="maps-gesture">
+      <div class="maps-gesture__bg"></div>
+      <div class="maps-gesture__contents">
+        <div class="maps-gesture__contents__icon">
+          <Image src={gesture_icon} alt="ジェスチャー" />
+        </div>
+        <p class="c-crop c-ls maps-gesture__contents__txt">DRAG &amp; DROP<br />or<br /> SWIPE</p>
+        <div class="maps-gesture__contents__character"></div>
+      </div>
+    </div>
     <div id="scroll-container">
       <div id="scroll-content">
         <div class="mv-kanpai">
@@ -59,25 +97,63 @@ import bar_11 from "@assets/img/bar_11.png";
           <div class="bg-photo">
             <Image src={photo} alt="メニューの写真" />
           </div>
-          <div class="bg-drinkMenu">
+          <div class="bg-spotlight bg-drinkMenu">
             <Image src={drinkMenu} alt="メニューの写真" />
           </div>
-          <div class="bg-direction">
-            <audio controls data-auto-play data-audio="direction"></audio>
-            <Image src={direction} alt="ディレクション" />
+          <div class="js-spotlight bg-direction">
+            <a href="/direction/">
+              <audio controls data-auto-play data-audio="direction"></audio>
+              <span class="odject-direction--people">
+                <Image src={direction_people} alt="ディレクション" />
+              </span>
+              <span class="odject-menu odject-direction--menu">
+                <Image src={direction_menu} alt="ディレクションのメニュー" />
+              </span>
+            </a>
           </div>
-          <div class="bg-coding">
-            <audio controls data-auto-play data-audio="coding"></audio>
-            <Image src={coding} alt="コーディング" />
+          <div class="js-spotlight bg-coding">
+            <a href="/coding/">
+              <audio controls data-auto-play data-audio="coding"></audio>
+              <span class="odject-coding--people">
+                <Image src={coding_people} alt="コーディング" />
+              </span>
+              <span class="odject-menu odject-coding--menu">
+                <Image src={coding_menu} alt="コーディングのメニュー" />
+              </span>
+            </a>
           </div>
-          <div class="bg-design">
+          <div class="js-spotlight bg-design">
             <a href="/design/">
               <audio controls data-auto-play data-audio="design"></audio>
-              <Image src={design} alt="コーディング" />
+              <span class="odject-design--people">
+                <Image src={design_people} alt="デザイン" />
+              </span>
+              <span class="odject-menu odject-design--menu">
+                <Image src={design_menu} alt="デザインのメニュー" />
+              </span>
             </a>
           </div>
           <div class="bg-bar">
             <Image src={bar} alt="バーカウンター" />
+            <div class="bg-bar--beer1">
+              <Image src={beer} alt="ビール" />
+            </div>
+            <div class="bg-bar--beer2">
+              <Image src={beer} alt="ビール" />
+            </div>
+            <div class="bg-bar--beer3">
+              <Image src={beer} alt="ビール" />
+            </div>
+          </div>
+          <div class="bg-">
+            <div class="bar-counter-people3">
+              <Image src={bar_counter_people3} alt="バーのカウンター" />
+            </div>
+          </div>
+          <div class="bg-">
+            <div class="bar-counter-people4">
+              <Image src={bar_counter_people4} alt="バーのカウンター" />
+            </div>
           </div>
           <div class="bg-bar1">
             <Image src={bar_01} alt="バーカウンター" />
@@ -112,41 +188,109 @@ import bar_11 from "@assets/img/bar_11.png";
           <div class="bg-bar11">
             <Image src={bar_11} alt="バーカウンター" />
           </div>
-          <div class="bg-jobHunting">
-            <a href="/job-hunting/">
-              <Image src={jobHunting} alt="バーカウンター" />
-            </a>
-            <audio controls data-auto-play data-audio="jobHunting"></audio>
+          <div class="bg-bottomTable">
+            <Image src={bar_bottomTable} alt="バーの下のテーブル" />
+          </div>
+          <div class="bg-bottomTableStand">
+            <Image src={bar_bottomTable_stand} alt="バーの下のテーブル" />
+          </div>
+          <div class="bg-">
+            <div class="bar-counter-people5">
+              <Image src={bar_counter_people5} alt="バーのカウンター" />
+            </div>
+          </div>
+          <div class="bg_bottomTable_chra1">
+            <Image src={bar_bottomTable_char1} alt="バーの下のテーブル" />
+          </div>
+          <div class="bg_bottomTable_chra2">
+            <Image src={bar_bottomTable_char2} alt="バーの下のテーブル" />
+          </div>
+          <div class="bg_bottomTable_chra3">
+            <Image src={bar_bottomTable_char3} alt="バーの下のテーブル" />
+          </div>
+          <div class="bg_bottomTable_chra4">
+            <Image src={bar_bottomTable_char4} alt="バーの下のテーブル" />
+          </div>
+          <div class="bg_bottomTable_chra5">
+            <Image src={bar_bottomTable_char5} alt="バーの下のテーブル" />
           </div>
         </div>
-        <div class="bg-jobHunting">
+        <div class="js-spotlight bg-jobHunting">
           <a href="/job-hunting/">
-            <Image src={jobHunting} alt="就活転職" />
+            <audio controls data-auto-play data-audio="jobHunting"></audio>
+            <span class="odject-jobHunting--people">
+              <Image src={jobHunting_people} alt="就活転職" />
+            </span>
+            <span class="odject-menu odject-jobHunting--menu">
+              <Image src={jobHunting_menu} alt="就活転職のメニュー" />
+            </span>
           </a>
         </div>
-        <div class="bg-company">
-          <audio controls data-auto-play data-audio="company"></audio>
-          <Image src={company} alt="制作会社" />
+        <div class="js-spotlight bg-company">
+          <a href="/company/">
+            <audio controls data-auto-play data-audio="company"></audio>
+            <span class="odject-company--people">
+              <Image src={company_people} alt="制作会社" />
+            </span>
+            <span class="odject-menu odject-company--menu">
+              <Image src={company_menu} alt="制作会社のメニュー" />
+            </span>
+          </a>
         </div>
-        <div class="bg-freeLance">
-          <Image src={freeLance} alt="フリーランス" />
-          <audio controls data-auto-play data-audio="freeLance"></audio>
+        <div class="js-spotlight bg-freeLance">
+          <a href="/free-lance/">
+            <span class="odject-freeLance--people">
+              <Image src={freeLance_people} alt="フリーランス" />
+            </span>
+            <span class="odject-menu odject-freeLance--menu">
+              <Image src={freeLance_menu} alt="フリーランスのメニュー" />
+            </span>
+            <audio controls data-auto-play data-audio="freeLance"></audio>
+          </a>
         </div>
-        <div class="bg-work">
-          <audio controls data-auto-play data-audio="work"></audio>
-          <Image src={work} alt="仕事" />
+        <div class="js-spotlight bg-work">
+          <a href="/work/">
+            <audio controls data-auto-play data-audio="work"></audio>
+            <span class="odject-company--people">
+              <Image src={work_people} alt="仕事" />
+            </span>
+            <span class="odject-menu odject-company--menu">
+              <Image src={work_menu} alt="仕事のメニュー" />
+            </span>
+          </a>
         </div>
-        <div class="bg-web">
-          <audio controls data-auto-play data-audio="web"></audio>
-          <Image src={web} alt="ウェブ" />
+        <div class="js-spotlight bg-web">
+          <a href="/web/">
+            <audio controls data-auto-play data-audio="web"></audio>
+            <span class="odject-web--people">
+              <Image src={web_people} alt="web" />
+            </span>
+            <span class="odject-menu odject-web--menu">
+              <Image src={web_menu} alt="デザインのメニュー" />
+            </span>
+          </a>
         </div>
-        <div class="bg-study">
-          <audio controls data-auto-play data-audio="study"></audio>
-          <Image src={study} alt="勉強法" />
+        <div class="js-spotlight bg-study">
+          <a href="/study/">
+            <audio controls data-auto-play data-audio="study"></audio>
+            <span class="odject-study--people">
+              <Image src={study_people} alt="勉強法" />
+            </span>
+            <span class="odject-menu odject-study--menu">
+              <Image src={study_menu} alt="勉強法のメニュー" />
+            </span>
+          </a>
         </div>
-        <div class="bg-portfolio">
-          <audio controls data-auto-play data-audio="portfolio"></audio>
-          <Image src={portfolio} alt="勉強法" />
+        <div class="js-spotlight bg-portfolio">
+          <a href="/portfolio/">
+            <audio controls data-auto-play data-audio="portfolio"></audio>
+            <span class="odject-portfolio--people">
+              <Image src={portfolio_people} alt="ポートフォリオ" />
+            </span>
+            <span class="odject-menu odject-portfolio--menu">
+              <Image src={portfolio_menu} alt="ポートフォリオのメニュー" />
+            </span>
+          </a>
         </div>
         <div class="bg-chockArt">
           <Image src={chockArt} alt="絵" />
@@ -156,8 +300,26 @@ import bar_11 from "@assets/img/bar_11.png";
         </div>
       </div>
       <div class="light"></div>
+
+      <div class="bg-table1">
+        <Image src={bar_table1} alt="バーのテーブル1" />
+      </div>
+      <div class="bg-table2">
+        <Image src={bar_table2} alt="バーのテーブル2" />
+      </div>
     </div>
   </main>
+  <audio class="js-bgm" src={bgm} autoplay loop></audio>
+  <button class="js-bgm-control">
+    <span class="js-bgm-control--text">BGM</span>
+    <span class="js-bgm-control--icon">
+      <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M8.08133 0C7.00969 0 5.98194 0.425706 5.22418 1.18347C4.46642 1.94123 4.04072 2.96897 4.04072 4.04061V9.69747C4.04072 10.7691 4.46642 11.7968 5.22418 12.5546C5.98194 13.3124 7.00969 13.7381 8.08133 13.7381C9.15296 13.7381 10.1807 13.3124 10.9385 12.5546C11.6962 11.7968 12.1219 10.7691 12.1219 9.69747V4.04061C12.1219 2.96897 11.6962 1.94123 10.9385 1.18347C10.1807 0.425706 9.15296 0 8.08133 0ZM1.61635 8.88934C1.83068 8.88934 2.03623 8.97448 2.18778 9.12604C2.33933 9.27759 2.42447 9.48314 2.42447 9.69747C2.42447 11.1978 3.02046 12.6366 4.08133 13.6975C5.14219 14.7583 6.58103 15.3543 8.08133 15.3543C9.58162 15.3543 11.0205 14.7583 12.0813 13.6975C13.1422 12.6366 13.7382 11.1978 13.7382 9.69747C13.7382 9.48314 13.8233 9.27759 13.9749 9.12604C14.1264 8.97448 14.332 8.88934 14.5463 8.88934C14.7606 8.88934 14.9662 8.97448 15.1177 9.12604C15.2693 9.27759 15.3544 9.48314 15.3544 9.69747C15.3548 11.4867 14.6955 13.2133 13.5028 14.5471C12.3101 15.8808 10.6676 16.7281 8.88945 16.9269V18.5868C8.88945 18.8011 8.80431 19.0067 8.65275 19.1582C8.5012 19.3098 8.29565 19.3949 8.08133 19.3949C7.867 19.3949 7.66145 19.3098 7.5099 19.1582C7.35834 19.0067 7.2732 18.8011 7.2732 18.5868V16.9269C5.49502 16.7281 3.85252 15.8808 2.65981 14.5471C1.4671 13.2133 0.807884 11.4867 0.808228 9.69747C0.808228 9.48314 0.893369 9.27759 1.04492 9.12604C1.19647 8.97448 1.40202 8.88934 1.61635 8.88934Z"
+          fill="black"></path>
+      </svg>
+    </span>
+  </button>
 </Layout>
 
 <script>
@@ -252,35 +414,87 @@ import bar_11 from "@assets/img/bar_11.png";
       this.maxDistance = options.maxDistance || 300;
       this.minVolume = options.minVolume || 0;
       this.maxVolume = options.maxVolume || 1;
-      this.startTime = options.startTime || 0; // 追加: 再生開始時間
+      this.startTime = options.startTime || 0;
+      this.isPlaying = false;
+      this.hasInteracted = false;
 
-      // 初回インタラクション待機
-      this.setupAutoplay();
-
-      // マウスの移動を監視
-      document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+      // 初期設定
+      this.initializeAudio();
+      // イベントリスナーの設定
+      this.setupEventListeners();
     }
 
-    setupAutoplay() {
-      const enableAudio = async () => {
-        try {
-          this.audioElement.loop = true;
-          this.audioElement.volume = this.minVolume;
-          this.audioElement.muted = true; // 最初はミュートで開始
-          this.audioElement.currentTime = this.startTime; // 追加: 再生開始位置を設定
-          await this.audioElement.play();
-          this.audioElement.muted = false; // ミュートを解除
-        } catch (error) {
-          console.warn("Autoplay failed:", error);
-        }
+    initializeAudio() {
+      this.audioElement.loop = true;
+      this.audioElement.volume = this.minVolume;
+      this.audioElement.currentTime = this.startTime;
 
-        document.removeEventListener("click", enableAudio); // イベントリスナーを削除
+      // エラーハンドリングの追加
+      this.audioElement.addEventListener("error", (e) => {
+        console.error("Audio error:", e);
+        this.retryPlay();
+      });
+    }
+
+    setupEventListeners() {
+      // クリックイベントの設定
+      const startPlayback = async () => {
+        if (!this.hasInteracted) {
+          this.hasInteracted = true;
+          await this.startPlaying();
+        }
       };
 
-      document.addEventListener("click", enableAudio); // 初回クリックをトリガーに
+      // 複数のイベントで再生開始できるように
+      ["click", "touchstart"].forEach((eventType) => {
+        document.addEventListener(eventType, startPlayback, { once: true });
+      });
+
+      // マウス移動の監視
+      document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+
+      // 画面表示状態の監視
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          this.audioElement.volume = this.minVolume;
+        }
+      });
+    }
+
+    async startPlaying() {
+      try {
+        await this.audioElement.play();
+        this.isPlaying = true;
+        console.log("Audio started successfully");
+      } catch (error) {
+        console.warn("Playback failed:", error);
+        this.retryPlay();
+      }
+    }
+
+    async retryPlay(maxRetries = 3, delay = 1000) {
+      let retries = 0;
+      const tryPlay = async () => {
+        try {
+          if (retries < maxRetries && !this.isPlaying) {
+            await this.audioElement.play();
+            this.isPlaying = true;
+            console.log("Retry successful");
+          }
+        } catch (error) {
+          retries++;
+          if (retries < maxRetries) {
+            console.log(`Retry attempt ${retries} failed, trying again in ${delay}ms`);
+            setTimeout(tryPlay, delay);
+          }
+        }
+      };
+      tryPlay();
     }
 
     handleMouseMove(event) {
+      if (!this.isPlaying || !this.hasInteracted) return;
+
       if (this.animationFrame) {
         cancelAnimationFrame(this.animationFrame);
       }
@@ -293,27 +507,30 @@ import bar_11 from "@assets/img/bar_11.png";
         };
 
         const distance = Math.sqrt(
-          Math.pow(event.clientX - elementCenter.x, 2) + Math.pow(event.clientY - elementCenter.y, 2),
+          Math.pow(event.clientX - elementCenter.x, 2) + Math.pow(event.clientY - elementCenter.y, 2)
         );
 
-        if (distance > this.maxDistance) {
-          this.audioElement.volume = this.minVolume;
-        } else {
-          const volumeLevel = Math.pow(1 - distance / this.maxDistance, 2);
-          this.audioElement.volume = this.minVolume + (this.maxVolume - this.minVolume) * volumeLevel;
-        }
+        const newVolume =
+          distance > this.maxDistance
+            ? this.minVolume
+            : this.minVolume + (this.maxVolume - this.minVolume) * Math.pow(1 - distance / this.maxDistance, 2);
+
+        // ボリューム変更を滑らかに
+        this.audioElement.volume = newVolume;
       });
     }
 
     stop() {
+      this.isPlaying = false;
       this.audioElement.pause();
-      this.audioElement.currentTime = 0;
+      this.audioElement.currentTime = this.startTime;
     }
   }
 
   // 使用例
   document.querySelectorAll("[data-auto-play]").forEach((audio) => {
     const triggerElement = audio.closest("div"); // 対応する要素を取得
+    console.log(triggerElement);
     new ProximityAudioPlayer(audio, triggerElement, {
       maxDistance: 300,
       minVolume: 0,
@@ -321,4 +538,66 @@ import bar_11 from "@assets/img/bar_11.png";
       startTime: 30, // 追加: 30秒から再生を開始
     });
   });
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const audio = document.querySelector(".js-bgm");
+  //   if (audio) {
+  //     audio.autoplay = true;
+  //     audio.volume = 0.015; // 0.0 から 1.0 の間で設定（0.2 = 20%）
+  //   }
+  //   const bgmControl = document.querySelector(".js-bgm-control");
+  //   bgmControl.addEventListener("click", () => {
+  //     audio.muted = !audio.muted;
+  //   });
+  // });
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("scroll-container");
+    // コンテナのサイズとスクロール量を取得
+    const containerWidth = container.scrollWidth;
+    const containerHeight = container.scrollHeight;
+    const containerVisibleWidth = container.clientWidth;
+    const containerVisibleHeight = container.clientHeight;
+
+    // スクロール位置を中央に設定
+    container.scrollLeft = (containerWidth - containerVisibleWidth) / 2;
+    container.scrollTop = (containerHeight - containerVisibleHeight) / 2;
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    const mapsGesture = document.querySelector(".maps-gesture");
+    mapsGesture.classList.add("is-shown");
+  });
+  class BGM {
+    constructor() {
+      this.audio = document.querySelector(".js-bgm");
+      if (this.audio) {
+        this.audio.volume = 0.1;
+
+        // クリックイベントを待ってから再生開始
+        const startAudio = () => {
+          this.audio
+            .play()
+            .then(() => {
+              console.log("再生開始");
+            })
+            .catch((error) => {
+              console.log("再生エラー:", error);
+            });
+        };
+
+        // ページ内のどこかをクリックしたら再生開始
+        document.addEventListener("click", startAudio, { once: true });
+
+        // スペースキーでも再生開始できるように
+        document.addEventListener(
+          "keydown",
+          (e) => {
+            if (e.code === "Space" && this.audio.paused) {
+              startAudio();
+            }
+          },
+          { once: true }
+        );
+      }
+    }
+  }
+  new BGM();
 </script>
