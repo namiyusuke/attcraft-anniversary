@@ -559,7 +559,6 @@ body{
 .hamburger-menu{
     position: fixed;
     top:0;
-    /* top:calc(40/ 16 * 1rem); */
     left: 0;
     z-index:2;
     width: 100%;
@@ -568,7 +567,7 @@ body{
 }
 .hamburger-menu-comment{
     position: absolute;
-    top: calc(60 / 16 * 1rem);
+    top: calc(40 / 16 * 1rem);
     right: calc(24 / 16 * 1rem);
     width:min(calc(131 / 375 * 100vw),120px);
     height: min(calc(131 / 375  * 100vw),120px);
@@ -593,6 +592,10 @@ body{
   backface-visibility: hidden;
   transition: opacity .43s, transform .43s cubic-bezier(.175,.885,.32,1.275);
 }
+.hamburger-menu .icon__close{
+  display: block;
+  width: calc(53 / 1600 * 100vw);
+}
 .hamburger-menu .hamburger-menu-link{
     position: relative;
     z-index: 1;
@@ -615,7 +618,7 @@ body{
     position: relative;
     display: flex;
     justify-content: center;
-    width: calc(53 / 375 * 100vw);
+    width: calc(68 / 375 * 100vw);
     margin-inline:auto;
 }
 @media (min-width: 768px) {
@@ -626,10 +629,12 @@ body{
 .hamburger-menu .icon__close {
     position: absolute;
     top: 0;
+    right: 0;
     left: 0;
     display: grid;
     place-items: center;
-    width: 100%;
+    width: 80%;
+    margin-inline: auto;
     opacity: 0;
     transform: scale(0);
 }
@@ -913,8 +918,8 @@ body{
 }
 .bg_bottomTable_chra4{
   position: absolute;
-  top: calc(1116 / 16 * 1rem);
-  right: calc(1135 / 16 * 1rem);
+  top: calc(1422 / 16 * 1rem);
+  right: calc(735 / 16* 1rem);
   z-index: 1;
   width: calc(52 / 16 * 1rem);
   animation: mini-bounce 3.5s infinite;
@@ -930,8 +935,8 @@ body{
 }
 .bg_bottomTable_chra5{
   position: absolute;
-  top: calc(1412 / 16* 1rem);
-  right: calc(280 / 16* 1rem);
+  top: calc(1413 / 16* 1rem);
+  right: calc(580 / 16* 1rem);
   z-index: 1;
   width: calc(63 / 16 * 1rem);
   animation: mini-shake 7.5s infinite;

@@ -1,0 +1,269 @@
+---
+import { SITE } from "../config";
+import Layout from "@layouts/Layout.astro";
+import menu from "@assets/img/menu-title.svg";
+import light01 from "@assets/img/light_01.png";
+import chockArt from "@assets/img/chock-art.png";
+import study_people from "@assets/img/study_people.png";
+import categoryPeople1 from "@assets/img/category_people1.png";
+import categoryPeople2 from "@assets/img/category_people2.png";
+import bar_10 from "@assets/img/bar_10.png";
+import categoryTable1 from "@assets/img/category_table1.png";
+import category_people4 from "@assets/img/category_people4.png";
+import category_people5 from "@assets/img/category_people5.png";
+import category_people6 from "@assets/img/category_people6.png";
+import category_bottom_table from "@assets/img/category_bottom_table.png";
+import category_bottom_people1 from "@assets/img/category_bottom_people1.png";
+import category_bottom_people2 from "@assets/img/category_bottom_people2.png";
+import category_bottom_people3 from "@assets/img/category_bottom_people3.png";
+import category_bottom_people4 from "@assets/img/category_bottom_people4.png";
+import category_bottom_people5 from "@assets/img/category_bottom_people5.png";
+import category_bottom_people6 from "@assets/img/category_bottom_people6.png";
+import twitter from "@assets/img/logo-x.svg";
+import facebook from "@assets/img/logo-facebook.svg";
+import instagram from "@assets/img/logo-Instagram.svg";
+import table_beer01 from "@assets/img/table_beer01.png";
+import web_people from "@assets/img/web_people.png";
+import { Image } from "astro:assets";
+---
+
+<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+  <main class="hunting category">
+    <div class="heading-wrapper">
+      <div class="heading__border">
+        <h1 class="-border heading">
+          <span class="heading-inline">
+            <span class="-lg -sp">Web制作の話</span>
+            <span class="-line">
+              <span class="-sm">を</span>
+              <span class="-lg -inline">盗</span>
+              <span class="-sm">みぎき</span>
+            </span>
+          </span>
+        </h1>
+      </div>
+      <figure class="heading__light1">
+        <Image src={light01} alt="ライト" />
+      </figure>
+      <div class="category-top">
+        <div class="hunting-image--center">
+          <figure class="category-top--people study-image--move">
+            <Image src={web_people} alt="就活中の人々" />
+          </figure>
+        </div>
+        <div class="category-top--text _01">
+          <p class="js-text-target">
+            転職はステップアップ<br />いつでも、<span class="-lg">いまが楽しい！！</span>
+          </p>
+        </div>
+        <div class="category-top--text _02">
+          <p class="js-text-target">
+            経験は浅くても、<br /><span>ものづくりの<span class="-lg">熱量</span>では負けない！！</span>
+          </p>
+        </div>
+        <div class="category-top--text _03">
+          <p class="js-text-target">
+            一晩寝て、起きて <br /><span class="-lg">必殺技</span>を蓄えて、さらに強くなる
+          </p>
+        </div>
+      </div>
+      <figure class="hunting-art">
+        <Image src={chockArt} alt="" />
+      </figure>
+      <figure class="category-hunting-people-02">
+        <Image src={bar_10} alt="就活中の人々" />
+      </figure>
+    </div>
+  </main>
+  <section class="menu-section">
+    <figure class="category-people1">
+      <Image src={categoryPeople1} alt="就活中の人々" />
+    </figure>
+    <figure class="category-people2">
+      <Image src={categoryPeople2} alt="就活中の人々" />
+    </figure>
+    <figure class="category-table1">
+      <Image src={categoryTable1} alt="就活中の人々" />
+    </figure>
+
+    <h2 class="menu-title">
+      <span class="menu-title--inner">
+        <span class="-ja">盗みぎき</span>
+        <span class="-en"><Image src={menu} alt="menu" /></span>
+      </span>
+    </h2>
+    <div class="menu-article--wrap -category">
+      <div class="menu-article--list" id="summary-display">
+        <!-- ここに動的にRSSデータが表示されます -->
+      </div>
+      <p class="menu-section--scroll">scroll</p>
+      <div class="category-bottom">
+        <p class="category-button">
+          <a href="#">
+            <span class="category-triangle">ほかの盗みぎきへ</span>
+          </a>
+        </p>
+      </div>
+      <figure class="table_beer1">
+        <Image src={table_beer01} alt="就活中の人々" />
+      </figure>
+    </div>
+  </section>
+  <div class="category-footer-wrap">
+    <div class="category-footer">
+      <figure class="category-people4">
+        <Image src={category_people4} alt="就活中の人々" />
+      </figure>
+      <figure class="category-people5">
+        <Image src={category_people5} alt="就活中の人々" />
+      </figure>
+      <figure class="category-people6">
+        <Image src={category_people6} alt="就活中の人々" />
+      </figure>
+      <p class="footer-copy">
+        <small>©2024 ︎Shibajuku.</small>
+      </p>
+    </div>
+    <div class="">
+      <figure class="category-bottom--table">
+        <Image src={category_bottom_table} alt="就活中の人々" />
+      </figure>
+      <figure class="category-bottom--people1">
+        <Image src={category_bottom_people1} alt="就活中の人々" />
+      </figure>
+      <figure class="category-bottom--people2">
+        <Image src={category_bottom_people2} alt="就活中の人々" />
+      </figure>
+      <figure class="category-bottom--people3">
+        <Image src={category_bottom_people3} alt="就活中の人々" />
+      </figure>
+      <figure class="category-bottom--people4">
+        <Image src={category_bottom_people4} alt="就活中の人々" />
+      </figure>
+      <figure class="category-bottom--people5">
+        <Image src={category_bottom_people5} alt="就活中の人々" />
+      </figure>
+      <figure class="category-bottom-share">
+        <div class="category-bottom-share--text">
+          <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
+          <ul class="category-bottom-share--list">
+            <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+            <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+            <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+          </ul>
+        </div>
+        <figure class="category-bottom-share--people">
+          <Image src={category_bottom_people6} alt="就活中の人々" />
+        </figure>
+      </figure>
+    </div>
+  </div>
+</Layout>
+<script client:load>
+  const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
+  async function fetchAndDisplayFilteredEpisodes() {
+    try {
+      const response = await fetch(xmlUrl);
+      const xmlText = await response.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+      const items = xmlDoc.getElementsByTagName("item");
+      const filteredSummaries = [];
+      const maxTitleLength = 46; // タイトルの最大文字数
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const url = `/episode-${items.length - i}`;
+        const titleElement = item.getElementsByTagName("title")[0];
+        const pubDateElement = item.getElementsByTagName("pubDate")[0];
+        const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
+        let summary = "No summary";
+        const summaryElements = item.getElementsByTagNameNS("*", "summary");
+        if (summaryElements.length > 0) {
+          summary = summaryElements[0].textContent;
+        }
+        let title = titleElement ? titleElement.textContent : "No title";
+        // タイトルが最大文字数を超えた場合に「...」を付ける
+        if (title.length > maxTitleLength) {
+          title = title.slice(0, maxTitleLength) + "...";
+        }
+        let duration = durationElement ? durationElement.textContent : "Unknown duration";
+        // duration のフォーマット変更: "00:13:37" を "13:37" に変換
+        if (duration.startsWith("00:")) {
+          duration = duration.slice(3); // "00:" の部分を削除
+        }
+        // フィルタリング条件：「就職」または「転職」が含まれる
+        if (title.includes("Web") || summary.includes("Web")) {
+          filteredSummaries.push(
+            `<article class="menu-article--item">
+            <div class="menu-article--body">
+              <a href=${url}>
+                <h3 class="menu-article--number">${title}</h3>
+                <p class="menu-article--time">${duration}</p>
+              </a>
+            </div>
+          </article>`
+          );
+        }
+      }
+      document.getElementById("summary-display").innerHTML =
+        filteredSummaries.length > 0 ? filteredSummaries.join("") : "該当するエピソードはありません。";
+    } catch (error) {
+      console.error("Error fetching or parsing the XML:", error);
+      document.getElementById("summary-display").textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
+    }
+  }
+  fetchAndDisplayFilteredEpisodes();
+</script>
+
+<script>
+  import spanWrap from "@assets/js/utils/spanWrap";
+  const counter = { value: 0 };
+  document.querySelectorAll(".js-text-target").forEach((el) => spanWrap(el, counter));
+</script>
+
+<script>
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const bgm = document.querySelector(".js-bgm");
+  //   const bgmControl = document.querySelector(".js-bgm-control");
+
+  //   if (bgm) {
+  //     bgm.volume = 0.2;
+
+  //     // 初期状態はミュート
+  //     bgm.muted = true;
+
+  //     // ユーザーインタラクションで再生を試みる
+  //     const playBGM = async () => {
+  //       try {
+  //         bgm.muted = false;
+  //         await bgm.play();
+
+  //         // 再生成功時の処理（必要に応じて）
+  //         bgmControl?.classList.add("is-playing");
+  //       } catch (error) {
+  //         console.warn("BGM autoplay failed:", error);
+  //         // 再生失敗時の処理（必要に応じて）
+  //         bgm.muted = true;
+  //       }
+  //     };
+
+  //     // クリックなどのユーザーインタラクションで再生
+  //     document.addEventListener("click", playBGM, { once: true });
+  //     document.addEventListener("touchstart", playBGM, { once: true });
+  //     document.addEventListener("keydown", playBGM, { once: true });
+
+  //     // BGMコントロールボタンの処理
+  //     bgmControl?.addEventListener("click", () => {
+  //       if (bgm.muted) {
+  //         bgm.muted = false;
+  //         bgmControl.classList.add("is-playing");
+  //       } else {
+  //         bgm.muted = true;
+  //         bgmControl.classList.remove("is-playing");
+  //       }
+  //     });
+  //   }
+  // });
+</script>

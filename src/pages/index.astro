@@ -418,10 +418,16 @@ import bgm from "@assets/audio/bgm.mp3";
       this.isPlaying = false;
       this.hasInteracted = false;
 
-      // 初期設定
+      // モバイルデバイスの判定
+      this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
       this.initializeAudio();
-      // イベントリスナーの設定
-      this.setupEventListeners();
+
+      if (this.isMobile) {
+        this.setupMobileBehavior();
+      } else {
+        this.setupDesktopBehavior();
+      }
     }
 
     initializeAudio() {
@@ -429,15 +435,52 @@ import bgm from "@assets/audio/bgm.mp3";
       this.audioElement.volume = this.minVolume;
       this.audioElement.currentTime = this.startTime;
 
-      // エラーハンドリングの追加
       this.audioElement.addEventListener("error", (e) => {
         console.error("Audio error:", e);
         this.retryPlay();
       });
     }
 
-    setupEventListeners() {
-      // クリックイベントの設定
+    setupMobileBehavior() {
+      // Intersection Observerの設定
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && this.hasInteracted) {
+              // 画面内に入った時
+              this.startPlaying();
+              this.audioElement.volume = this.maxVolume;
+            } else {
+              // 画面外に出た時
+              this.stop();
+            }
+          });
+        },
+        {
+          threshold: 0.6, // 30%表示されたら発火
+          rootMargin: "0px",
+        }
+      );
+
+      // 要素の監視を開始
+      this.observer.observe(this.triggerElement);
+
+      // 初回インタラクションの設定
+      const enableAudio = () => {
+        this.hasInteracted = true;
+        // 現在表示されている要素の音声を開始
+        if (this.isElementInView(this.triggerElement)) {
+          this.startPlaying();
+          this.audioElement.volume = this.maxVolume;
+        }
+      };
+
+      document.addEventListener("click", enableAudio, { once: true });
+      document.addEventListener("touchstart", enableAudio, { once: true });
+    }
+
+    setupDesktopBehavior() {
+      // 既存のデスクトップ向け処理
       const startPlayback = async () => {
         if (!this.hasInteracted) {
           this.hasInteracted = true;
@@ -445,20 +488,13 @@ import bgm from "@assets/audio/bgm.mp3";
         }
       };
 
-      // 複数のイベントで再生開始できるように
-      ["click", "touchstart"].forEach((eventType) => {
-        document.addEventListener(eventType, startPlayback, { once: true });
-      });
-
-      // マウス移動の監視
+      document.addEventListener("click", startPlayback, { once: true });
       document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+    }
 
-      // 画面表示状態の監視
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-          this.audioElement.volume = this.minVolume;
-        }
-      });
+    isElementInView(element) {
+      const rect = element.getBoundingClientRect();
+      return rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth;
     }
 
     async startPlaying() {
@@ -472,7 +508,7 @@ import bgm from "@assets/audio/bgm.mp3";
       }
     }
 
-    async retryPlay(maxRetries = 3, delay = 1000) {
+    async retryPlay(maxRetries = 10, delay = 6000) {
       let retries = 0;
       const tryPlay = async () => {
         try {
@@ -525,30 +561,31 @@ import bgm from "@assets/audio/bgm.mp3";
       this.audioElement.pause();
       this.audioElement.currentTime = this.startTime;
     }
+
+    destroy() {
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+      if (this.animationFrame) {
+        cancelAnimationFrame(this.animationFrame);
+      }
+      this.stop();
+    }
   }
 
-  // 使用例
+  // 初期化
   document.querySelectorAll("[data-auto-play]").forEach((audio) => {
-    const triggerElement = audio.closest("div"); // 対応する要素を取得
-    console.log(triggerElement);
-    new ProximityAudioPlayer(audio, triggerElement, {
-      maxDistance: 300,
-      minVolume: 0,
-      maxVolume: 0.6,
-      startTime: 30, // 追加: 30秒から再生を開始
-    });
+    const triggerElement = audio.closest("div");
+    if (triggerElement) {
+      new ProximityAudioPlayer(audio, triggerElement, {
+        maxDistance: 300,
+        minVolume: 0,
+        maxVolume: 0.6,
+        startTime: 30,
+      });
+    }
   });
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   const audio = document.querySelector(".js-bgm");
-  //   if (audio) {
-  //     audio.autoplay = true;
-  //     audio.volume = 0.015; // 0.0 から 1.0 の間で設定（0.2 = 20%）
-  //   }
-  //   const bgmControl = document.querySelector(".js-bgm-control");
-  //   bgmControl.addEventListener("click", () => {
-  //     audio.muted = !audio.muted;
-  //   });
-  // });
+
   document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("scroll-container");
     // コンテナのサイズとスクロール量を取得
@@ -561,10 +598,12 @@ import bgm from "@assets/audio/bgm.mp3";
     container.scrollLeft = (containerWidth - containerVisibleWidth) / 2;
     container.scrollTop = (containerHeight - containerVisibleHeight) / 2;
   });
+
   document.addEventListener("DOMContentLoaded", () => {
     const mapsGesture = document.querySelector(".maps-gesture");
     mapsGesture.classList.add("is-shown");
   });
+
   class BGM {
     constructor() {
       this.audio = document.querySelector(".js-bgm");
