@@ -1001,9 +1001,11 @@ body{
   height: 100vh;
   /* padding: calc(185 / 1600 * 100vw) 0 0 min(calc(100 / 1600 * 100vw),100px); */
   color: var(--white);
+  /* background-color: #262626; */
   /* background-image: url(/src/assets/img/globalNav_gradation.png); */
   background-repeat: no-repeat;
   background-size: cover;
+  /* overflow:auto; */
 }
 @media (min-width: 768px) {
 .globalNav-body{
@@ -1076,6 +1078,7 @@ body{
 .globalNav-inner{
   width: calc(100% - 100px);
   max-width: 760px;
+  height: 100vh;
   padding-top: calc(170 / 16 * 1rem);
   padding-bottom: calc(100 / 16 * 1rem);
   margin-inline: auto;
@@ -1085,7 +1088,7 @@ body{
   .globalNav-inner{
   width: calc(100% - 100px);
   max-width: 760px;
-  height: 100vh;
+
   padding-top: calc(214 / 16 * 1rem);
   padding-bottom: calc(100 / 16 * 1rem);
 
