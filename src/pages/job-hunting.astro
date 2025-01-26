@@ -105,14 +105,7 @@ import bgm from "@assets/audio/bgm.mp3";
       <div class="menu-article--list" id="summary-display">
         <!-- ここに動的にRSSデータが表示されます -->
       </div>
-      <p class="menu-section--scroll">scroll</p>
-      <div class="category-bottom">
-        <p class="category-button">
-          <a href="#">
-            <span class="category-triangle">ほかの盗みぎきへ</span>
-          </a>
-        </p>
-      </div>
+
       <figure class="table_beer1">
         <Image src={table_beer01} alt="就活中の人々" />
       </figure>
@@ -152,14 +145,16 @@ import bgm from "@assets/audio/bgm.mp3";
       <figure class="category-bottom--people5">
         <Image src={category_bottom_people5} alt="就活中の人々" />
       </figure>
-      <figure class="category-bottom-share">
-        <div class="category-bottom-share--text">
-          <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
-          <ul class="category-bottom-share--list">
-            <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-            <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
-            <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
-          </ul>
+      <figure class="js-observer category-bottom-share">
+        <div class="is-observer-comment">
+          <div class="category-bottom-share--text">
+            <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
+            <ul class="category-bottom-share--list">
+              <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+              <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+              <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+            </ul>
+          </div>
         </div>
         <figure class="category-bottom-share--people">
           <Image src={category_bottom_people6} alt="就活中の人々" />
@@ -170,68 +165,147 @@ import bgm from "@assets/audio/bgm.mp3";
 </Layout>
 <script client:load>
   const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
-  async function fetchAndDisplayFilteredEpisodes() {
+  const INITIAL_DISPLAY_COUNT = 6;
+  let allEpisodes = []; // 全エピソードを保持する配列
+
+  async function fetchEpisodes(limit = null) {
     try {
-      const response = await fetch(xmlUrl);
-      const xmlText = await response.text();
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+      // まだ全エピソードを取得していない場合のみfetchする
+      if (allEpisodes.length === 0) {
+        const response = await fetch(xmlUrl);
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const items = xmlDoc.getElementsByTagName("item");
 
-      const items = xmlDoc.getElementsByTagName("item");
-      const filteredSummaries = [];
-      const maxTitleLength = 46; // タイトルの最大文字数
-
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        const url = `/episode-${items.length - i}`;
-        const titleElement = item.getElementsByTagName("title")[0];
-        const pubDateElement = item.getElementsByTagName("pubDate")[0];
-        const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
-
-        let summary = "No summary";
-        const summaryElements = item.getElementsByTagNameNS("*", "summary");
-        if (summaryElements.length > 0) {
-          summary = summaryElements[0].textContent;
-        }
-
-        let title = titleElement ? titleElement.textContent : "No title";
-
-        // タイトルが最大文字数を超えた場合に「...」を付ける
-        if (title.length > maxTitleLength) {
-          title = title.slice(0, maxTitleLength) + "...";
-        }
-
-        let duration = durationElement ? durationElement.textContent : "Unknown duration";
-
-        // duration のフォーマット変更: "00:13:37" を "13:37" に変換
-        if (duration.startsWith("00:")) {
-          duration = duration.slice(3); // "00:" の部分を削除
-        }
-
-        // フィルタリング条件：「就職」または「転職」が含まれる
-        if (title.includes("就職") || title.includes("転職") || summary.includes("就職") || summary.includes("転職")) {
-          filteredSummaries.push(
-            `<article class="menu-article--item">
-            <div class="menu-article--body">
-              <a href=${url}>
-                <h3 class="menu-article--number">${title}</h3>
-                <p class="menu-article--time">${duration}</p>
-              </a>
-            </div>
-          </article>`
-          );
+        // 全エピソードのデータを整形して保存
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const episode = formatEpisodeData(item, items.length - i);
+          if (episode.isRelevant) {
+            allEpisodes.push(episode);
+          }
         }
       }
 
-      document.getElementById("summary-display").innerHTML =
-        filteredSummaries.length > 0 ? filteredSummaries.join("") : "該当するエピソードはありません。";
+      // 表示件数を制限するか全件返すか
+      return limit ? allEpisodes.slice(0, limit) : allEpisodes;
     } catch (error) {
-      console.error("Error fetching or parsing the XML:", error);
-      document.getElementById("summary-display").textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
+      console.error("Error fetching episodes:", error);
+      return [];
     }
   }
 
-  fetchAndDisplayFilteredEpisodes();
+  // エピソードデータの整形
+  function formatEpisodeData(item, index) {
+    const maxTitleLength = 46;
+    const titleElement = item.getElementsByTagName("title")[0];
+    const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
+    const summaryElements = item.getElementsByTagNameNS("*", "summary");
+
+    let title = titleElement ? titleElement.textContent : "No title";
+    let summary = summaryElements.length > 0 ? summaryElements[0].textContent : "No summary";
+    let duration = durationElement ? durationElement.textContent : "Unknown duration";
+
+    // タイトルの長さ制限
+    if (title.length > maxTitleLength) {
+      title = title.slice(0, maxTitleLength) + "...";
+    }
+
+    // durationのフォーマット
+    if (duration.startsWith("00:")) {
+      duration = duration.slice(3);
+    }
+
+    return {
+      title,
+      duration,
+      url: `/episode-${index}`,
+      isRelevant: title.includes("会社") || summary.includes("会社"),
+    };
+  }
+
+  // エピソードのHTML生成
+  function generateEpisodeHTML(episode, isHidden = false) {
+    return `
+      <article class="menu-article--item ${isHidden ? "is-more-button--hidden" : ""}">
+        <div class="menu-article--body">
+          <a href=${episode.url}>
+            <h3 class="menu-article--number">${episode.title}</h3>
+            <p class="menu-article--time">${episode.duration}</p>
+          </a>
+        </div>
+      </article>
+    `;
+  }
+
+  // 初期表示ともっと見るボタンの設定
+  async function initializeEpisodeDisplay() {
+    const summaryDisplay = document.getElementById("summary-display");
+
+    // 最初の6件を取得して表示
+    const initialEpisodes = await fetchEpisodes(INITIAL_DISPLAY_COUNT);
+
+    if (initialEpisodes.length === 0) {
+      summaryDisplay.textContent = "該当するエピソードはありません。";
+      return;
+    }
+
+    // 初期エピソードの表示
+    summaryDisplay.innerHTML = initialEpisodes.map((episode) => generateEpisodeHTML(episode)).join("");
+
+    // 全件数を確認して必要な場合はもっと見るボタンを表示
+    const totalEpisodes = allEpisodes.length;
+
+    if (totalEpisodes > INITIAL_DISPLAY_COUNT) {
+      const moreButtonHTML = `
+        <div class="more-button-wrapper category-bottom">
+          <button type="button" class="more-button js-more-button ">
+            もっと見る
+          </button>
+        </div>
+      `;
+      summaryDisplay.insertAdjacentHTML("afterend", moreButtonHTML);
+      function hiddenButton() {
+        const hiddenButtonHTML = `
+        <div class="more-button-wrapper category-bottom">
+          <button type="button" class="more-button js-more-button -hidden">
+            隠す
+          </button>
+        </div>
+      `;
+      }
+
+      // もっと見るボタンのクリックイベント
+      document.querySelector(".js-more-button").addEventListener("click", async function () {
+        const buttonWrapper = this.closest(".more-button-wrapper .more-button");
+
+        // 残りのエピソードを取得
+        const remainingEpisodes = allEpisodes.slice(INITIAL_DISPLAY_COUNT);
+
+        // 残りのエピソードを順番に表示
+        remainingEpisodes.forEach((episode, index) => {
+          setTimeout(() => {
+            const episodeHTML = generateEpisodeHTML(episode, true);
+            summaryDisplay.insertAdjacentHTML("beforeend", episodeHTML);
+
+            // 少し遅延させて表示アニメーション
+            setTimeout(() => {
+              summaryDisplay.lastElementChild.classList.remove("is-more-button--hidden");
+            }, 50);
+          }, index * 10);
+        });
+
+        // ボタンを非表示にして削除
+        // buttonWrapper.classList.add("is-hiding");
+        setTimeout(() => buttonWrapper.remove(), 400);
+        hiddenButton();
+      });
+    }
+  }
+
+  // 初期化実行
+  initializeEpisodeDisplay();
 </script>
 
 <script>

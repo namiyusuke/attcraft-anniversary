@@ -7,6 +7,8 @@ import archive_people2 from "@assets/img/archive_people2.png";
 import archive_people3 from "@assets/img/archive_people3.png";
 import archive_people4 from "@assets/img/archive_people4.png";
 import archive_people5 from "@assets/img/bar_10.png";
+import light_parts1 from "@assets/img/light_parts1.png";
+import light_parts2 from "@assets/img/light_parts2.png";
 import archive_people6 from "@assets/img/archive_people6.png";
 import archive_table1 from "@assets/img/archive_table1.png";
 import archive_table2 from "@assets/img/archive_table2.png";
@@ -27,8 +29,10 @@ import archive_footer_table2 from "@assets/img/archive_footer_table2.png";
 import archive_footer_table3 from "@assets/img/archive_footer_table3.png";
 import archive_footer_table4 from "@assets/img/archive_footer_table4.png";
 import archive_footer_table5 from "@assets/img/archive_footer_table5.png";
+import credit from "@assets/img/credit.png";
 import category_art from "@assets/img/chock-art.png";
 import twitter from "@assets/img/logo-x.svg";
+import x_logo from "@assets/img/logo-x.svg";
 import facebook from "@assets/img/logo-facebook.svg";
 import instagram from "@assets/img/logo-Instagram.svg";
 import spotify_icon from "@assets/img/spotify_icon.png";
@@ -106,15 +110,17 @@ import { Image } from "astro:assets";
       <figure class="archive-table2">
         <Image src={archive_table2} alt="テーブル" />
       </figure>
-      <figure class="archive-category-people1">
-        <Image src={categoryPeople1} alt="カテゴリ" />
-      </figure>
-      <figure class="archive-category-people2">
-        <Image src={categoryPeople2} alt="カテゴリ" />
-      </figure>
-      <figure class="archive-category-table1">
-        <Image src={categoryTable1} alt="カテゴリ" />
-      </figure>
+      <div class="archive-category-people--wrap">
+        <figure class="archive-category-people1">
+          <Image src={categoryPeople1} alt="カテゴリ" />
+        </figure>
+        <figure class="archive-category-people2">
+          <Image src={categoryPeople2} alt="カテゴリ" />
+        </figure>
+        <figure class="archive-category-table1">
+          <Image src={categoryTable1} alt="カテゴリ" />
+        </figure>
+      </div>
     </div>
     <div class="archive-footer">
       <div class="archive-category-art">
@@ -123,7 +129,7 @@ import { Image } from "astro:assets";
       <figure class="js-observer archive-people4">
         <div class="archive-category-art--inner">
           <div class="is-observer-comment">
-            <div class="archive-category-art--inner--content">
+            <div class="archive-category-art--inner--content" style="--delay: 0s;">
               <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
               <ul class="category-bottom-share--list">
                 <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
@@ -138,7 +144,7 @@ import { Image } from "astro:assets";
       <div class="js-observer archive-people5--wrap">
         <div class="is-observer-comment">
           <div class="archive-category-art--inner">
-            <div class="archive-category-art--inner--content">
+            <div class="archive-category-art--inner--content" style="--delay: 1.5s;">
               <p class="archive-category-art--txt">ポッドキャストで<br />配信中！</p>
               <ul class="category-bottom-share--list -podcast">
                 <li class="category-bottom-share--list--item">
@@ -195,9 +201,38 @@ import { Image } from "astro:assets";
         <figure class="archive-footer-table5">
           <Image src={archive_footer_table5} alt="アーカイブ" />
         </figure>
-        <Image class="archive-green" src={archive_green} alt="アーカイブ" />
       </div>
     </div>
+    <p class="js-dialog-open archive-footer-credit"><a href="">Credit</a></p>
+    <dialog class="js-dialog-content -closing baseDialog" aria-label="modal">
+      <div class="baseDialog_wrapper">
+        <div class="baseDialog_content">
+          <div class="baseDialog_content_inner">
+            <Image class="light-parts1" src={light_parts1} alt="ライトパーツ1" />
+            <Image class="light-parts2" src={light_parts2} alt="ライトパーツ2" />
+            <button type="button" class="baseDialog_close"></button>
+            <div class="baseDialog_content_image">
+              <div class="baseDialog_content_txt">
+                <div class="baseDialog_content_txt_inner">
+                  <p class="baseDialog_content_image_text">Planning：Attcraft</p>
+                  <p class="baseDialog_content_image_text">Direction：くうみん</p>
+                  <p class="baseDialog_content_image_text">Design：くうみん</p>
+                  <p class="baseDialog_content_image_text">Programing：nami</p>
+                </div>
+              </div>
+              <Image src={credit} alt="クレジット" />
+            </div>
+            <div class="archive-footer-x">
+              <p class="archive-footer-x-text"><span class="archive-footer-x-text-decorate"><span class="archive-footer-x-text-decorate-inner">Follow us</span></span></p>
+              <a href="#">
+                <Image src={x_logo} alt="X" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <Image class="archive-green" src={archive_green} alt="アーカイブ" />
   </main>
   <script client:load>
     let xmlUrl2 = "https://anchor.fm/s/132fb79c/podcast/rss";
@@ -325,6 +360,22 @@ import { Image } from "astro:assets";
     });
 
     fetchAndDisplayFilteredEpisodes();
+    function Dialog() {
+      const dialog = document.querySelector(".js-dialog-content");
+      const dialogButton = document.querySelector(".js-dialog-open");
+      const dialogClose = document.querySelector(".baseDialog_close");
+      dialogButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        dialog.showModal();
+        document.documentElement.style.overflow = "hidden";
+      });
+      dialogClose.addEventListener("click", (e) => {
+        e.preventDefault();
+        dialog.close();
+        document.documentElement.style.overflow = "auto";
+      });
+    }
+    Dialog();
   </script>
   <style>
     /* .more-button {
