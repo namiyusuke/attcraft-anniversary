@@ -365,9 +365,9 @@ body{
 @media (min-width: 768px) {
   .bg-freeLance{
   position: absolute;
-  top: calc(1180 / 16 * 1rem);
-  right: calc(155 / 16 * 1rem);
-  width: calc(325 / 16 * 1rem);
+  top: calc(1257 / 16* 1rem);
+  right: calc(189 / 16* 1rem);
+  width: calc(325 / 16* 1rem);
 }
 }
 .bg-work{
@@ -436,22 +436,7 @@ body{
   width: calc(420 / 16 * 1rem);
 }
 }
-.bg-green{
-  position: absolute;
-  top: calc(1218 / 16 * 1rem);
-  left: calc(50 / 16 * 1rem);
-  width: calc(254 / 16 * 1rem);
-  transform: rotate(3.25deg);
-}
-@media (min-width: 768px) {
-  .bg-green{
-  position: absolute;
-  top: calc(1931 / 16 * 1rem);
-  left: calc(50 / 16 * 1rem);
-  width: calc(420 / 16 * 1rem);
-  transform: rotate(3.25deg);
-}
-}
+
 /* mv */
 .mv-title{
   font-family: var(--font-family-kaisei);
@@ -720,7 +705,8 @@ body{
   left: calc(754 / 16 * 1rem);
   z-index: 3;
   width: calc(65 / 16 * 1rem);
-  animation: loop_bounce 2.5s infinite;
+  animation: loop_bounce 4.5s infinite;
+  animation-delay: .5s;
 }
 @media (min-width: 768px) {
 .bg-bar4{
@@ -728,7 +714,8 @@ body{
   top: calc(345 / 16 * 1rem);
   left: calc(1154 / 16 * 1rem);
   width: calc(103 / 16 * 1rem);
-  animation: loop_bounce 2.5s infinite;
+  animation: loop_bounce 4.5s infinite;
+    animation-delay: .5s;
 }
 }
 .bg-bar5{
@@ -877,7 +864,19 @@ body{
   width: calc(64 / 16 * 1rem);
   animation: mini-shake 6.5s infinite;
 }
+.bg_wine_table{
+  position: absolute;
+  top: calc(654 / 16 * 1rem);
+  right: calc(320 / 16* 1rem);
+  z-index: 2;
+  width: calc(72 / 16 * 1rem);
+}
 @media (min-width: 768px) {
+.bg_wine_table{
+    top: calc(1073 / 16 * 1rem);
+  right: calc(520 / 16* 1rem);
+  width: calc(112 / 16 * 1rem);
+}
   .bg_bottomTable_chra1{
   top: calc(2211 / 16 * 1rem);
   left: calc(774 / 16 * 1rem);
@@ -1063,6 +1062,9 @@ body{
   -webkit-text-stroke: 1px var(--white);
   color: transparent;
 }
+.globalNav-list{
+  margin-top: 24px;
+}
 .globalNav-title.-first{
   margin-bottom: 24px;
   line-height: 1;
@@ -1076,27 +1078,29 @@ body{
   -webkit-text-stroke: 1px var(--white);
 }
 .globalNav-inner{
+  position: relative;
   width: calc(100% - 100px);
   max-width: 760px;
   height: 100vh;
-  padding-top: calc(170 / 16 * 1rem);
-  padding-bottom: calc(100 / 16 * 1rem);
+  /* padding-top: calc(170 / 16 * 1rem);
+  padding-bottom: calc(100 / 16 * 1rem); */
   margin-inline: auto;
-  overflow: auto;
+
 }
 @media (min-width: 768px) {
+.globalNav-list{
+  margin-top: 24px;
+}
   .globalNav-inner{
   width: calc(100% - 100px);
   max-width: 760px;
-
-  padding-top: calc(214 / 16 * 1rem);
-  padding-bottom: calc(100 / 16 * 1rem);
-
 }
 }
 .globalNav-inner--scroll{
-  height: 100vh;
-  /* overflow: auto; */
+  height: 100%;
+  padding-top: calc(214 / 16 * 1rem);
+  padding-bottom: calc(100 / 16 * 1rem);
+  overflow: auto;
 }
 .globalNav-inner::-webkit-scrollbar{
   overflow: hidden;
@@ -2504,6 +2508,7 @@ img:focus{
   left: 800px;
   z-index: 1;
   width: calc(84 / 16 * 1rem);
+  animation: loop_rotate2 3.5s infinite;
 }
 @media (min-width: 768px) {
   .bar-counter-people3{
@@ -3769,7 +3774,8 @@ display: block;
   position: absolute;
   /* top:  clamp(280px,calc(380 / 1600 * 100vw),380px); */
   top: 380px;
-  right: min(calc(592 / 1600 * 100vw),592px);
+  right: 200px;
+  /* right: min(calc(592 / 1600 * 100vw),592px); */
   z-index: 2;
   display: block;
   width: calc(83 / 1600 * 100vw);
@@ -3782,7 +3788,7 @@ display: block;
   position: absolute;
   /* top: clamp(348px,calc(448 / 1600 * 100vw),448px); */
   top: 313px;
-  right:47px;
+  right:-50px;
   z-index: 2;
   width: calc(80 / 16 * 1rem);
   margin-inline: auto;
@@ -3792,17 +3798,17 @@ display: block;
   .globalNav-people2{
   /* top: clamp(348px,calc(448 / 1600 * 100vw),448px); */
   top: 448px;
-  right: min(calc(339 / 1600 * 100vw),339px);
+  right:-20px;
   z-index: 2;
   width: calc(106 / 1600 * 100vw);
-  max-width: calc(106 / 1600 * 100vw);
+  max-width: 106px;
 }
 }
 .globalNav-table{
   position: absolute;
   /* top: clamp(383px,calc(483 / 1600 * 100vw),483px); */
   top: 376px;
-  right:81px;
+  right:0px;
   z-index: 2;
   width: calc(109 / 16 * 1rem);
   margin-inline: auto;
@@ -3810,7 +3816,7 @@ display: block;
 @media (min-width: 768px) {
   .globalNav-table{
   top: 483px;
-  right: min(calc(500 / 1600 * 100vw),500px);
+  right:100px;
   width: calc(128 / 1600 * 100vw);
   max-width: calc(128 / 16 * 1rem);
 }
@@ -4093,4 +4099,98 @@ display: block;
 .is-shown .is-observer-comment{
   opacity: 1;
   transform: translateY(0);
+}
+.bg-green{
+  position: absolute;
+  top: calc(1218 / 16 * 1rem);
+  left: calc(50 / 16 * 1rem);
+  width: calc(254 / 16 * 1rem);
+  transform: scale(0.7) rotate(12deg);
+}
+@media (min-width: 768px) {
+  .bg-green{
+  position: absolute;
+  top: calc(1931 / 16 * 1rem);
+  left: calc(150 / 16 * 1rem);
+  width: calc(420 / 16 * 1rem);
+  transform: scale(1) rotate(12deg);
+}
+}
+.c-anime__leaf{
+  animation: loop_rotate2 2.5s infinite;
+}
+  .bg-green--brunch{
+    position: absolute;
+    top:0;
+    right: 0;
+    left: 0;
+    width: calc(221 / 16 * 1rem);
+    margin-inline: auto;
+  }
+  .bg-green--leaf01{
+    position: absolute;
+    top:122px;
+    left:130px;
+    width: calc(217 / 16 * 1rem);
+    transform-origin: 30% 30%;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 1.5s;
+  }
+  .bg-green--leaf02{
+    position: absolute;
+    top: 130px;
+    left: 80px;
+    width: calc(118 / 16 * 1rem);
+    transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+    animation-delay: 3s;
+  }
+  .bg-green--leaf03{
+    position: absolute;
+    top: 90px;
+    left: 0px;
+    width: calc(118 / 16 * 1rem);
+    transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  }
+.bg-green--leaf04{
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  width: calc(126 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 0.5s;
+}
+.bg-green--leaf05{
+  position: absolute;
+  top: 10px;
+  left: 110px;
+  width: calc(126 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 1s;
+}
+.bg-green--leaf06{
+  position: absolute;
+  top: -70px;
+  left: 200px;
+  width: calc(158 / 16 * 1rem);
+  transform-origin: bottom left;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 1.2s;
+}
+@keyframes gentleRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

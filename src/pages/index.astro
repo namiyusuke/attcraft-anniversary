@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import LoadingPage from "@components/parts/Loading.astro";
 import wine_tool from "@assets/img/wine_tool.png";
+import wine_table from "@assets/img/wine_table.png";
 import photo from "@assets/img/photo.png";
 import drinkMenu from "@assets/img/drink-menu.png";
 import direction_people from "@assets/img/direction_people.png";
@@ -30,7 +31,14 @@ import portfolio_menu from "@assets/img/portfolio_menu.png";
 import chockArt from "@assets/img/chock-art.png";
 import mvBg from "@assets/img/bg_mv.png";
 import kanpai from "@assets/img/kanpai.png";
-import green from "@assets/img/green.png";
+import green_brunch from "@assets/img/green_brunch.svg";
+import green_leaf01 from "@assets/img/green_leaf01.svg";
+import green_leaf02 from "@assets/img/green_leaf02.svg";
+import green_leaf03 from "@assets/img/green_leaf03.svg";
+import green_leaf04 from "@assets/img/green_leaf04.svg";
+import green_leaf05 from "@assets/img/green_leaf05.svg";
+import green_leaf06 from "@assets/img/green_leaf06.svg";
+import green_leaf07 from "@assets/img/green_leaf07.svg";
 import bar_01 from "@assets/img/bar_01.png";
 import bar_02 from "@assets/img/bar_02.png";
 import bar_03 from "@assets/img/bar_03.png";
@@ -62,7 +70,7 @@ import bgm from "@assets/audio/bgm.mp3";
 
 <Layout title={`${SITE.name} | Welcome to Orelop Astro.`} description="これは俺流スターターキット">
   <!-- <LoadingPage /> -->
-  <main>
+  <main class="bg-bricks">
     <div class="maps-gesture">
       <div class="maps-gesture__bg"></div>
       <div class="maps-gesture__contents">
@@ -80,6 +88,9 @@ import bgm from "@assets/audio/bgm.mp3";
         </div>
         <div class="mv-bg">
           <Image src={mvBg} alt="メインビジュアル" />
+        </div>
+        <div class="bg_wine_table">
+          <Image src={wine_table} alt="バーの下のテーブル" />
         </div>
         <div class="mv-title">
           <h2 class="mv-title--center">
@@ -270,6 +281,12 @@ import bgm from "@assets/audio/bgm.mp3";
             </span>
           </a>
         </div>
+        <div class="bg-table1">
+          <Image src={bar_table1} alt="バーのテーブル1" />
+        </div>
+        <div class="bg-table2">
+          <Image src={bar_table2} alt="バーのテーブル2" />
+        </div>
         <div class="js-spotlight bg-study">
           <a href="/study/">
             <audio controls data-auto-play data-audio="study"></audio>
@@ -296,31 +313,45 @@ import bgm from "@assets/audio/bgm.mp3";
           <Image src={chockArt} alt="絵" />
         </div>
         <div class="bg-green">
-          <Image src={green} alt="草木" />
+          <div class="bg-green--brunch">
+            <Image src={green_brunch} alt="草木" />
+          </div>
+          <div class="bg-green--leaf01">
+            <Image src={green_leaf01} alt="草木" />
+          </div>
+          <div class="bg-green--leaf02">
+            <Image src={green_leaf02} alt="草木" />
+          </div>
+          <div class="bg-green--leaf03">
+            <Image src={green_leaf03} alt="草木" />
+          </div>
+          <div class="bg-green--leaf04">
+            <Image src={green_leaf04} alt="草木" />
+          </div>
+          <div class="bg-green--leaf05">
+            <Image src={green_leaf05} alt="草木" />
+          </div>
+          <div class="bg-green--leaf06">
+            <Image src={green_leaf06} alt="草木" />
+          </div>
         </div>
-      </div>
-      <div class="light"></div>
-
-      <div class="bg-table1">
-        <Image src={bar_table1} alt="バーのテーブル1" />
-      </div>
-      <div class="bg-table2">
-        <Image src={bar_table2} alt="バーのテーブル2" />
+        <!-- <Image src={green} alt="草木" /> -->
       </div>
     </div>
+    <div class="light"></div>
   </main>
-  <audio class="js-bgm" src={bgm} autoplay loop></audio>
-  <button class="js-bgm-control">
-    <span class="js-bgm-control--text">BGM</span>
-    <span class="js-bgm-control--icon">
-      <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M8.08133 0C7.00969 0 5.98194 0.425706 5.22418 1.18347C4.46642 1.94123 4.04072 2.96897 4.04072 4.04061V9.69747C4.04072 10.7691 4.46642 11.7968 5.22418 12.5546C5.98194 13.3124 7.00969 13.7381 8.08133 13.7381C9.15296 13.7381 10.1807 13.3124 10.9385 12.5546C11.6962 11.7968 12.1219 10.7691 12.1219 9.69747V4.04061C12.1219 2.96897 11.6962 1.94123 10.9385 1.18347C10.1807 0.425706 9.15296 0 8.08133 0ZM1.61635 8.88934C1.83068 8.88934 2.03623 8.97448 2.18778 9.12604C2.33933 9.27759 2.42447 9.48314 2.42447 9.69747C2.42447 11.1978 3.02046 12.6366 4.08133 13.6975C5.14219 14.7583 6.58103 15.3543 8.08133 15.3543C9.58162 15.3543 11.0205 14.7583 12.0813 13.6975C13.1422 12.6366 13.7382 11.1978 13.7382 9.69747C13.7382 9.48314 13.8233 9.27759 13.9749 9.12604C14.1264 8.97448 14.332 8.88934 14.5463 8.88934C14.7606 8.88934 14.9662 8.97448 15.1177 9.12604C15.2693 9.27759 15.3544 9.48314 15.3544 9.69747C15.3548 11.4867 14.6955 13.2133 13.5028 14.5471C12.3101 15.8808 10.6676 16.7281 8.88945 16.9269V18.5868C8.88945 18.8011 8.80431 19.0067 8.65275 19.1582C8.5012 19.3098 8.29565 19.3949 8.08133 19.3949C7.867 19.3949 7.66145 19.3098 7.5099 19.1582C7.35834 19.0067 7.2732 18.8011 7.2732 18.5868V16.9269C5.49502 16.7281 3.85252 15.8808 2.65981 14.5471C1.4671 13.2133 0.807884 11.4867 0.808228 9.69747C0.808228 9.48314 0.893369 9.27759 1.04492 9.12604C1.19647 8.97448 1.40202 8.88934 1.61635 8.88934Z"
-          fill="black"></path>
-      </svg>
-    </span>
-  </button>
 </Layout>
+<audio class="js-bgm" src={bgm} autoplay loop></audio>
+<button class="js-bgm-control">
+  <span class="js-bgm-control--text">BGM</span>
+  <span class="js-bgm-control--icon">
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8.08133 0C7.00969 0 5.98194 0.425706 5.22418 1.18347C4.46642 1.94123 4.04072 2.96897 4.04072 4.04061V9.69747C4.04072 10.7691 4.46642 11.7968 5.22418 12.5546C5.98194 13.3124 7.00969 13.7381 8.08133 13.7381C9.15296 13.7381 10.1807 13.3124 10.9385 12.5546C11.6962 11.7968 12.1219 10.7691 12.1219 9.69747V4.04061C12.1219 2.96897 11.6962 1.94123 10.9385 1.18347C10.1807 0.425706 9.15296 0 8.08133 0ZM1.61635 8.88934C1.83068 8.88934 2.03623 8.97448 2.18778 9.12604C2.33933 9.27759 2.42447 9.48314 2.42447 9.69747C2.42447 11.1978 3.02046 12.6366 4.08133 13.6975C5.14219 14.7583 6.58103 15.3543 8.08133 15.3543C9.58162 15.3543 11.0205 14.7583 12.0813 13.6975C13.1422 12.6366 13.7382 11.1978 13.7382 9.69747C13.7382 9.48314 13.8233 9.27759 13.9749 9.12604C14.1264 8.97448 14.332 8.88934 14.5463 8.88934C14.7606 8.88934 14.9662 8.97448 15.1177 9.12604C15.2693 9.27759 15.3544 9.48314 15.3544 9.69747C15.3548 11.4867 14.6955 13.2133 13.5028 14.5471C12.3101 15.8808 10.6676 16.7281 8.88945 16.9269V18.5868C8.88945 18.8011 8.80431 19.0067 8.65275 19.1582C8.5012 19.3098 8.29565 19.3949 8.08133 19.3949C7.867 19.3949 7.66145 19.3098 7.5099 19.1582C7.35834 19.0067 7.2732 18.8011 7.2732 18.5868V16.9269C5.49502 16.7281 3.85252 15.8808 2.65981 14.5471C1.4671 13.2133 0.807884 11.4867 0.808228 9.69747C0.808228 9.48314 0.893369 9.27759 1.04492 9.12604C1.19647 8.97448 1.40202 8.88934 1.61635 8.88934Z"
+        fill="black"></path>
+    </svg>
+  </span>
+</button>
 
 <script>
   const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
