@@ -29,8 +29,6 @@ import detail_people2_wine from "@assets/img/detail_people2_wine.png";
 import detail_wine_table from "@assets/img/detail-wine-table.png";
 import detail_photo from "@assets/img/detail-photo.png";
 import detail_green from "@assets/img/archive_green.png";
-import detail_people4 from "@assets/img/detail-people4.png";
-import detail_people5 from "@assets/img/detail-people5.png";
 export async function getStaticPaths() {
   const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
 
@@ -179,7 +177,7 @@ const { title, text, audioUrl } = Astro.props;
   }
 </style>
 
-<script>
+<script client:load>
   function initializeAudioPlayer() {
     const audioElement = document.getElementById("audioElement");
     const playButton = document.getElementById("playButton");
