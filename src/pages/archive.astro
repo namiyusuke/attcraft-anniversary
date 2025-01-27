@@ -37,7 +37,14 @@ import facebook from "@assets/img/logo-facebook.svg";
 import instagram from "@assets/img/logo-Instagram.svg";
 import spotify_icon from "@assets/img/spotify_icon.png";
 import podcast_icon from "@assets/img/podcast_icon.png";
-import archive_green from "@assets/img/archive_green.png";
+// import archive_green from "@assets/img/archive_green.png";
+import archive_green_brunch from "@assets/img/archive_green_brunch.svg";
+import green_leaf01 from "@assets/img/green_leaf01.svg";
+import green_leaf02 from "@assets/img/green_leaf02.svg";
+import green_leaf03 from "@assets/img/green_leaf03.svg";
+import green_leaf04 from "@assets/img/green_leaf04.svg";
+import green_leaf05 from "@assets/img/green_leaf05.svg";
+import green_leaf06 from "@assets/img/green_leaf06.svg";
 import { Image } from "astro:assets";
 ---
 
@@ -223,7 +230,11 @@ import { Image } from "astro:assets";
               <Image src={credit} alt="クレジット" />
             </div>
             <div class="archive-footer-x">
-              <p class="archive-footer-x-text"><span class="archive-footer-x-text-decorate"><span class="archive-footer-x-text-decorate-inner">Follow us</span></span></p>
+              <p class="archive-footer-x-text">
+                <span class="archive-footer-x-text-decorate"
+                  ><span class="archive-footer-x-text-decorate-inner">Follow us</span></span
+                >
+              </p>
               <a href="#">
                 <Image src={x_logo} alt="X" />
               </a>
@@ -232,7 +243,27 @@ import { Image } from "astro:assets";
         </div>
       </div>
     </dialog>
-    <Image class="archive-green" src={archive_green} alt="アーカイブ" />
+    <div class="archive-green--wrap">
+      <Image class="archive-green" src={archive_green_brunch} alt="アーカイブ" />
+      <div class="archive-green--leaf01">
+        <Image src={green_leaf01} alt="草木" />
+      </div>
+      <div class="archive-green--leaf02">
+        <Image src={green_leaf02} alt="草木" />
+      </div>
+      <div class="archive-green--leaf03">
+        <Image src={green_leaf03} alt="草木" />
+      </div>
+      <div class="archive-green--leaf04">
+        <Image src={green_leaf04} alt="草木" />
+      </div>
+      <div class="archive-green--leaf05">
+        <Image src={green_leaf05} alt="草木" />
+      </div>
+      <div class="archive-green--leaf06">
+        <Image src={green_leaf06} alt="草木" />
+      </div>
+    </div>
   </main>
   <script client:load>
     let xmlUrl2 = "https://anchor.fm/s/132fb79c/podcast/rss";

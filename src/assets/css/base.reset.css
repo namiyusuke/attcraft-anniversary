@@ -1682,7 +1682,7 @@ body{
 }
 @media (min-width: 768px) {
   .category-bottom{
-  padding-top: calc(340 / 16 * 1rem);
+  padding-top: calc(200 / 16 * 1rem);
 }
 }
 .category-people4{
@@ -2795,7 +2795,7 @@ img:focus{
 }
 .table_beer1{
   position: absolute;
-  right: 400px;
+  right: 300px;
   bottom: 0px;
   z-index: 2;
   width: calc(153 / 16 * 1rem);
@@ -3702,14 +3702,83 @@ display: block;
     transform: translateY(-1px);
   }
 }
+.archive-green--wrap{
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  z-index: 2;
+  width: calc(422 / 16 * 1rem);
+  height: calc(456 / 16 * 1rem);
+  transform: rotate(-6.54deg);
+}
+.archive-green--leaf01{
+  position: absolute;
+  top: 219px;
+  left: 186px;
+  z-index: 2;
+  width: calc(217 / 16 * 1rem);
+  transform-origin: 30% 30%;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 1.5s;
+}
+.archive-green--leaf02{
+  position: absolute;
+  top: 249px;
+  left: 100px;
+  z-index: 2;
+  width: calc(118 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 3s;
+}
+.archive-green--leaf03{
+  position: absolute;
+  top: 240px;
+  left: 10px;
+  z-index: 2;
+  width: calc(118 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 4.5s;
+}
+.archive-green--leaf04{
+  position: absolute;
+  top: 120px;
+  left: 30px;
+  z-index: 2;
+  width: calc(126 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 0.5s;
+}
+.archive-green--leaf05{
+  position: absolute;
+  top: 80px;
+  left: 130px;
+  z-index: 2;
+  width: calc(108 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 1s;
+}
+.archive-green--leaf06{
+  position: absolute;
+  top: 0;
+  left: 230px;
+  z-index: 2;
+  width: calc(217 / 16 * 1rem);
+    transform-origin: bottom left;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 1.2s;
+}
 .archive-green{
   position: absolute;
-  right: 0;
-  bottom: 0px;
+  inset-inline: 0;
   z-index: 2;
   display: none;
-  width: calc(296 / 16 * 1rem);
-  transform: rotate(-21.16deg) scaleX(-1);
+
+  margin-inline: auto;
+  /* transform: rotate(-21.16deg) scaleX(-1); */
 }
 @media (min-width: 768px) {
   .archive-green{
@@ -3719,8 +3788,8 @@ display: block;
   left: 100px;
   z-index: 2;
   display: block;
-  width: calc(422 / 16 * 1rem);
-  transform: rotate(-6.16deg) scaleX(1);
+  width: calc(221 / 16 * 1rem);
+  /* transform: rotate(-6.16deg) scaleX(1); */
 }
 }
   .light-parts1{
@@ -3866,6 +3935,7 @@ display: block;
 }
 .detail-content--wrap{
   position: relative;
+  height: 100%;
   padding-top: calc(202 / 16 * 1rem);
   /* overflow: hidden; */
 }
@@ -4137,11 +4207,12 @@ display: block;
 }
 .detail-green{
   position: absolute;
-  right: -100px;
-  bottom: -100px;
+  right: -50px;
+  bottom: 0px;
   z-index: 2;
   display: none;
   width: 422px;
+  height: 456px;
   transform: rotate(-6deg) scaleX(-1);
 }
 @media (min-width: 768px) {
