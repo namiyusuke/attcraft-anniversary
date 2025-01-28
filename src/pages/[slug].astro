@@ -35,6 +35,7 @@ import green_leaf03 from "@assets/img/green_leaf03.svg";
 import green_leaf04 from "@assets/img/green_leaf04.svg";
 import green_leaf05 from "@assets/img/green_leaf05.svg";
 import green_leaf06 from "@assets/img/green_leaf06.svg";
+import green_leaf07 from "@assets/img/green_leaf07.svg";
 import detail_green from "@assets/img/archive_green.png";
 export async function getStaticPaths() {
   const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
@@ -145,6 +146,9 @@ const { title, text, audioUrl } = Astro.props;
           </div>
           <div class="archive-green--leaf06">
             <Image src={green_leaf06} alt="草木" />
+          </div>
+          <div class="archive-green--leaf07">
+            <Image src={green_leaf07} alt="草木" />
           </div>
         </div>
       </div>

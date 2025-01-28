@@ -1299,6 +1299,9 @@ body{
   font-weight: 400;
   color: transparent;
   text-align: center;
+  -webkit-text-stroke: 1px rgba(253, 213, 4, 0.7);
+  text-stroke: 1px rgba(253, 213, 4, 0.7);
+  filter: drop-shadow(0 0 4px rgba(253, 213, 4, 0.4));
   animation: softStrokeGlow 3s infinite alternate-reverse;
 }
 
@@ -1928,7 +1931,7 @@ body{
 }
 @media (min-width: 768px) {
   .detail-content{
-  padding-top: calc(450 / 16 * 1rem);
+  padding-top: calc(380 / 16 * 1rem);
 }
 }
 .detail-content--inner{
@@ -2893,6 +2896,8 @@ img:focus{
   background-repeat: no-repeat;
   background-position: top;
   background-size: contain;
+  animation: comment-balloon 8s infinite;
+  animation-delay: var(--delay, 0s);
 }
 
 @media (min-width: 768px) {
@@ -3742,7 +3747,7 @@ display: block;
 .archive-green--leaf02{
   position: absolute;
   top: 249px;
-  left: 100px;
+  left: 77px;
   z-index: 2;
   width: calc(118 / 16 * 1rem);
   transform-origin: top center;
@@ -3788,6 +3793,16 @@ display: block;
     transform-origin: bottom left;
   animation: gentleRotate 7.5s infinite;
   animation-delay: 1.2s;
+}
+.archive-green--leaf07{
+  position: absolute;
+  top: 111px;
+  left: 238px;
+  z-index: 2;
+  width: calc(200 / 16 * 1rem);
+  transform-origin: top center;
+  animation: gentleRotate 7.5s infinite;
+  animation-delay: 6s;
 }
 .archive-green{
   position: absolute;
@@ -3977,7 +3992,7 @@ display: block;
   animation: blinking_light 5.5s infinite;
 }
 .detail-wrap{
-  height: 120vh;
+  height: 100vh;
   overflow: hidden;
 }
 .detail-wine{
@@ -4032,6 +4047,12 @@ display: block;
   background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%22239%22%20height%3D%22192%22%20viewBox%3D%220%200%20239%20192%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M234.343%2091.2926C232.971%2071.0388%20217.956%2053.2131%20200.145%2050.6743C200.379%2033.9397%20189.768%2018.8139%20175.736%2013.51C161.712%208.20652%20145.018%2013.0013%20134.759%2025.2863C122.087%208.09056%20100.224%200.342592%2080.9394%206.21491C61.6549%2012.0872%2045.9314%2031.2827%2042.2408%2053.458C24.7434%2053.9401%205.63596%2072.8352%204.20045%2094.9536C2.7645%20117.081%2019.263%20138.437%2038.8097%20139.759C39.2075%20140.594%2041.7213%20140.896%2044.227%20141.197C51.8935%20161.275%2068.8734%20176.352%2087.986%20180.036C103.426%20183.016%20119.879%20178.485%20132.747%20168.199C139.382%20177.738%20148.97%20184.781%20159.625%20187.675C154.603%20181.363%20150.828%20173.836%20148.512%20165.761C157.623%20171.424%20168.783%20172.996%20178.853%20169.629C191.817%20165.288%20202.518%20152.936%20206.093%20138.193C223.322%20132.13%20235.724%20111.547%20234.343%2091.2926Z%22%20stroke%3D%22%23FEFEFD%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
 }
 @media (min-width: 768px) {
+  .detail-light-parts2{
+  top: 70px;
+}
+.detail-light{
+  max-width: 110px;
+}
   .detail-people1{
   position: absolute;
   top: auto;
@@ -4061,8 +4082,9 @@ display: block;
 }
 .detail-wine{
   top: 0;
-  left: calc(248 / 1440 * 100vw);
+  left: calc(290 / 16 * 1rem);
   z-index: 2;
+  max-width: 290px;
 }
 .detail-people2{
   top:328px;
