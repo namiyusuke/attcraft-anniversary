@@ -1475,7 +1475,7 @@ body{
 }
 .hunting-image--move2{
   position: absolute;
-  top: 100px;
+  top: 200px;
   right: 0px;
   width: 160px;
   margin-inline:auto;
