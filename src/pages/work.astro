@@ -2,7 +2,8 @@
 import { SITE } from "../config";
 import Layout from "@layouts/Layout.astro";
 import menu from "@assets/img/menu-title.svg";
-import light01 from "@assets/img/light_01.png";
+import light_parts2 from "@assets/img/light_parts2.png";
+import light_parts3 from "@assets/img/light_parts3.png";
 import chockArt from "@assets/img/chock-art.png";
 import work_people from "@assets/img/work_people.png";
 import categoryPeople1 from "@assets/img/category_people1.png";
@@ -47,9 +48,8 @@ import bgm from "@assets/audio/bgm.mp3";
           </span>
         </h1>
       </div>
-      <figure class="heading__light1">
-        <Image src={light01} alt="ライト" />
-      </figure>
+      <Image class="category-light-parts1" src={light_parts3} alt="ライトパーツ1" />
+      <Image class="category-light-parts2" src={light_parts2} alt="ライトパーツ2" />
       <div class="category-top">
         <div class="hunting-image--center">
           <figure class="category-top--people work-image--move">
@@ -111,9 +111,7 @@ import bgm from "@assets/audio/bgm.mp3";
       <figure class="category-people4">
         <Image src={category_people4} alt="就活中の人々" />
       </figure>
-      <figure class="category-people5">
-        <Image src={category_people5} alt="就活中の人々" />
-      </figure>
+
       <figure class="category-people6">
         <Image src={category_people6} alt="就活中の人々" />
       </figure>
@@ -139,6 +137,9 @@ import bgm from "@assets/audio/bgm.mp3";
       </figure>
       <figure class="category-bottom--people5">
         <Image src={category_bottom_people5} alt="就活中の人々" />
+      </figure>
+      <figure class="category-people5">
+        <Image src={category_people5} alt="就活中の人々" />
       </figure>
       <figure class="js-observer category-bottom-share">
         <div class="is-observer-comment">

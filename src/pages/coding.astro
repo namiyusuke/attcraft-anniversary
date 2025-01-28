@@ -23,6 +23,8 @@ import twitter from "@assets/img/logo-x.svg";
 import facebook from "@assets/img/logo-facebook.svg";
 import instagram from "@assets/img/logo-Instagram.svg";
 import table_beer01 from "@assets/img/table_beer01.png";
+import light_parts2 from "@assets/img/light_parts2.png";
+import light_parts3 from "@assets/img/light_parts3.png";
 import { Image } from "astro:assets";
 import bgm from "@assets/audio/bgm.mp3";
 // // フロントマター内でデータを取得
@@ -33,6 +35,7 @@ import bgm from "@assets/audio/bgm.mp3";
 
 <Layout title={`About | ${SITE.name}`} description="これはAboutページ">
   <main class="hunting category">
+    <div class="category-bg"></div>
     <div class="heading-wrapper">
       <div class="heading__border">
         <h1 class="-border heading">
@@ -46,9 +49,8 @@ import bgm from "@assets/audio/bgm.mp3";
           </span>
         </h1>
       </div>
-      <figure class="heading__light1">
-        <Image src={light01} alt="ライト" />
-      </figure>
+      <Image class="category-light-parts1" src={light_parts3} alt="ライトパーツ1" />
+      <Image class="category-light-parts2" src={light_parts2} alt="ライトパーツ2" />
       <div class="category-top">
         <div class="hunting-image--center">
           <figure class="category-top--people coding-image--move">
@@ -77,31 +79,29 @@ import bgm from "@assets/audio/bgm.mp3";
       <figure class="category-hunting-people-02">
         <Image src={bar_10} alt="就活中の人々" />
       </figure>
-      <div class="category-people--wrap">
-        <figure class="category-people1">
-          <Image src={categoryPeople1} alt="就活中の人々" />
-        </figure>
-        <figure class="category-people2">
-          <Image src={categoryPeople2} alt="就活中の人々" />
-        </figure>
-        <figure class="category-table1">
-          <Image src={categoryTable1} alt="就活中の人々" />
-        </figure>
-      </div>
     </div>
-  </main>
-  <section class="menu-section">
-    <h2 class="menu-title">
-      <span class="menu-title--inner">
-        <span class="-ja">盗みぎき</span>
-        <span class="-en"><Image src={menu} alt="menu" /></span>
-      </span>
-    </h2>
-    <div class="menu-article--wrap -category">
-      <div class="menu-article--list" id="summary-display">
-        <!-- ここに動的にRSSデータが表示されます -->
-      </div>
-      <!-- <p class="menu-section--scroll">scroll</p>
+    <div class="category-people--wrap"></div>
+    <section class="menu-section">
+      <figure class="category-people1">
+        <Image src={categoryPeople1} alt="就活中の人々" />
+      </figure>
+      <figure class="category-people2">
+        <Image src={categoryPeople2} alt="就活中の人々" />
+      </figure>
+      <figure class="category-table1">
+        <Image src={categoryTable1} alt="就活中の人々" />
+      </figure>
+      <h2 class="menu-title">
+        <span class="menu-title--inner">
+          <span class="-ja">盗みぎき</span>
+          <span class="-en"><Image src={menu} alt="menu" /></span>
+        </span>
+      </h2>
+      <div class="menu-article--wrap -category">
+        <div class="menu-article--list" id="summary-display">
+          <!-- ここに動的にRSSデータが表示されます -->
+        </div>
+        <!-- <p class="menu-section--scroll">scroll</p>
       <div class="category-bottom">
         <p class="category-button">
           <a href="#">
@@ -109,62 +109,64 @@ import bgm from "@assets/audio/bgm.mp3";
           </a>
         </p>
       </div> -->
-      <figure class="table_beer1">
-        <Image src={table_beer01} alt="就活中の人々" />
-      </figure>
-    </div>
-  </section>
-  <div class="category-footer-wrap">
-    <div class="category-footer">
-      <figure class="category-people4">
-        <Image src={category_people4} alt="就活中の人々" />
-      </figure>
-      <figure class="category-people5">
-        <Image src={category_people5} alt="就活中の人々" />
-      </figure>
-      <figure class="category-people6">
-        <Image src={category_people6} alt="就活中の人々" />
-      </figure>
-      <p class="footer-copy">
-        <small>©2024 ︎Shibajuku.</small>
-      </p>
-    </div>
-    <div class="">
-      <figure class="category-bottom--table">
-        <Image src={category_bottom_table} alt="就活中の人々" />
-      </figure>
-      <figure class="category-bottom--people1">
-        <Image src={category_bottom_people1} alt="就活中の人々" />
-      </figure>
-      <figure class="category-bottom--people2">
-        <Image src={category_bottom_people2} alt="就活中の人々" />
-      </figure>
-      <figure class="category-bottom--people3">
-        <Image src={category_bottom_people3} alt="就活中の人々" />
-      </figure>
-      <figure class="category-bottom--people4">
-        <Image src={category_bottom_people4} alt="就活中の人々" />
-      </figure>
-      <figure class="category-bottom--people5">
-        <Image src={category_bottom_people5} alt="就活中の人々" />
-      </figure>
-      <figure class="js-observer category-bottom-share">
-        <div class="is-observer-comment">
-          <div class="category-bottom-share--text">
-            <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
-            <ul class="category-bottom-share--list">
-              <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-              <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
-              <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
-            </ul>
-          </div>
-        </div>
-        <figure class="category-bottom-share--people">
-          <Image src={category_bottom_people6} alt="就活中の人々" />
+        <figure class="table_beer1">
+          <Image src={table_beer01} alt="就活中の人々" />
         </figure>
-      </figure>
+      </div>
+    </section>
+    <div class="category-footer-wrap">
+      <div class="category-footer">
+        <figure class="category-people4">
+          <Image src={category_people4} alt="就活中の人々" />
+        </figure>
+
+        <figure class="category-people6">
+          <Image src={category_people6} alt="就活中の人々" />
+        </figure>
+        <p class="footer-copy">
+          <small>©2024 ︎Shibajuku.</small>
+        </p>
+      </div>
+      <div class="">
+        <figure class="category-bottom--table">
+          <Image src={category_bottom_table} alt="就活中の人々" />
+        </figure>
+        <figure class="category-bottom--people1">
+          <Image src={category_bottom_people1} alt="就活中の人々" />
+        </figure>
+        <figure class="category-bottom--people2">
+          <Image src={category_bottom_people2} alt="就活中の人々" />
+        </figure>
+        <figure class="category-bottom--people3">
+          <Image src={category_bottom_people3} alt="就活中の人々" />
+        </figure>
+        <figure class="category-bottom--people4">
+          <Image src={category_bottom_people4} alt="就活中の人々" />
+        </figure>
+        <figure class="category-bottom--people5">
+          <Image src={category_bottom_people5} alt="就活中の人々" />
+        </figure>
+        <figure class="category-people5">
+          <Image src={category_people5} alt="就活中の人々" />
+        </figure>
+        <figure class="js-observer category-bottom-share">
+          <div class="is-observer-comment">
+            <div class="category-bottom-share--text">
+              <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
+              <ul class="category-bottom-share--list">
+                <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+                <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+                <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+              </ul>
+            </div>
+          </div>
+          <figure class="category-bottom-share--people">
+            <Image src={category_bottom_people6} alt="就活中の人々" />
+          </figure>
+        </figure>
+      </div>
     </div>
-  </div>
+  </main>
 </Layout>
 <script client:load>
   const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
