@@ -4012,6 +4012,14 @@ display: block;
   margin-inline: auto;
   transform: scaleX(-1);
 }
+.detail-people1--wrap{
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  z-index: 2;
+  width: 300px;
+  height: 300px;
+}
 .detail-people2{
   position: absolute;
   top:490px;
@@ -4032,18 +4040,17 @@ display: block;
 }
 .detail-beer--wrap{
   position: absolute;
-  bottom: -30px;
+  bottom: 20px;
   left: -22px;
   z-index: 2;
 }
-.detail-beer--wrap .archive-category-art--txt{
+.detail-people1--wrap .archive-category-art--txt{
   font-size: 1rem;
 }
 .detail-beer--wrap .archive-category-art--inner--content{
   width: 230px;
   /* aspect-ratio: 230/180; */
   font-size: 1rem;
-
   background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%22239%22%20height%3D%22192%22%20viewBox%3D%220%200%20239%20192%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M234.343%2091.2926C232.971%2071.0388%20217.956%2053.2131%20200.145%2050.6743C200.379%2033.9397%20189.768%2018.8139%20175.736%2013.51C161.712%208.20652%20145.018%2013.0013%20134.759%2025.2863C122.087%208.09056%20100.224%200.342592%2080.9394%206.21491C61.6549%2012.0872%2045.9314%2031.2827%2042.2408%2053.458C24.7434%2053.9401%205.63596%2072.8352%204.20045%2094.9536C2.7645%20117.081%2019.263%20138.437%2038.8097%20139.759C39.2075%20140.594%2041.7213%20140.896%2044.227%20141.197C51.8935%20161.275%2068.8734%20176.352%2087.986%20180.036C103.426%20183.016%20119.879%20178.485%20132.747%20168.199C139.382%20177.738%20148.97%20184.781%20159.625%20187.675C154.603%20181.363%20150.828%20173.836%20148.512%20165.761C157.623%20171.424%20168.783%20172.996%20178.853%20169.629C191.817%20165.288%20202.518%20152.936%20206.093%20138.193C223.322%20132.13%20235.724%20111.547%20234.343%2091.2926Z%22%20stroke%3D%22%23FEFEFD%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
 }
 @media (min-width: 768px) {
@@ -4071,7 +4078,9 @@ display: block;
 .detail-beer--wrap .archive-category-art--txt{
   font-size: calc(20 / 16 * 1rem);
 }
-.detail-beer--wrap .archive-category-art--inner--content{
+.detail-people1--wrap .archive-category-art--inner--content{
+  position: absolute;
+  top: -200px;
   width: 300px;
 }
 .detail-beer{

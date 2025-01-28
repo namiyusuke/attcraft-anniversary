@@ -1,7 +1,7 @@
 ---
 import { SITE } from "../config";
 import Layout from "@layouts/Layout.astro";
-import light01 from "@assets/img/light_01.png";
+
 import archive_people1 from "@assets/img/archive_people1.png";
 import archive_people2 from "@assets/img/archive_people2.png";
 import archive_people3 from "@assets/img/archive_people3.png";
@@ -9,6 +9,7 @@ import archive_people4 from "@assets/img/archive_people4.png";
 import archive_people5 from "@assets/img/bar_10.png";
 import light_parts1 from "@assets/img/light_parts1.png";
 import light_parts2 from "@assets/img/light_parts2.png";
+import light_parts3 from "@assets/img/light_parts3.png";
 import archive_people6 from "@assets/img/archive_people6.png";
 import archive_table1 from "@assets/img/archive_table1.png";
 import archive_table2 from "@assets/img/archive_table2.png";
@@ -65,10 +66,11 @@ import { Image } from "astro:assets";
             </span>
           </h1>
         </div>
-        <figure class="heading__light1 -archive">
+        <!-- <figure class="heading__light1 -archive">
           <Image src={light01} alt="ライト" />
-        </figure>
-
+        </figure> -->
+        <Image class="category-light-parts1" src={light_parts3} alt="ライトパーツ1" />
+        <Image class="category-light-parts2" src={light_parts2} alt="ライトパーツ2" />
         <div class="menu-article--wrap">
           <div class="search-wrap">
             <!-- フリーワード検索用の入力フォーム -->
