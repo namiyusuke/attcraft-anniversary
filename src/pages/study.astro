@@ -20,9 +20,9 @@ import category_bottom_people3 from "@assets/img/category_bottom_people3.png";
 import category_bottom_people4 from "@assets/img/category_bottom_people4.png";
 import category_bottom_people5 from "@assets/img/category_bottom_people5.png";
 import category_bottom_people6 from "@assets/img/category_bottom_people6.png";
-import twitter from "@assets/img/logo-x.svg";
-import facebook from "@assets/img/logo-facebook.svg";
-import instagram from "@assets/img/logo-Instagram.svg";
+import twitter from "@assets/img/logo-x.png";
+import facebook from "@assets/img/logo-facebook.png";
+import instagram from "@assets/img/logo-Instagram.png";
 import table_beer01 from "@assets/img/table_beer01.png";
 import fukidasi from "@assets/img/fukidasi.png";
 import { Image } from "astro:assets";
@@ -145,9 +145,11 @@ import bgm from "@assets/audio/bgm.mp3";
           <div class="category-bottom-share--text">
             <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
             <ul class="category-bottom-share--list">
-              <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-              <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
-              <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+              <li class="category-bottom-share--twitter"><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+              <li class="category-bottom-share--facebook"><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+              <li class="category-bottom-share--instagram">
+                <a href="#"><img src={instagram.src} alt="instagram" /></a>
+              </li>
             </ul>
           </div>
         </div>

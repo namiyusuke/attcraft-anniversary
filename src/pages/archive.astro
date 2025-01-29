@@ -32,10 +32,9 @@ import archive_footer_table4 from "@assets/img/archive_footer_table4.png";
 import archive_footer_table5 from "@assets/img/archive_footer_table5.png";
 import credit from "@assets/img/credit.png";
 import category_art from "@assets/img/chock-art.png";
-import twitter from "@assets/img/logo-x.svg";
-import x_logo from "@assets/img/logo-x.svg";
-import facebook from "@assets/img/logo-facebook.svg";
-import instagram from "@assets/img/logo-Instagram.svg";
+import x_logo from "@assets/img/logo-x.png";
+import facebook from "@assets/img/logo-facebook.png";
+import instagram from "@assets/img/logo-Instagram.png";
 import spotify_icon from "@assets/img/spotify_icon.png";
 import podcast_icon from "@assets/img/podcast_icon.png";
 // import archive_green from "@assets/img/archive_green.png";
@@ -142,9 +141,13 @@ import { Image } from "astro:assets";
             <div class="archive-category-art--inner--content" style="--delay: 0s;">
               <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
               <ul class="category-bottom-share--list">
-                <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-                <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
-                <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+                <li class="category-bottom-share--twitter"><a href="#"><img src={x_logo.src} alt="twitter" /></a></li>
+                <li class="category-bottom-share--facebook">
+                  <a href="#"><img src={facebook.src} alt="facebook" /></a>
+                </li>
+                <li class="category-bottom-share--instagram">
+                  <a href="#"><img src={instagram.src} alt="instagram" /></a>
+                </li>
               </ul>
             </div>
           </div>
@@ -327,7 +330,7 @@ import { Image } from "astro:assets";
             <a href="/${url}">
             <h3 class="archive-list--number">${title}</h3>
             <div class="archive-list--flex">
-              <p class="archive-list--date">公開日: ${formattedDate}</p>
+              <p class="archive-list--date">${formattedDate}</p>
               <p class="archive-list--time">${duration}</p>
             </div>
 

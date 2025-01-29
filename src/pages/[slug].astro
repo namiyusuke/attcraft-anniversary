@@ -18,9 +18,9 @@ import bar_09 from "@assets/img/bar_09.png";
 import bar_10 from "@assets/img/bar_07.png";
 import bar_11 from "@assets/img/bar_08.png";
 import bar_12 from "@assets/img/bar_12.png";
-import twitter from "@assets/img/logo-x.svg";
-import facebook from "@assets/img/logo-facebook.svg";
-import instagram from "@assets/img/logo-Instagram.svg";
+import twitter from "@assets/img/logo-x.png";
+import facebook from "@assets/img/logo-facebook.png";
+import instagram from "@assets/img/logo-Instagram.png";
 import bar_counter_people4 from "@assets/img/bar_counter_people4.png";
 import bar_counter_people5 from "@assets/img/bar_counter_people5.png";
 import detail_people1 from "@assets/img/detail_people1.png";
@@ -116,9 +116,11 @@ const { title, text, audioUrl } = Astro.props;
         <div class="archive-category-art--inner--content" style="--delay: 0s;">
           <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
           <ul class="category-bottom-share--list">
-            <li><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-            <li><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
-            <li><a href="#"><img src={instagram.src} alt="instagram" /></a></li>
+            <li class="category-bottom-share--twitter"><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
+            <li class="category-bottom-share--facebook"><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+            <li class="category-bottom-share--instagram">
+              <a href="#"><img src={instagram.src} alt="instagram" /></a>
+            </li>
           </ul>
         </div>
         <Image class="detail-people1" src={detail_people1} alt="ディナーライト" />
@@ -197,15 +199,6 @@ const { title, text, audioUrl } = Astro.props;
 </Layout>
 
 <style>
-  .custom-audio-player {
-    margin: 20px 0;
-  }
-
-  .player-controls {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-
   .hidden {
     display: none;
   }

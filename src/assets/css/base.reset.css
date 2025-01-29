@@ -1110,8 +1110,8 @@ body{
 }
 .globalNav-inner--scroll{
   height: 100%;
-  padding-top: calc(214 / 16 * 1rem);
-  padding-bottom: calc(100 / 16 * 1rem);
+  padding-top: calc(84 / 16 * 1rem);
+  padding-bottom: calc(80 / 16 * 1rem);
   overflow: auto;
 }
 .globalNav-inner::-webkit-scrollbar{
@@ -1159,6 +1159,7 @@ body{
 .menu-article--item{
   position: relative;
   max-width: calc(300 / 16 * 1rem);
+  height: 100%;
   aspect-ratio: 301/381;
   padding: calc(39 / 16 * 1rem) calc(20 / 16 * 1rem) calc(29 / 16 * 1rem) calc(21 / 16 * 1rem);
   margin-inline: auto;
@@ -1327,6 +1328,11 @@ body{
   text-align: right;
 }
 @media (min-width: 768px) {
+.heading-inline{
+  display: inline-block;
+  margin-bottom: 1rem;
+  text-align: right;
+}
 .heading .-sm{
   font-size: calc(40 / 16 * 1rem);
 }
@@ -1374,7 +1380,7 @@ body{
 .heading-wrapper{
   width: calc(100% - 100px);
   max-width: calc(900 / 16 * 1rem);
-  padding-bottom: calc(535 / 16 * 1rem);
+  padding-bottom: calc(635 / 16 * 1rem);
   margin-inline:auto;
 }
 }
@@ -1819,7 +1825,7 @@ body{
 }
 }
 .footer-copy{
-  paddong-bottom: calc(36 / 16 * 1rem);
+  padding-bottom: calc(30 / 16 * 1rem);
   color: var(--white);
   text-align: center;
 }
@@ -1837,6 +1843,19 @@ body{
 }
 .archive-list--item + .archive-list--item{
   margin-top: calc(50 / 16 * 1rem);
+}
+.archive-list--body{
+  position: relative;
+}
+.archive-list--body::before{
+  position: absolute;
+  right: calc(0 / 16 * 1rem);
+  bottom: calc(0 / 16 * 1rem);
+  width: 30px;
+  height: 30px;
+  content: "";
+  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M10.8333%2022.5L22.5%2015L10.8333%207.5V22.5ZM3.33333%2030C2.41667%2030%201.63194%2029.6736%200.979167%2029.0208C0.326389%2028.3681%200%2027.5833%200%2026.6667V3.33333C0%202.41667%200.326389%201.63194%200.979167%200.979167C1.63194%200.326389%202.41667%200%203.33333%200H26.6667C27.5833%200%2028.3681%200.326389%2029.0208%200.979167C29.6736%201.63194%2030%202.41667%2030%203.33333V26.6667C30%2027.5833%2029.6736%2028.3681%2029.0208%2029.0208C28.3681%2029.6736%2027.5833%2030%2026.6667%2030H3.33333ZM3.33333%2026.6667H26.6667V3.33333H3.33333V26.6667Z%22%20fill%3D%22%23FDD504%22%2F%3E%3C%2Fsvg%3E');
+  background-size:cover;
 }
 .archive-list--number{
   margin-bottom: calc(26 / 16 * 1rem);
@@ -1938,10 +1957,17 @@ body{
   position: relative;
   z-index: 3;
   max-width: calc(558 / 16 * 1rem);
-  padding: calc(20 / 16 * 1rem) calc(40 / 16 * 1rem);
+  padding: calc(40 / 16 * 1rem) calc(40 / 16 * 1rem);
   margin-inline:auto;
   border: 1px solid #fff;
 }
+  .custom-audio-player {
+    margin: 30px 0;
+  }
+    .player-controls {
+    margin-bottom: 30px;
+    text-align: left;
+  }
 .detail-title{
   font-family: var(--font-family-kaisei);
   font-size: calc(20 / 16 * 1rem);
@@ -2754,6 +2780,15 @@ img:focus{
   right: calc(-10 / 16 * 1rem);
   bottom: calc(500 / 16 * 1rem);
 }
+.category-bottom-share--twitter img{
+  width: calc(26 / 16 * 1rem);
+}
+.category-bottom-share--facebook img{
+  width: calc(32 / 16 * 1rem);
+}
+.category-bottom-share--instagram img{
+  width: calc(32 / 16 * 1rem);
+}
 @media (min-width: 1200px) {
   .category-bottom-share{
   position: absolute;
@@ -2816,10 +2851,17 @@ img:focus{
 }
 .table_beer1{
   position: absolute;
+  right: 200px;
+  bottom: 160px;
+  z-index: 2;
+  width: calc(120 / 16 * 1rem);
+}
+@media (min-width: 768px) {
+.table_beer1{
   right: 300px;
   bottom: 0px;
-  z-index: 2;
   width: calc(153 / 16 * 1rem);
+}
 }
 .category-bottom-share--list{
   display: flex;
@@ -2837,7 +2879,12 @@ img:focus{
   position: relative;
   z-index: 1;
   display: block;
+  padding-bottom: calc(500 / 16 * 1rem);
+}
+@media (min-width: 768px) {
+.archive{
   padding-bottom: calc(100 / 16 * 1rem);
+}
 }
 .archive-list--wrap{
   position: relative;
@@ -2852,11 +2899,16 @@ img:focus{
   top: 500px;
   right: -100px;
   z-index: 2;
+  display: none;
   width: calc(201 / 16 * 1rem);
+  animation: loop_rotate2 5s infinite;
 }
 @media (min-width: 768px) {
 .archive_people1{
   max-width: 124px;
+}
+.archive_people2{
+  display: block;
 }
 }
 .archive-list--inner{
@@ -3076,7 +3128,13 @@ img:focus{
   top: 400px;
   left: -100px;
   z-index: 2;
+  display: none;
   width: calc(153 / 16 * 1rem);
+}
+@media (min-width: 768px) {
+  .archive-table1{
+  display: block;
+  }
 }
 .archive-table2{
   position: absolute;
@@ -3100,7 +3158,7 @@ img:focus{
   z-index: 2;
   display: none;
   width: calc(76 / 16 * 1rem);
-
+  animation: loop_rotate2 4s infinite;
 }
 .archive-category-people2{
   position: absolute;
@@ -3109,6 +3167,7 @@ img:focus{
   z-index: 2;
   display: none;
   width: calc(56 / 16 * 1rem);
+  animation: loop_bounce 4s infinite;
 }
 .archive-category-table1{
   position: absolute;
@@ -3136,7 +3195,7 @@ display: block;
 @media (min-width: 768px) {
   .archive-footer{
   position: relative;
-  padding-top: 1700px;
+  padding-top: 1400px;
 }
 }
 .archive-category-art{
@@ -3217,6 +3276,7 @@ display: block;
 }
 .archive-people4 img{
   transform:  scaleX(-1);
+    animation: loop_rotate2 4s infinite;
 }
 @media (min-width: 768px) {
 .archive-people4{
@@ -3231,6 +3291,9 @@ display: block;
 .archive-people5{
   width: calc(160 / 16 * 1rem);
   transform: scaleX(1);
+}
+.archive-people5 img{
+  animation: loop_bounce2 2s infinite;
 }
 @media (min-width: 768px) {
   .archive-people5{
@@ -3287,7 +3350,7 @@ display: block;
   right: 10px;
   z-index: 1;
   width: calc(44 / 16 * 1rem);
-  /* animation: shake 10s infinite linear; */
+  animation: loop_bounce2 4s infinite linear;
 }
 @media (min-width: 768px) {
   .archive-footer-people1{
@@ -3304,8 +3367,8 @@ display: block;
   right: 86px;
   z-index: 1;
   width: calc(49 / 16 * 1rem);
-  /* animation: loop_rotate2 2s infinite linear;
-  animation-delay: .4s; */
+  animation: loop_rotate2 2s infinite linear;
+  animation-delay: .4s;
 }
 @media (min-width: 768px) {
 .archive-footer-people2{
@@ -3317,12 +3380,11 @@ display: block;
 }
 .archive-footer-people3{
   position: absolute;
-    top: 1295px;
-
+  top: 1295px;
   right: 112px;
   z-index: 1;
   width: calc(44 / 16 * 1rem);
-  /* animation: loop_rotate2 3s infinite linear; */
+  animation: loop_rotate2 6s infinite linear;
 }
 @media (min-width: 768px) {
   .archive-footer-people3{
@@ -3338,8 +3400,8 @@ display: block;
   right: 112px;
   z-index: 3;
   width: calc(50 / 16 * 1rem);
-  /* animation: mini-bounce 2s infinite linear ;
-  animation-delay: .4s; */
+  animation: mini-bounce 2s infinite linear ;
+  animation-delay: .4s;
 }
 @media (min-width: 768px) {
   .archive-footer-people4{
@@ -3808,8 +3870,6 @@ display: block;
   position: absolute;
   inset-inline: 0;
   z-index: 2;
-  display: none;
-
   margin-inline: auto;
   /* transform: rotate(-21.16deg) scaleX(-1); */
 }
@@ -4015,7 +4075,8 @@ display: block;
 .detail-people1--wrap{
   position: absolute;
   bottom: 30px;
-  left: 10px;
+  /* left: 10px; */
+  left: calc(245 / 1440 * 100vw);
   z-index: 2;
   width: 300px;
   height: 300px;
@@ -4064,8 +4125,9 @@ display: block;
   position: absolute;
   top: auto;
   right: auto;
+  /* left: calc(245 / 1440 * 100vw); */
+  right: 0;
   bottom: 64px;
-  left: calc(245 / 1440 * 100vw);
   z-index: 2;
   width: calc(84 / 1440 * 100vw);
   max-width:84px;
@@ -4081,7 +4143,14 @@ display: block;
 .detail-people1--wrap .archive-category-art--inner--content{
   position: absolute;
   top: -200px;
+  left: -100px;
   width: 300px;
+}
+@media (min-width: 768px) {
+  .detail-people1--wrap .archive-category-art--inner--content{
+  top: -200px;
+  left: -60px;
+}
 }
 .detail-beer{
   display: block;
@@ -4250,9 +4319,16 @@ display: block;
 .detail-photo{
   position: absolute;
   top: 57px;
-  left: 839px;
+  right: 839px;
   z-index: 2;
   width: 251px;
+}
+@media (min-width: 768px) {
+  .detail-photo{
+  top: 57px;
+  right: 350px;
+  width: 251px;
+}
 }
 .detail-green{
   position: absolute;
@@ -4424,7 +4500,7 @@ display: block;
 .archive-footer-credit{
   position: absolute;
   right: 24px;
-  bottom: 108px;
+  bottom: 508px;
 }
 @media (min-width: 768px) {
   .archive-footer-credit{
