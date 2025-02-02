@@ -2797,7 +2797,7 @@ img:focus{
 }
 }
 .category-bottom-share--people{
-  width: calc(100 / 16 * 1rem);
+  width: calc(130 / 16 * 1rem);
   animation: loop_rotate2 4s infinite;
 }
 @media (min-width: 768px) {
@@ -4074,9 +4074,8 @@ display: block;
 }
 .detail-people1--wrap{
   position: absolute;
-  bottom: 30px;
-  /* left: 10px; */
-  left: calc(245 / 1440 * 100vw);
+  bottom: -80px;
+  left: -60px;
   z-index: 2;
   width: 300px;
   height: 300px;
@@ -4384,12 +4383,18 @@ display: block;
   }
   .bg-green--leaf01{
     position: absolute;
-    top:122px;
-    left:130px;
+    top:92px;
+    left:100px;
     width: calc(217 / 16 * 1rem);
     transform-origin: 30% 30%;
   animation: gentleRotate 7.5s infinite;
   animation-delay: 1.5s;
+  }
+  @media (min-width: 768px) {
+  .bg-green--leaf01{
+    top:122px;
+    left:130px;
+  }
   }
   .bg-green--leaf02{
     position: absolute;
@@ -4421,6 +4426,7 @@ display: block;
   position: absolute;
   top: -29px;
   left: 126px;
+  z-index: 2;
   width: calc(126 / 16 * 1rem);
   transform-origin: top center;
   animation: gentleRotate 7.5s infinite;
@@ -4428,13 +4434,20 @@ display: block;
 }
 .bg-green--leaf06{
   position: absolute;
-  top: -100px;
-  left: 236px;
+  top: -70px;
+  left: 190px;
   width: calc(168 / 16 * 1rem);
   transform-origin: bottom left;
   animation: gentleRotate 7.5s infinite;
   animation-delay: 1.2s;
 }
+  @media (min-width: 768px) {
+  .bg-green--leaf06{
+  position: absolute;
+  top: -100px;
+  left: 236px;
+}
+  }
 .bg-green--leaf07{
   position: absolute;
   top: 40px;

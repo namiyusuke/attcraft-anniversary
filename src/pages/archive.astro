@@ -274,58 +274,62 @@ import { Image } from "astro:assets";
       </div>
     </div>
   </main>
-  <script client:load>
-    let xmlUrl2 = "https://anchor.fm/s/132fb79c/podcast/rss";
-    let allEpisodes = []; // 全エピソードを保存
-    let currentPage = 1;
-    const episodesPerPage = 10; // 1ページあたりの表示数
+  <p class="footer-copy">
+    <small>©2024 ︎Shibajuku.</small>
+  </p>
+</Layout>
+<script client:load>
+  let xmlUrl2 = "https://anchor.fm/s/132fb79c/podcast/rss";
+  let allEpisodes = []; // 全エピソードを保存
+  let currentPage = 1;
+  const episodesPerPage = 10; // 1ページあたりの表示数
 
-    // 全エピソードをフェッチして表示する
-    async function fetchAndDisplayFilteredEpisodes() {
-      try {
-        const response = await fetch(xmlUrl2);
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-        const items = xmlDoc.getElementsByTagName("item");
-        allEpisodes = []; // リセット
+  // 全エピソードをフェッチして表示する
+  async function fetchAndDisplayFilteredEpisodes() {
+    try {
+      const response = await fetch(xmlUrl2);
+      const xmlText = await response.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+      const items = xmlDoc.getElementsByTagName("item");
+      allEpisodes = []; // リセット
 
-        for (let i = 0; i < items.length; i++) {
-          const item = items[i];
-          const url = `episode-${items.length - i}`;
-          const titleElement = item.getElementsByTagName("title")[0];
-          const pubDateElement = item.getElementsByTagName("pubDate")[0];
-          const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const url = `episode-${items.length - i}`;
+        const titleElement = item.getElementsByTagName("title")[0];
+        const pubDateElement = item.getElementsByTagName("pubDate")[0];
+        const durationElement = item.getElementsByTagNameNS("*", "duration")[0];
 
-          // summaryの処理
-          let summary = "No summary";
-          const summaryElements = item.getElementsByTagNameNS("*", "summary");
-          if (summaryElements.length > 0) {
-            summary = summaryElements[0].textContent || "No summary";
-          }
+        // summaryの処理
+        let summary = "No summary";
+        const summaryElements = item.getElementsByTagNameNS("*", "summary");
+        if (summaryElements.length > 0) {
+          summary = summaryElements[0].textContent || "No summary";
+        }
 
-          // itunes:summaryの処理
-          let itunesSummary = "";
-          const itunesSummaryElements = item.getElementsByTagName("itunes:summary");
-          if (itunesSummaryElements.length > 0) {
-            itunesSummary = itunesSummaryElements[0].textContent || "";
-          }
+        // itunes:summaryの処理
+        let itunesSummary = "";
+        const itunesSummaryElements = item.getElementsByTagName("itunes:summary");
+        if (itunesSummaryElements.length > 0) {
+          itunesSummary = itunesSummaryElements[0].textContent || "";
+        }
 
-          const title = titleElement?.textContent || "No title";
-          const duration = durationElement?.textContent || "Unknown duration";
+        const title = titleElement?.textContent || "No title";
+        const duration = durationElement?.textContent || "Unknown duration";
 
-          // 日付のフォーマット変換
-          let formattedDate = "Unknown date";
-          if (pubDateElement) {
-            const pubDate = new Date(pubDateElement.textContent || "");
-            const year = pubDate.getFullYear();
-            const month = String(pubDate.getMonth() + 1).padStart(2, "0");
-            const day = String(pubDate.getDate()).padStart(2, "0");
-            formattedDate = `${year}年${month}月${day}日`;
-          }
+        // 日付のフォーマット変換
+        let formattedDate = "Unknown date";
+        if (pubDateElement) {
+          const pubDate = new Date(pubDateElement.textContent || "");
+          const year = pubDate.getFullYear();
+          const month = String(pubDate.getMonth() + 1).padStart(2, "0");
+          const day = String(pubDate.getDate()).padStart(2, "0");
+          formattedDate = `${year}年${month}月${day}日`;
+        }
 
-          allEpisodes.push({
-            html: `<article class="archive-list--item">
+        allEpisodes.push({
+          html: `<article class="archive-list--item">
           <div class="archive-list--body">
             <a href="/${url}">
             <h3 class="archive-list--number">${title}</h3>
@@ -337,88 +341,88 @@ import { Image } from "astro:assets";
             </a>
           </div>
         </article>`,
-            title: title.toLowerCase(), // 小文字に変換して検索しやすくする
-            summary: (itunesSummary || summary).toLowerCase(), // itunes:summary優先で小文字に変換
-          });
-        }
-
-        // 初期表示（最初の10件のみ）
-        renderEpisodes(allEpisodes, true);
-      } catch (error) {
-        console.error("Error fetching or parsing the XML:", error);
-        const summaryDisplay = document.getElementById("summary-display");
-        if (summaryDisplay) {
-          summaryDisplay.textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
-        }
+          title: title.toLowerCase(), // 小文字に変換して検索しやすくする
+          summary: (itunesSummary || summary).toLowerCase(), // itunes:summary優先で小文字に変換
+        });
       }
-    }
 
-    // エピソードをDOMにレンダリング
-    function renderEpisodes(episodes, isInitialLoad = false) {
+      // 初期表示（最初の10件のみ）
+      renderEpisodes(allEpisodes, true);
+    } catch (error) {
+      console.error("Error fetching or parsing the XML:", error);
       const summaryDisplay = document.getElementById("summary-display");
-      const loadMoreButton = document.getElementById("load-more");
-
       if (summaryDisplay) {
-        if (isInitialLoad) {
-          // 初期表示または検索時
-          currentPage = 1;
-          summaryDisplay.innerHTML = episodes
-            .slice(0, episodesPerPage)
-            .map((ep) => ep.html)
-            .join("");
-        } else {
-          // もっと見るボタンクリック時
-          const nextEpisodes = episodes
-            .slice(currentPage * episodesPerPage, (currentPage + 1) * episodesPerPage)
-            .map((ep) => ep.html)
-            .join("");
-          summaryDisplay.innerHTML += nextEpisodes;
-        }
-
-        // もっと見るボタンの表示制御
-        if (episodes.length > currentPage * episodesPerPage) {
-          loadMoreButton.style.display = "inline-block";
-        } else {
-          loadMoreButton.style.display = "none";
-        }
+        summaryDisplay.textContent = "XMLの読み込みまたは解析でエラーが発生しました。";
       }
     }
+  }
 
-    // フリーワード検索関数
-    window.filterEpisodes = function () {
-      const searchInput = document.getElementById("search-input").value.toLowerCase();
-      const filteredEpisodes = allEpisodes.filter(
-        (ep) => ep.title.includes(searchInput) || ep.summary.includes(searchInput)
-      );
-      renderEpisodes(filteredEpisodes, true); // 検索時は初期表示として扱う
-    };
+  // エピソードをDOMにレンダリング
+  function renderEpisodes(episodes, isInitialLoad = false) {
+    const summaryDisplay = document.getElementById("summary-display");
+    const loadMoreButton = document.getElementById("load-more");
 
-    // もっと見るボタンのイベントリスナー
-    document.getElementById("load-more")?.addEventListener("click", () => {
-      currentPage++;
-      renderEpisodes(allEpisodes, false);
-    });
+    if (summaryDisplay) {
+      if (isInitialLoad) {
+        // 初期表示または検索時
+        currentPage = 1;
+        summaryDisplay.innerHTML = episodes
+          .slice(0, episodesPerPage)
+          .map((ep) => ep.html)
+          .join("");
+      } else {
+        // もっと見るボタンクリック時
+        const nextEpisodes = episodes
+          .slice(currentPage * episodesPerPage, (currentPage + 1) * episodesPerPage)
+          .map((ep) => ep.html)
+          .join("");
+        summaryDisplay.innerHTML += nextEpisodes;
+      }
 
-    fetchAndDisplayFilteredEpisodes();
-    function Dialog() {
-      const dialog = document.querySelector(".js-dialog-content");
-      const dialogButton = document.querySelector(".js-dialog-open");
-      const dialogClose = document.querySelector(".baseDialog_close");
-      dialogButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        dialog.showModal();
-        document.documentElement.style.overflow = "hidden";
-      });
-      dialogClose.addEventListener("click", (e) => {
-        e.preventDefault();
-        dialog.close();
-        document.documentElement.style.overflow = "auto";
-      });
+      // もっと見るボタンの表示制御
+      if (episodes.length > currentPage * episodesPerPage) {
+        loadMoreButton.style.display = "inline-block";
+      } else {
+        loadMoreButton.style.display = "none";
+      }
     }
-    Dialog();
-  </script>
-  <style>
-    /* .more-button {
+  }
+
+  // フリーワード検索関数
+  window.filterEpisodes = function () {
+    const searchInput = document.getElementById("search-input").value.toLowerCase();
+    const filteredEpisodes = allEpisodes.filter(
+      (ep) => ep.title.includes(searchInput) || ep.summary.includes(searchInput)
+    );
+    renderEpisodes(filteredEpisodes, true); // 検索時は初期表示として扱う
+  };
+
+  // もっと見るボタンのイベントリスナー
+  document.getElementById("load-more")?.addEventListener("click", () => {
+    currentPage++;
+    renderEpisodes(allEpisodes, false);
+  });
+
+  fetchAndDisplayFilteredEpisodes();
+  function Dialog() {
+    const dialog = document.querySelector(".js-dialog-content");
+    const dialogButton = document.querySelector(".js-dialog-open");
+    const dialogClose = document.querySelector(".baseDialog_close");
+    dialogButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      dialog.showModal();
+      document.documentElement.style.overflow = "hidden";
+    });
+    dialogClose.addEventListener("click", (e) => {
+      e.preventDefault();
+      dialog.close();
+      document.documentElement.style.overflow = "auto";
+    });
+  }
+  Dialog();
+</script>
+<style>
+  /* .more-button {
       padding: 1rem 2rem;
       color: white;
       cursor: pointer;
@@ -428,8 +432,7 @@ import { Image } from "astro:assets";
       transition: opacity 0.3s;
     } */
 
-    .more-button:hover {
-      opacity: 0.8;
-    }
-  </style>
-</Layout>
+  .more-button:hover {
+    opacity: 0.8;
+  }
+</style>
