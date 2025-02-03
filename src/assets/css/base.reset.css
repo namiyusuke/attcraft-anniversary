@@ -1630,17 +1630,26 @@ body{
 }
 .more-button{
   position: relative;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  width: calc(308 / 16 * 1rem);
-  height: calc(44 / 16 * 1rem);
+  width: calc(260 / 16 * 1rem);
+  height: calc(50 / 16 * 1rem);
   margin-inline:auto;
   font-family: var(--font-family-kaisei);
-  font-size: calc(24 / 16 * 1rem);
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1;
   color: var(--white);
+  cursor: pointer;
   border: 2px solid var(--yellow);
   border-radius: calc(1px / 0 );
+}
+@media (min-width: 768px) {
+  .more-button{
+    width: calc(400 / 16 * 1rem);
+    height: calc(50 / 16 * 1rem);
+    font-size: calc(24 / 16 * 1rem);
+  }
 }
 .category-triangle{
   position: relative;
@@ -2856,16 +2865,25 @@ img:focus{
   z-index: 2;
   width: calc(120 / 16 * 1rem);
 }
+.table_beer1.-archive{
+  right: 200px;
+  bottom: -200px;
+}
 @media (min-width: 768px) {
 .table_beer1{
   right: 300px;
   bottom: 0px;
   width: calc(153 / 16 * 1rem);
 }
+.table_beer1.-archive{
+    right: 700px;
+  bottom: -200px;
+}
 }
 .category-bottom-share--list{
   display: flex;
   gap: 10px;
+  align-items: center;
   justify-content: center;
   margin-block-start: 10px;
 }
