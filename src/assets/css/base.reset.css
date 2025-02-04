@@ -2927,7 +2927,7 @@ img:focus{
   position: relative;
   z-index: 1;
   display: block;
-  padding-bottom: calc(500 / 16 * 1rem);
+  padding-bottom: calc(370 / 16 * 1rem);
 }
 @media (min-width: 768px) {
 .archive{
@@ -3322,7 +3322,8 @@ display: block;
   width: calc(72 / 16 * 1rem);
   transform: translateX(-50%);
 }
-.archive-people4 img{
+.archive-people4--img{
+  display: inline-block;
   transform:  scaleX(-1);
     animation: loop_rotate2 4s infinite;
 }
@@ -4250,7 +4251,7 @@ display: block;
   transform: scaleX(1);
 }
 .detail-beer--wrap{
-  bottom: 170px;
+  bottom: 370px;
   left: calc(85 / 1440 * 100vw);
 }
 .detail-beer--wrap .archive-category-art--txt{
@@ -4633,7 +4634,7 @@ display: block;
 .archive-footer-credit{
   position: absolute;
   right: 24px;
-  bottom: 508px;
+  bottom: 408px;
 }
 @media (min-width: 768px) {
   .archive-footer-credit{
@@ -4705,29 +4706,22 @@ display: block;
 .baseDialog_close{
   position: absolute;
   top: 40px;
-  right: 40px;
-  width: calc(24 / 16 * 1rem);
-  height: calc(24 / 16 * 1rem);
+  right: 20px;
+  padding: calc(14 / 16 * 1rem);
+  font-family: var(--font-family-kaisei);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  background-color: #FEFEFD;
+  border-radius: calc(14 / 16 * 1rem);
 }
-.baseDialog_close::before,
-.baseDialog_close::after{
-  position: absolute;
-  inset: 0;
-  inset-block: 0%;
-  width: 100%;
-  height: 1px;
-  margin: auto;
-  content: "";
-  background-color: #fff;
-}
-.baseDialog_close::before{
-  transform: rotate(30deg);
-}
-.baseDialog_close::after{
-  transform: rotate(-30deg);
-}
-.baseDialog_content{
-  height: 100%;
+@media (min-width: 768px) {
+.baseDialog_close{
+  top: 60px;
+  right: 100px;
+  padding: calc(16 / 16 * 1rem);
+  font-size: calc(16 / 16 * 1rem);
+  }
 }
 .baseDialog_content_image{
   display: grid;
