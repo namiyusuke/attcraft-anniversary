@@ -5,6 +5,7 @@ import menu from "@assets/img/menu-title.svg";
 import light_parts2 from "@assets/img/light_parts2.png";
 import light_parts3 from "@assets/img/light_parts3.png";
 import chockArt from "@assets/img/chock-art.png";
+import decorate_ear from "@assets/img/decorate_ear.svg";
 import portfolio_people from "@assets/img/portfolio_people.png";
 import categoryPeople1 from "@assets/img/category_people1.png";
 import categoryPeople2 from "@assets/img/category_people2.png";
@@ -81,9 +82,12 @@ import bgm from "@assets/audio/bgm.mp3";
     </div>
   </main>
   <section class="menu-section">
-    <figure class="category-people1">
-      <Image src={categoryPeople1} alt="就活中の人々" />
-    </figure>
+    <div class="category-people1">
+      <div class="decorate-ear -left">
+        <!-- <Image class="decorate-ear--img" src={decorate_ear} alt="装飾耳" /> -->
+        <Image class="category-people1--img" src={categoryPeople1} alt="就活中の人々" />
+      </div>
+    </div>
     <figure class="category-people2">
       <Image src={categoryPeople2} alt="就活中の人々" />
     </figure>
