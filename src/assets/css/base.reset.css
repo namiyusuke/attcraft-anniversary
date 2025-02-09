@@ -509,23 +509,7 @@ body{
   color: var(--white);
 }
 }
- @keyframes softStrokeGlow {
-    0%, 100% {
-        -webkit-text-stroke: 1px var(--yellow);
-        text-stroke: 1px var(--yellow);
-        -webkit-filter: drop-shadow(0 0 2px var(--yellow))
-                        drop-shadow(0 0 3px rgba(253, 213, 4, 0.6));
-        filter: drop-shadow(0 0 2px var(--yellow))
-                drop-shadow(0 0 3px rgba(253, 213, 4, 0.6));
-    }
 
-    50% {
-        -webkit-text-stroke: 1px rgba(253, 213, 4, 0.7);
-        text-stroke: 1px rgba(253, 213, 4, 0.7);
-        -webkit-filter: drop-shadow(0 0 4px rgba(253, 213, 4, 0.4));
-        filter: drop-shadow(0 0 4px rgba(253, 213, 4, 0.4));
-    }
-}
 .mv-kanpai{
   position: absolute;
   top: calc(650 / 16 * 1rem);
@@ -634,14 +618,7 @@ body{
   opacity: 1;
   transform: scale(1);
 }
-@keyframes loop_rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
+
 .hamburger-menu-link .text svg{
   width: 100%;
   height: 100%;
@@ -2368,14 +2345,7 @@ body{
   animation-delay: calc(1s + (var(--index) * 0.04s));
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+
 
 /* .category-top--text .-lg{
   font-size: 1.3rem;
@@ -3139,10 +3109,7 @@ img:focus{
   width: calc(48 / 16 * 1rem);
   }
 }
-  @keyframes move {
-      0% { offset-distance: 0%; }
-      100% { offset-distance: 100%; }
-    }
+
 .is-shown .maps-gesture__contents {
   transform: translate(-50%, -50%) scale(1);
 }
@@ -3698,200 +3665,7 @@ display: block;
   background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%22303%22%20height%3D%22241%22%20viewBox%3D%220%200%20303%20241%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M301.639%20114.667C299.844%2088.3522%20280.256%2065.1887%20257.023%2061.8858C257.324%2040.1438%20243.48%2020.4894%20225.176%2013.5948C206.883%206.70084%20185.109%2012.9261%20171.731%2028.8844C155.199%206.54014%20126.68%20-3.53175%20101.528%204.09282C76.3762%2011.7174%2055.8723%2036.6526%2051.0641%2065.4624C28.2418%2066.0843%203.32411%2090.6284%201.45732%20119.365C-0.410033%20148.113%2021.115%20175.864%2046.6108%20177.586C47.1298%20178.671%2050.4087%20179.064%2053.6771%20179.456C63.6818%20205.543%2085.8331%20225.136%20110.763%20229.928C130.903%20233.803%20152.363%20227.92%20169.144%20214.56C177.8%20226.955%20190.308%20236.108%20204.206%20239.871C197.654%20231.669%20192.729%20221.888%20189.706%20211.396C201.591%20218.756%20216.147%20220.801%20229.281%20216.429C246.19%20210.792%20260.145%20194.747%20264.804%20175.593C287.275%20167.721%20303.445%20140.982%20301.639%20114.667Z%22%20stroke%3D%22%23FEFEFD%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
 }
 }
-/* .archive-footer-object{
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  z-index: 2;
-} */
-@keyframes tekuteku-round {
-  /* 右から左へ移動 */
-  0%, 100% {
-    transform: translateX(0) translateY(0);
-  }
-  20% {
-    transform: translateX(-80px) translateY(-5px);
-  }
-  40% {
-    transform: translateX(-160px) translateY(0);
-  }
-  /* 左で向きを変える */
-  45% {
-    transform: translateX(-200px) translateY(0) scaleX(-1);
-  }
-  /* 左から右へ移動 */
-  60% {
-    transform: translateX(-100px) translateY(-5px) scaleX(-1);
-  }
-  80% {
-    transform: translateX(0) translateY(0) scaleX(-1);
-  }
-  /* 右で向きを戻す */
-  85% {
-    transform: translateX(0) translateY(0) scaleX(1);
-  }
-}
-@keyframes loop_bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-6px);
-  }
-}
-@keyframes loop_bounce2 {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(3px);
-  }
-  40% {
-    transform: translateY(0px);
-  }
-  60% {
-    transform: translateY(-3px);
-  }
-}
-@keyframes loop_rotate2 {
-  0%, 20%, 50%, 80%, 100% {
-    transform: rotate(0deg);
-  }
-  40% {
-    transform: rotate(5deg);
-  }
-  60% {
-    transform: rotate(-5deg);
-  }
-}
-@keyframes loop_pingpong {
-  0% {
-    transform: translateX(0) scaleX(1);
-  }
-  24.99% {
-    transform: translateX(-100px) scaleX(1);
-  }
-  25% {
-    transform: translateX(-100px) scaleX(-1);
-  }
-  74.99% {
-    transform: translateX(0) scaleX(-1);
-  }
-  75% {
-    transform: translateX(0) scaleX(1);
-  }
-  100% {
-    transform: translateX(0) scaleX(1);
-  }
-}
-@keyframes mini-shake {
-  /* 小刻みな左右の揺れ */
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10% {
-    transform: translateX(-3px);
-  }
-  20% {
-    transform: translateX(2px);
-  }
-  30% {
-    transform: translateX(-3px);
-  }
-  40% {
-    transform: translateX(2px);
-  }
-  50% {
-    transform: translateX(-2px);
-  }
-  60% {
-    transform: translateX(3px);
-  }
-  70% {
-    transform: translateX(-2px);
-  }
-  80% {
-    transform: translateX(2px);
-  }
-  90% {
-    transform: translateX(-1px);
-  }
-}
 
-/* より激しい揺れバージョン */
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10% {
-    transform: translateX(-5px);
-  }
-  20% {
-    transform: translateX(5px);
-  }
-  30% {
-    transform: translateX(-7px);
-  }
-  40% {
-    transform: translateX(7px);
-  }
-  50% {
-    transform: translateX(-5px);
-  }
-  60% {
-    transform: translateX(5px);
-  }
-  70% {
-    transform: translateX(-3px);
-  }
-  80% {
-    transform: translateX(3px);
-  }
-  90% {
-    transform: translateX(-2px);
-  }
-}
-/* 優しい上下の揺れ */
-@keyframes mini-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-2px);
-  }
-  50% {
-    transform: translateY(1px);
-  }
-  75% {
-    transform: translateY(-1px);
-  }
-}
-
-/* よりはっきりとした上下の揺れ */
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-4px);
-  }
-  50% {
-    transform: translateY(2px);
-  }
-  75% {
-    transform: translateY(-2px);
-  }
-}
-
-/* 息遣いのような微細な上下の動き */
-@keyframes breathing {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-1px);
-  }
-}
 .archive-green--wrap{
   position: absolute;
   bottom: 0px;
@@ -4983,14 +4757,311 @@ display: block;
   max-width: 364px;
   height: 100%;
   aspect-ratio: 282 / 429;
+  overflow: hidden;
 }
 .flip-container img {
   position: absolute;
   inset: 0;
+  z-index: 10;
   margin: auto;
   opacity: 0;
   transition: opacity 0.7s;
 }
 .flip-container img.active {
   opacity: 1;
+}
+.flip-container .flip-container--chra{
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  margin: auto;
+}
+.flip-container--chra.-chra1{
+  top: auto;
+  bottom: 30%;
+  max-width: 102px;
+  animation: loop_rotate2 7s ease-in-out infinite;
+}
+.flip-container--chra.-chra2{
+  top: 20%;
+  right: auto;
+  bottom: auto;
+  left: 20%;
+  max-width: 87px;
+  transform: scaleX(-1);
+  animation: loop_bounce2 7s ease-in-out infinite;
+}
+.flip-container .flip-container--obj{
+  right: auto;
+  left: 10%;
+  max-width: 87px;
+  margin: auto;
+}
+.flip-finish{
+  opacity: 0;
+  transition: opacity 0.7s;
+  transition-delay: 2s;
+}
+.flip-container--light{
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  bottom: auto;
+  left: auto;
+  display: block;
+  width: min(calc(100 / 375 * 100vw), 100px);
+  height: min(calc(100 / 375 * 100vw), 100px);
+  content: "";
+  background: radial-gradient(50% 50% at 50% 50%, rgba(253, 213, 4, 0.6) 0%, rgba(255, 255, 255, 0.12) 100%);
+  filter: blur(10px);
+  border-radius: 50%;
+  animation: scaleUp 10s ease-in-out infinite;
+}
+@media (min-width: 768px) {
+.flip-container--light{
+  width: min(calc(200 / 1600 * 100vw), 200px);
+  height: min(calc(200 / 1600 * 100vw), 200px);
+}
+}
+  @keyframes move {
+      0% { offset-distance: 0%; }
+      100% { offset-distance: 100%; }
+    }
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes softStrokeGlow {
+    0%, 100% {
+        -webkit-text-stroke: 1px var(--yellow);
+        text-stroke: 1px var(--yellow);
+        -webkit-filter: drop-shadow(0 0 2px var(--yellow))
+                        drop-shadow(0 0 3px rgba(253, 213, 4, 0.6));
+        filter: drop-shadow(0 0 2px var(--yellow))
+                drop-shadow(0 0 3px rgba(253, 213, 4, 0.6));
+    }
+
+    50% {
+        -webkit-text-stroke: 1px rgba(253, 213, 4, 0.7);
+        text-stroke: 1px rgba(253, 213, 4, 0.7);
+        -webkit-filter: drop-shadow(0 0 4px rgba(253, 213, 4, 0.4));
+        filter: drop-shadow(0 0 4px rgba(253, 213, 4, 0.4));
+    }
+}
+@keyframes loop_rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes scaleUp {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-10%, 20%) scale(1.1);
+  }
+  50% {
+    transform: translate(-70%, 80%) scale(1.2);
+  }
+  75% {
+    transform: translate(-30%, 80%) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+@keyframes tekuteku-round {
+  /* 右から左へ移動 */
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  20% {
+    transform: translateX(-80px) translateY(-5px);
+  }
+  40% {
+    transform: translateX(-160px) translateY(0);
+  }
+  /* 左で向きを変える */
+  45% {
+    transform: translateX(-200px) translateY(0) scaleX(-1);
+  }
+  /* 左から右へ移動 */
+  60% {
+    transform: translateX(-100px) translateY(-5px) scaleX(-1);
+  }
+  80% {
+    transform: translateX(0) translateY(0) scaleX(-1);
+  }
+  /* 右で向きを戻す */
+  85% {
+    transform: translateX(0) translateY(0) scaleX(1);
+  }
+}
+@keyframes loop_bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes loop_bounce2 {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(3px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes loop_rotate2 {
+  0%, 20%, 50%, 80%, 100% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes loop_pingpong {
+  0% {
+    transform: translateX(0) scaleX(1);
+  }
+  24.99% {
+    transform: translateX(-100px) scaleX(1);
+  }
+  25% {
+    transform: translateX(-100px) scaleX(-1);
+  }
+  74.99% {
+    transform: translateX(0) scaleX(-1);
+  }
+  75% {
+    transform: translateX(0) scaleX(1);
+  }
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+}
+@keyframes mini-shake {
+  /* 小刻みな左右の揺れ */
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-3px);
+  }
+  20% {
+    transform: translateX(2px);
+  }
+  30% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(2px);
+  }
+  50% {
+    transform: translateX(-2px);
+  }
+  60% {
+    transform: translateX(3px);
+  }
+  70% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+  90% {
+    transform: translateX(-1px);
+  }
+}
+
+/* より激しい揺れバージョン */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-5px);
+  }
+  20% {
+    transform: translateX(5px);
+  }
+  30% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  70% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+  90% {
+    transform: translateX(-2px);
+  }
+}
+/* 優しい上下の揺れ */
+@keyframes mini-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}
+
+/* よりはっきりとした上下の揺れ */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+}
+
+/* 息遣いのような微細な上下の動き */
+@keyframes breathing {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
 }
