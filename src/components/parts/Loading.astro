@@ -24,11 +24,12 @@ import { Image } from "astro:assets";
     <div class="loading-layer1">
       <p class="loading-text">
         <span class="js-text-target loading-text--top"
-          >「シバジュク酒場」… それはShibajukuサロンメンバーが集まるポッドキャスト</span
+          ><span class="-sp u-wbr">「シバジュク酒場」…</span> それはShibajukuサロンメンバーが集まるポッドキャスト</span
         >
         <span class="loading-text--bottom js-text-target"
-          >バーで隣に座っているひとの会話を<em class="loading-text--em">「こっそり盗み聴き」</em
-          >をコンセプトにお届けしています
+          >バーで隣に座っているひとの会話を<em class="loading-text--em">「こっそり盗み聴き」</em><span class="-sp u-wbr"
+            >をコンセプトに</span
+          >お届けしています
         </span>
       </p>
     </div>
@@ -51,7 +52,7 @@ import { Image } from "astro:assets";
             <span class="flip-finish flip-container--light"></span>
           </div>
           <div class="loading-message">
-            <p class="loading-message--text">音声をONにすると、ラジオの一部が流れます！</p>
+            <p class="loading-message--text"><span class="-sp">音声をONにすると、ラジオの</span>一部が流れます！</p>
             <div class="loading-btn--wrap">
               <button type="button" class="js-loading--on js-loading--open loading-btn">
                 <span class="loading-btn--inner">
@@ -93,7 +94,7 @@ import { Image } from "astro:assets";
 <script>
   import { gsap } from "gsap";
   import spanWrap from "@assets/js/utils/spanWrap";
-  const counter = { value: 0 };
+
   function flipAnimation(options = {}) {
     const {
       containerSelector = ".flip-container",
@@ -160,42 +161,6 @@ import { Image } from "astro:assets";
       },
     };
   }
-  document.querySelectorAll(".js-text-target").forEach((el) => spanWrap(el, counter));
-  const tl = gsap.timeline({});
-  tl.to(".js-text", {
-    duration: 1.5,
-    autoAlpha: 1,
-    ease: "power2.inOut",
-    stagger: 0.04,
-  })
-    .to(".loading-layer1", {
-      duration: 1.5,
-      autoAlpha: 0,
-      ease: "power2.inOut",
-    })
-    .to(".loading-layer2", {
-      duration: 1.5,
-      autoAlpha: 1,
-      ease: "power1.inOut",
-      onComplete: () => {
-        flipAnimation();
-      },
-    });
-  // .to(".loading-front", {
-  //   rotateY: "-160deg",
-  //   duration: 1,
-  //   ease: "linear",
-  // })
-  // .to(
-  //   ".loading-group",
-  //   {
-  //     translateX: "50%",
-  //     duration: 1.3,
-  //     ease: "linear",
-  //   },
-  //   "<"
-  // );
-  // ローディングのグラデーション
   function RootLoading() {
     let obj = { value: 0 };
     let radius = 1.5;
@@ -223,18 +188,49 @@ import { Image } from "astro:assets";
       },
     });
   }
+  // セッションストレージで初回訪問を管理
+  const isFirstVisit = !sessionStorage.getItem("hasVisited");
+  if (isFirstVisit) {
+    // 初回訪問時のみアニメーションを実行
+    initializeLoadingAnimation();
+    // 訪問済みフラグを設定
+    sessionStorage.setItem("hasVisited", "true");
+  } else {
+    // 2回目以降の訪問ではローディング画面を非表示
+    document.querySelector(".loading-wrap").style.display = "none";
+    document.querySelector(".maps-gesture").classList.add("is-shown");
+  }
+  function initializeLoadingAnimation() {
+    const counter = { value: 0 };
+    document.querySelectorAll(".js-text-target").forEach((el) => spanWrap(el, counter));
+    const tl = gsap.timeline({});
+    tl.to(".js-text", {
+      duration: 1.5,
+      autoAlpha: 1,
+      ease: "power2.inOut",
+      stagger: 0.02,
+    })
+      .to(".loading-layer1", {
+        duration: 1.5,
+        autoAlpha: 0,
+        ease: "power2.inOut",
+      })
+      .to(".loading-layer2", {
+        duration: 1.5,
+        autoAlpha: 1,
+        ease: "power1.inOut",
+        onComplete: () => {
+          flipAnimation();
+        },
+      });
+    // ローディングのグラデーション
+  }
   const loadingBtn = document.querySelectorAll(".js-loading--open");
   const loadingOn = document.querySelector(".js-loading--on");
   const mapsGesture = document.querySelector(".maps-gesture");
   loadingBtn.forEach((btn) => {
     btn.addEventListener("click", () => {
       RootLoading();
-      // gsap.to(".loading", {
-      //   autoAlpha: 0,
-      //   duration: 0.5,
-      //   ease: "power1.inOut",
-      // });
-
       mapsGesture.classList.add("is-shown");
     });
   });
