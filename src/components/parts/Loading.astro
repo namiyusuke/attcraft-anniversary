@@ -3,6 +3,15 @@ import menu from "@assets/img/menu-title.svg";
 import light01 from "@assets/img/light_01.png";
 import onMisic from "@assets/img/onMisic.png";
 import offMisic from "@assets/img/offMisic.png";
+import door01 from "@assets/img/intro_door01.png";
+import door02 from "@assets/img/intro_door02.png";
+import door03 from "@assets/img/intro_door03.png";
+import door04 from "@assets/img/intro_door04.png";
+import door05 from "@assets/img/intro_door05.png";
+import door06 from "@assets/img/intro_door06.png";
+import door07 from "@assets/img/intro_door07.png";
+import door08 from "@assets/img/intro_door08.png";
+import door09 from "@assets/img/intro_door09.png";
 import logo from "@assets/img/pj_logo.png";
 import { Image } from "astro:assets";
 ---
@@ -22,7 +31,37 @@ import { Image } from "astro:assets";
     </div>
     <div class="loading-layer2">
       <div class="loading-relative">
-        <div class="loading-perspective">
+        <div class="flip-container">
+          <div class="flip-container--inner">
+            <Image data-index="1" src={door01} alt="" width="564" height="858" />
+            <Image data-index="2" src={door02} alt="" width="564" height="858" />
+            <Image data-index="3" src={door03} alt="" width="564" height="858" />
+            <Image data-index="4" src={door04} alt="" width="564" height="858" />
+            <Image data-index="5" src={door05} alt="" width="564" height="858" />
+            <Image data-index="6" src={door06} alt="" width="564" height="858" />
+            <Image data-index="7" src={door07} alt="" width="564" height="858" />
+            <Image data-index="8" src={door08} alt="" width="564" height="858" />
+            <Image data-index="9" src={door09} alt="" width="564" height="858" />
+          </div>
+          <div class="loading-message">
+            <p class="loading-message--text">音声をONにすると、ラジオの一部が流れます！</p>
+            <div class="loading-btn--wrap">
+              <button type="button" class="js-loading--on js-loading--open loading-btn">
+                <span class="loading-btn--inner">
+                  <sapn class="loading-btn--text">ON</sapn>
+                  <Image class="loading-btn--icon1" src={onMisic} alt="音あり" />
+                </span>
+              </button>
+              <button type="button" class="js-loading--open loading-btn">
+                <span class="loading-btn--inner">
+                  <span class="loading-btn--text">OFF</span>
+                  <Image class="loading-btn--icon2" src={offMisic} alt="音なし" />
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="loading-perspective">
           <div class="loading-group">
             <div class="loading-front">
               <div class="loading-front--inner"></div>
@@ -39,24 +78,7 @@ import { Image } from "astro:assets";
             </div>
             <div class="loading-spine"></div>
           </div>
-        </div>
-      </div>
-      <div class="loading-message">
-        <p class="loading-message--text">音声をONにすると、ラジオの一部が流れます！</p>
-        <div class="loading-btn--wrap">
-          <button type="button" class="js-loading--on js-loading--open loading-btn">
-            <span class="loading-btn--inner">
-              <sapn class="loading-btn--text">ON</sapn>
-              <Image class="loading-btn--icon1" src={onMisic} alt="音あり" />
-            </span>
-          </button>
-          <button type="button" class="js-loading--open loading-btn">
-            <span class="loading-btn--inner">
-              <span class="loading-btn--text">OFF</span>
-              <Image class="loading-btn--icon2" src={offMisic} alt="音なし" />
-            </span>
-          </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -65,6 +87,69 @@ import { Image } from "astro:assets";
   import { gsap } from "gsap";
   import spanWrap from "@assets/js/utils/spanWrap";
   const counter = { value: 0 };
+  function flipAnimation(options = {}) {
+    const {
+      containerSelector = ".flip-container",
+      imageSelector = "img",
+      defaultDuration = 500,
+      maxFrames = 8,
+      finalScale = 1,
+    } = options;
+
+    const flipContainer = document.querySelector(containerSelector);
+    const flipTargets = flipContainer.querySelectorAll(imageSelector);
+    let currentIndex = 0;
+    let isAnimating = true;
+
+    // 最初の画像を表示
+    flipTargets[0].classList.add("active");
+
+    function animate() {
+      if (!isAnimating) return;
+
+      if (currentIndex < maxFrames) {
+        // 現在の画像を非表示
+        flipTargets[currentIndex].classList.remove("active");
+        currentIndex++;
+        // 次の画像を表示
+        flipTargets[currentIndex].classList.add("active");
+
+        // 最後のフレームでスケール変更
+        if (currentIndex === maxFrames) {
+          flipContainer.style.transform = `scale(${finalScale})`;
+        }
+
+        // 次のフレームの表示時間を取得
+        const duration = flipTargets[currentIndex].dataset.duration || defaultDuration;
+        setTimeout(animate, parseInt(duration));
+      }
+    }
+
+    // アニメーション開始
+    const firstDuration = flipTargets[0].dataset.duration || defaultDuration;
+    setTimeout(animate, parseInt(firstDuration));
+
+    // コントロール用の関数を返す
+    return {
+      stop() {
+        isAnimating = false;
+      },
+      resume() {
+        if (!isAnimating) {
+          isAnimating = true;
+          animate();
+        }
+      },
+      reset() {
+        currentIndex = 0;
+        flipTargets.forEach((target) => target.classList.remove("active"));
+        flipTargets[0].classList.add("active");
+        flipContainer.style.transform = "";
+        isAnimating = true;
+        animate();
+      },
+    };
+  }
   document.querySelectorAll(".js-text-target").forEach((el) => spanWrap(el, counter));
   const tl = gsap.timeline({});
   tl.to(".js-text", {
@@ -82,30 +167,65 @@ import { Image } from "astro:assets";
       duration: 1.5,
       autoAlpha: 1,
       ease: "power1.inOut",
-    })
-    .to(".loading-front", {
-      rotateY: "-160deg",
-      duration: 1,
-      ease: "linear",
-    })
-    .to(
-      ".loading-group",
-      {
-        translateX: "50%",
-        duration: 1.3,
-        ease: "linear",
+      onComplete: () => {
+        flipAnimation();
       },
-      "<"
-    );
+    });
+  // .to(".loading-front", {
+  //   rotateY: "-160deg",
+  //   duration: 1,
+  //   ease: "linear",
+  // })
+  // .to(
+  //   ".loading-group",
+  //   {
+  //     translateX: "50%",
+  //     duration: 1.3,
+  //     ease: "linear",
+  //   },
+  //   "<"
+  // );
+  // ローディングのグラデーション
+  function RootLoading() {
+    let obj = { value: 0 };
+    let radius = 1.5;
+    let gradientWidth = 0;
+    const el = document.querySelector(".loading");
+    const width = el.offsetWidth * 0.5;
+    const height = el.offsetHeight;
+
+    radius = Math.sqrt(width * width + height * height) * 1.2;
+    gradientWidth = radius * 0.3;
+
+    gsap.to(obj, {
+      value: 1,
+      duration: 1,
+      delay: 0,
+      ease: "sine",
+      onUpdate: () => {
+        const e = obj.value * radius;
+        el.style.setProperty("--rootLoadingGradientValue1", `${Math.max(0, e - gradientWidth)}px`);
+        el.style.setProperty("--rootLoadingGradientValue2", `${e}px`);
+        el.style.setProperty("--rootLoadingGradientValue3", `${e + gradientWidth}px`);
+      },
+      onComplete: () => {
+        el.classList.add("is-hidden");
+      },
+    });
+  }
   const loadingBtn = document.querySelectorAll(".js-loading--open");
   const loadingOn = document.querySelector(".js-loading--on");
+  const mapsGesture = document.querySelector(".maps-gesture");
   loadingBtn.forEach((btn) => {
     btn.addEventListener("click", () => {
-      gsap.to(".loading", {
-        autoAlpha: 0,
-        duration: 0.5,
-        ease: "power1.inOut",
-      });
+      RootLoading();
+      // gsap.to(".loading", {
+      //   autoAlpha: 0,
+      //   duration: 0.5,
+      //   ease: "power1.inOut",
+      // });
+
+      mapsGesture.classList.add("is-shown");
     });
   });
 </script>
