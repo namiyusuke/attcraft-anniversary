@@ -721,4 +721,16 @@ import bgm from "@assets/audio/bgm.mp3";
     }
   }
   new BGM();
+  function hoverClass() {
+    const hoverClass = document.querySelectorAll(".js-spotlight");
+    hoverClass.forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        element.classList.add("is-hover");
+      });
+      element.addEventListener("mouseleave", () => {
+        element.classList.remove("is-hover");
+      });
+    });
+  }
+  hoverClass();
 </script>
