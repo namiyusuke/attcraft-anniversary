@@ -112,7 +112,7 @@ import bgm from "@assets/audio/bgm.mp3";
           <div class="bg-spotlight bg-drinkMenu">
             <Image src={drinkMenu} alt="メニューの写真" />
           </div>
-          <div class="js-spotlight bg-direction">
+          <div class="bg-direction js-spotlight">
             <a href="/direction/">
               <audio controls data-auto-play data-audio="direction"></audio>
               <span class="odject-direction--people">
@@ -123,7 +123,7 @@ import bgm from "@assets/audio/bgm.mp3";
               </span>
             </a>
           </div>
-          <div class="js-spotlight bg-coding">
+          <div class="bg-coding js-spotlight">
             <a href="/coding/">
               <audio controls data-auto-play data-audio="coding"></audio>
               <span class="odject-coding--people">
@@ -134,7 +134,7 @@ import bgm from "@assets/audio/bgm.mp3";
               </span>
             </a>
           </div>
-          <div class="js-spotlight bg-design">
+          <div class="bg-design js-spotlight">
             <a href="/design/">
               <audio controls data-auto-play data-audio="design"></audio>
               <span class="odject-design--people">
@@ -227,7 +227,7 @@ import bgm from "@assets/audio/bgm.mp3";
             <Image src={bar_bottomTable_char5} alt="バーの下のテーブル" />
           </div>
         </div>
-        <div class="js-spotlight bg-jobHunting">
+        <div class="bg-jobHunting js-spotlight">
           <a href="/job-hunting/">
             <audio controls data-auto-play data-audio="jobHunting"></audio>
             <span class="odject-jobHunting--people">
@@ -238,7 +238,7 @@ import bgm from "@assets/audio/bgm.mp3";
             </span>
           </a>
         </div>
-        <div class="js-spotlight bg-company">
+        <div class="bg-company js-spotlight">
           <a href="/company/">
             <audio controls data-auto-play data-audio="company"></audio>
             <span class="odject-company--people">
@@ -249,7 +249,7 @@ import bgm from "@assets/audio/bgm.mp3";
             </span>
           </a>
         </div>
-        <div class="js-spotlight bg-freeLance">
+        <div class="bg-freeLance js-spotlight">
           <a href="/free-lance/">
             <span class="odject-freeLance--people">
               <Image src={freeLance_people} alt="フリーランス" />
@@ -260,7 +260,7 @@ import bgm from "@assets/audio/bgm.mp3";
             <audio controls data-auto-play data-audio="freeLance"></audio>
           </a>
         </div>
-        <div class="js-spotlight bg-work">
+        <div class="bg-work js-spotlight">
           <a href="/work/">
             <audio controls data-auto-play data-audio="work"></audio>
             <span class="odject-company--people">
@@ -271,7 +271,7 @@ import bgm from "@assets/audio/bgm.mp3";
             </span>
           </a>
         </div>
-        <div class="js-spotlight bg-web">
+        <div class="bg-web js-spotlight">
           <a href="/web/">
             <audio controls data-auto-play data-audio="web"></audio>
             <span class="odject-web--people">
@@ -288,7 +288,7 @@ import bgm from "@assets/audio/bgm.mp3";
         <div class="bg-table2">
           <Image src={bar_table2} alt="バーのテーブル2" />
         </div>
-        <div class="js-spotlight bg-study">
+        <div class="bg-study js-spotlight">
           <a href="/study/">
             <audio controls data-auto-play data-audio="study"></audio>
             <span class="odject-study--people">
@@ -299,7 +299,7 @@ import bgm from "@assets/audio/bgm.mp3";
             </span>
           </a>
         </div>
-        <div class="js-spotlight bg-portfolio">
+        <div class="bg-portfolio js-spotlight">
           <a href="/portfolio/">
             <audio controls data-auto-play data-audio="portfolio"></audio>
             <span class="odject-portfolio--people">
@@ -372,7 +372,6 @@ import bgm from "@assets/audio/bgm.mp3";
     direction: ["ディレクター"],
     coding: ["コーディング"],
     design: ["デザイン"],
-    // 必要に応じて他のカテゴリーを追加
   };
 
   async function fetchAndDisplayFilteredEpisodes() {
@@ -385,11 +384,9 @@ import bgm from "@assets/audio/bgm.mp3";
       const items = xmlDoc.getElementsByTagName("item");
       const results = {};
 
-      // data-audio属性を持つ要素をすべて取得
       const audioElements = document.querySelectorAll("[data-audio]");
       const targetCategories = Array.from(audioElements).map((el) => el.dataset.audio);
 
-      // 各カテゴリーごとにURLの配列を初期化
       targetCategories.forEach((category) => {
         results[category] = [];
       });
@@ -404,7 +401,6 @@ import bgm from "@assets/audio/bgm.mp3";
         const summary = summaryElements.length > 0 ? summaryElements[0].textContent : "";
         const audioUrl = enclosureElement ? enclosureElement.getAttribute("url") : "";
 
-        // 各カテゴリーごとにキーワードチェック
         targetCategories.forEach((category) => {
           const keywords = SEARCH_CONFIGS[category] || [];
           if (keywords.some((keyword) => title.includes(keyword) || summary.includes(keyword))) {
@@ -420,27 +416,253 @@ import bgm from "@assets/audio/bgm.mp3";
     }
   }
 
-  // 使用例
   fetchAndDisplayFilteredEpisodes().then((categoryResults) => {
-    // 各カテゴリーの要素にURLを設定
     Object.entries(categoryResults).forEach(([category, urls]) => {
       const elements = document.querySelectorAll(`[data-audio="${category}"]`);
       elements.forEach((element) => {
         if (urls.length > 0) {
-          // ランダムにURLを選ぶ関数
           const getRandomUrl = (urlArray) => urlArray[Math.floor(Math.random() * urlArray.length)];
-
-          // ランダムなURLを取得
           const randomUrl = getRandomUrl(urls);
-
-          // 選ばれたURLを使用
           element.setAttribute("src", randomUrl);
-          // または全てのURLを保存する場合
           element.setAttribute("data-urls", JSON.stringify(urls));
         }
       });
     });
   });
+
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  const container = document.getElementById("scroll-container");
+  const contentBlocks = document.querySelectorAll(".js-spotlight");
+  let isDragging = false;
+  let snapLock = false;
+  let startX, startY, scrollLeft, scrollTop;
+  console.log("画面描画");
+
+  if (!isMobileDevice()) {
+    container.style.overflowX = "auto";
+    container.style.overflowY = "auto";
+    container.style.touchAction = "auto";
+    console.log("PCデバイスのため、スナップ機能は無効です");
+  } else {
+    console.log("モバイルデバイスのため、スナップ機能が有効です");
+
+    function animateScroll(targetX, targetY) {
+      const startX = container.scrollLeft;
+      const startY = container.scrollTop;
+      const deltaX = targetX - startX;
+      const deltaY = targetY - startY;
+      const duration = 500;
+      let startTime;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+
+        container.scrollLeft = startX + deltaX * progress;
+        container.scrollTop = startY + deltaY * progress;
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          snapLock = false;
+          // スクロールアニメーション完了時に音声を制御
+          // handleAudioOnScrollComplete();
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    // グローバルなスクロールタイムアウトの変数を定義
+    let scrollTimeout;
+
+    // function handleAudioOnScrollComplete() {
+    //   if (!isMobileDevice()) return;
+
+    //   // スクロール完了時の処理をデバウンス
+    //   if (scrollTimeout !== undefined) {
+    //     clearTimeout(scrollTimeout);
+    //   }
+
+    //   scrollTimeout = setTimeout(async () => {
+    //     // 現在表示されている要素を特定（最も中央に近い要素を1つだけ選択）
+    //     const centerY = window.innerHeight / 2;
+    //     let closestElement = null;
+    //     let minDistance = Infinity;
+
+    //     contentBlocks.forEach((element) => {
+    //       const rect = element.getBoundingClientRect();
+    //       const elementCenterY = rect.top + rect.height / 2;
+    //       const distance = Math.abs(elementCenterY - centerY);
+
+    //       if (distance < minDistance) {
+    //         minDistance = distance;
+    //         closestElement = element;
+    //       }
+    //     });
+
+    //      if (closestElement) {
+    //     const audio = closestElement.querySelector("[data-auto-play]");
+    //     if (audio && audio.proximityPlayer) {
+    //       await mobileAudioController.playAudio(audio.proximityPlayer);
+    //      }
+    //     }
+    //   }, 150);
+    // }
+
+    // モバイルでの初期インタラクションを管理するクラス
+    class MobileInteractionManager {
+      constructor() {
+        this.hasInteracted = false;
+        this.initialize();
+      }
+
+      initialize() {
+        const initHandler = () => {
+          this.hasInteracted = true;
+          document.removeEventListener("touchstart", initHandler);
+          document.removeEventListener("click", initHandler);
+        };
+
+        document.addEventListener("touchstart", initHandler, { once: true });
+        document.addEventListener("click", initHandler, { once: true });
+      }
+
+      isReady() {
+        return this.hasInteracted;
+      }
+    }
+
+    // グローバルなインタラクションマネージャーのインスタンスを作成
+    const mobileInteractionManager = new MobileInteractionManager();
+
+    async function snapToCenter(targetElement) {
+      if (snapLock) return;
+      snapLock = true;
+
+      // スクロールアニメーションを開始
+      const rect = targetElement.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const snapX = container.scrollLeft + rect.left - containerRect.left + rect.width / 2 - container.clientWidth / 2;
+      const snapY = container.scrollTop + rect.top - containerRect.top + rect.height / 2 - container.clientHeight / 2;
+
+      const playAudioWithRetry = async (audioElement, maxRetries = 3) => {
+        // ユーザーインタラクションがまだない場合は音声を再生しない
+        if (!mobileInteractionManager.isReady()) {
+          console.log("ユーザーインタラクション待機中...");
+          return;
+        }
+
+        for (let attempt = 0; attempt < maxRetries; attempt++) {
+          try {
+            // 他の音声を停止
+            document.querySelectorAll("audio").forEach((audio) => {
+              if (audio !== audioElement && !audio.paused) {
+                audio.pause();
+                audio.currentTime = 0;
+              }
+            });
+
+            const urls = JSON.parse(audioElement.dataset.urls);
+            const randomUrl = urls[Math.floor(Math.random() * urls.length)];
+
+            // 現在のURLと同じ場合は別のURLを選択
+            if (audioElement.src === randomUrl && urls.length > 1) {
+              const otherUrls = urls.filter((url) => url !== randomUrl);
+              audioElement.src = otherUrls[Math.floor(Math.random() * otherUrls.length)];
+            } else {
+              audioElement.src = randomUrl;
+            }
+
+            audioElement.load();
+
+            // 即時再生を試みる
+            await audioElement.play();
+            console.log("音声再生開始:", audioElement.src);
+
+            // フェードイン
+            audioElement.volume = 0;
+            const fadeIn = () => {
+              if (audioElement.volume < 0.6) {
+                audioElement.volume = Math.min(0.6, audioElement.volume + 0.1);
+                requestAnimationFrame(fadeIn);
+              }
+            };
+            requestAnimationFrame(fadeIn);
+
+            return;
+          } catch (error) {
+            console.warn(`再生試行 ${attempt + 1}回目が失敗:`, error);
+            if (attempt === maxRetries - 1) {
+              console.error("すべての再生試行が失敗しました");
+            } else {
+              await new Promise((resolve) => setTimeout(resolve, 500));
+            }
+          }
+        }
+      };
+
+      try {
+        animateScroll(snapX, snapY);
+        // スクロールアニメーションの開始直後に音声再生を試みる
+        await playAudioWithRetry(targetElement.querySelector("audio"));
+      } catch (error) {
+        console.error("処理中にエラーが発生:", error);
+      } finally {
+        setTimeout(() => {
+          snapLock = false;
+        }, 500);
+      }
+    }
+
+    // IntersectionObserverの設定を調整
+    if (isMobileDevice()) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !snapLock) {
+              snapToCenter(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.7, // より高い閾値に設定
+          rootMargin: "0px",
+        }
+      );
+
+      contentBlocks.forEach((block) => {
+        observer.observe(block);
+      });
+    }
+
+    container.addEventListener("touchstart", (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX - container.offsetLeft;
+      startY = e.touches[0].pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+    });
+
+    container.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const y = e.touches[0].pageY - container.offsetTop;
+      const walkX = x - startX;
+      const walkY = y - startY;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    });
+
+    container.addEventListener("touchend", () => {
+      isDragging = false;
+      observer.disconnect();
+      contentBlocks.forEach((block) => observer.observe(block));
+    });
+  }
 
   class ProximityAudioPlayer {
     constructor(audioElement, triggerElement, options = {}) {
@@ -452,9 +674,9 @@ import bgm from "@assets/audio/bgm.mp3";
       this.startTime = options.startTime || 0;
       this.isPlaying = false;
       this.hasInteracted = false;
-      this.lastPlayPosition = this.startTime; // 最後に再生していた位置を保存
+      this.lastPlayPosition = this.startTime;
 
-      this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      this.isMobile = isMobileDevice();
 
       this.initializeAudio();
 
@@ -468,17 +690,57 @@ import bgm from "@assets/audio/bgm.mp3";
     initializeAudio() {
       this.audioElement.loop = true;
       this.audioElement.volume = this.minVolume;
-      this.audioElement.currentTime = this.startTime;
-      this.audioElement.preload = "none"; // 初期ロードを防止
+      this.audioElement.preload = "auto";
 
-      // 再生位置を保存
-      this.audioElement.addEventListener("timeupdate", () => {
-        this.lastPlayPosition = this.audioElement.currentTime;
+      // エラーハンドリングを強化
+      this.audioElement.addEventListener("error", (e) => {
+        const error = e.target.error;
+        if (error) {
+          switch (error.code) {
+            case MediaError.MEDIA_ERR_ABORTED:
+              console.error("音声の読み込みが中断されました");
+              break;
+            case MediaError.MEDIA_ERR_NETWORK:
+              console.error("ネットワークエラーが発生しました");
+              break;
+            case MediaError.MEDIA_ERR_DECODE:
+              console.error("音声のデコードエラーが発生しました");
+              break;
+            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+              console.error("音声フォーマットがサポートされていません");
+              break;
+            default:
+              console.error("不明なエラーが発生しました");
+          }
+        }
+
+        // 音声URLの再設定を試みる
+        if (this.audioElement.dataset.urls) {
+          try {
+            const urls = JSON.parse(this.audioElement.dataset.urls);
+            if (urls.length > 0) {
+              const currentUrl = this.audioElement.src;
+              const newUrl = urls.find((url) => url !== currentUrl) || urls[0];
+              this.audioElement.src = newUrl;
+              this.audioElement.load();
+              console.log("別の音声URLに切り替えました:", newUrl);
+            }
+          } catch (parseError) {
+            console.error("URLsの解析に失敗しました:", parseError);
+          }
+        }
+
+        // 再生を再試行
+        this.retryPlay(3, 2000); // 3回まで、2秒間隔で再試行
       });
 
-      this.audioElement.addEventListener("error", (e) => {
-        console.error("Audio error:", e);
-        this.retryPlay();
+      this.audioElement.addEventListener("loadeddata", () => {
+        console.log("音声データが正常に読み込まれました");
+        this.audioElement.currentTime = this.startTime;
+      });
+
+      this.audioElement.addEventListener("timeupdate", () => {
+        this.lastPlayPosition = this.audioElement.currentTime;
       });
     }
 
@@ -500,12 +762,10 @@ import bgm from "@assets/audio/bgm.mp3";
           Math.pow(event.clientX - elementCenter.x, 2) + Math.pow(event.clientY - elementCenter.y, 2)
         );
 
-        // 距離に基づいて再生/停止を制御
         if (distance <= this.maxDistance) {
           if (!this.isPlaying) {
             this.resumeFromLastPosition();
           }
-          // 音量調整
           const newVolume =
             this.minVolume + (this.maxVolume - this.minVolume) * Math.pow(1 - distance / this.maxDistance, 2);
           this.audioElement.volume = Math.max(0, Math.min(1, newVolume));
@@ -537,7 +797,6 @@ import bgm from "@assets/audio/bgm.mp3";
       const startPlayback = async (event) => {
         if (!this.hasInteracted) {
           this.hasInteracted = true;
-          // 初回クリック時は再生を開始しない
           console.log("Interaction enabled");
         }
       };
@@ -547,33 +806,27 @@ import bgm from "@assets/audio/bgm.mp3";
     }
 
     setupMobileBehavior() {
-      // Intersection Observerの設定
       this.observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting && this.hasInteracted) {
-              // 画面内に入った時
               this.startPlaying();
               this.audioElement.volume = this.maxVolume;
             } else {
-              // 画面外に出た時
               this.stop();
             }
           });
         },
         {
-          threshold: 0.6, // 30%表示されたら発火
+          threshold: 0.6,
           rootMargin: "0px",
         }
       );
 
-      // 要素の監視を開始
       this.observer.observe(this.triggerElement);
 
-      // 初回インタラクションの設定
       const enableAudio = () => {
         this.hasInteracted = true;
-        // 現在表示されている要素の音声を開始
         if (this.isElementInView(this.triggerElement)) {
           this.startPlaying();
           this.audioElement.volume = this.maxVolume;
@@ -590,40 +843,53 @@ import bgm from "@assets/audio/bgm.mp3";
     }
 
     async startPlaying() {
+      if (!this.audioElement.src) return;
+
       try {
+        this.audioElement.currentTime = this.startTime;
         await this.audioElement.play();
+        this.audioElement.volume = this.maxVolume;
         this.isPlaying = true;
-        console.log("Audio started successfully");
       } catch (error) {
-        console.warn("Playback failed:", error);
-        this.retryPlay();
+        console.error("Audio playback failed:", error);
       }
     }
 
-    async retryPlay(maxRetries = 10, delay = 6000) {
+    async retryPlay(maxRetries = 3, delay = 2000) {
       let retries = 0;
+
       const tryPlay = async () => {
         try {
           if (retries < maxRetries && !this.isPlaying) {
+            await this.audioElement.load(); // 明示的に再読み込み
             await this.audioElement.play();
             this.isPlaying = true;
-            console.log("Retry successful");
+            console.log("再生の再試行が成功しました");
           }
         } catch (error) {
           retries++;
           if (retries < maxRetries) {
-            console.log(`Retry attempt ${retries} failed, trying again in ${delay}ms`);
+            console.log(`再生の再試行 ${retries}回目が失敗しました。${delay}ms後に再試行します`);
             setTimeout(tryPlay, delay);
+          } else {
+            console.error("すべての再試行が失敗しました");
           }
         }
       };
+
       tryPlay();
     }
 
-    stop() {
-      this.isPlaying = false;
-      this.audioElement.pause();
-      this.audioElement.currentTime = this.startTime;
+    async stop() {
+      try {
+        this.audioElement.volume = 0;
+        await new Promise((resolve) => setTimeout(resolve, 100)); // フェードアウト
+        this.audioElement.pause();
+        this.audioElement.currentTime = this.startTime;
+        this.isPlaying = false;
+      } catch (error) {
+        console.error("Failed to stop audio:", error);
+      }
     }
 
     destroy() {
@@ -638,16 +904,17 @@ import bgm from "@assets/audio/bgm.mp3";
     }
   }
 
-  // 初期化
   document.querySelectorAll("[data-auto-play]").forEach((audio) => {
     const triggerElement = audio.closest("div");
     if (triggerElement) {
-      new ProximityAudioPlayer(audio, triggerElement, {
+      const player = new ProximityAudioPlayer(audio, triggerElement, {
         maxDistance: 300,
         minVolume: 0,
         maxVolume: 0.6,
         startTime: 30,
       });
+      // プレイヤーインスタンスを要素に保存
+      audio.proximityPlayer = player;
     }
   });
 
@@ -663,11 +930,6 @@ import bgm from "@assets/audio/bgm.mp3";
     container.scrollLeft = (containerWidth - containerVisibleWidth) / 2;
     container.scrollTop = (containerHeight - containerVisibleHeight) / 2;
   });
-
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   const mapsGesture = document.querySelector(".maps-gesture");
-  //   mapsGesture.classList.add("is-shown");
-  // });
 
   class BGM {
     constructor() {
@@ -733,4 +995,87 @@ import bgm from "@assets/audio/bgm.mp3";
     });
   }
   hoverClass();
+
+  class MobileAudioController {
+    constructor() {
+      this.currentPlayingAudio = null;
+      this.isInitialized = false;
+    }
+
+    async initialize() {
+      if (this.isInitialized) return;
+
+      // ユーザーインタラクション待機
+      await new Promise((resolve) => {
+        const initHandler = () => {
+          document.removeEventListener("touchstart", initHandler);
+          document.removeEventListener("click", initHandler);
+          resolve();
+        };
+        document.addEventListener("touchstart", initHandler);
+        document.addEventListener("click", initHandler);
+      });
+
+      this.isInitialized = true;
+    }
+
+    async playAudio(player) {
+      if (!this.isInitialized) {
+        await this.initialize();
+      }
+
+      // 現在再生中の音声があれば停止
+      if (this.currentPlayingAudio && this.currentPlayingAudio !== player) {
+        await this.currentPlayingAudio.stop();
+      }
+
+      try {
+        await player.startPlaying();
+        this.currentPlayingAudio = player;
+      } catch (error) {
+        console.error("Failed to play audio:", error);
+      }
+    }
+
+    stopAllAudio() {
+      if (this.currentPlayingAudio) {
+        this.currentPlayingAudio.stop();
+        this.currentPlayingAudio = null;
+      }
+    }
+  }
+
+  // グローバルなオーディオコントローラーのインスタンスを作成
+  const mobileAudioController = new MobileAudioController();
+
+  // スクロールイベントの処理を最適化
+  if (isMobileDevice()) {
+    let scrollEndTimeout;
+
+    container.addEventListener(
+      "scroll",
+      () => {
+        if (scrollEndTimeout) {
+          clearTimeout(scrollEndTimeout);
+        }
+
+        // scrollEndTimeout = setTimeout(() => {
+        //   handleAudioOnScrollComplete();
+        // }, 100);
+      },
+      { passive: true }
+    );
+
+    // ページ離脱時に音声を停止
+    window.addEventListener("beforeunload", () => {
+      mobileAudioController.stopAllAudio();
+    });
+
+    // ページがバックグラウンドに移動した時に音声を停止
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        mobileAudioController.stopAllAudio();
+      }
+    });
+  }
 </script>
