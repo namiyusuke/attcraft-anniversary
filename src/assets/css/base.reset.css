@@ -231,7 +231,7 @@ body{
 }
 @media (min-width: 768px) {
   .l-header--logo{
-  width: calc(130 / 16 * 1rem);
+  width: clamp(100px,calc(130 / 1600 * 100vw),130px);
 }
 }
 .bg-wine{
@@ -541,7 +541,7 @@ body{
     width:min(calc(131 / 375 * 100vw),120px);
     height: min(calc(131 / 375  * 100vw),120px);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .hamburger-menu-comment{
     position: absolute;
     right: calc(40 / 16 * 1rem);
@@ -587,12 +587,12 @@ body{
     position: relative;
     display: flex;
     justify-content: center;
-    width: calc(68 / 375 * 100vw);
+    width: min(calc(68 / 375 * 100vw),68px);
     margin-inline:auto;
 }
 @media (min-width: 768px) {
 .hamburger-menu .icon{
-    width: calc(100 / 1600 * 100vw);
+    width: clamp(70px,calc(100 / 1600 * 100vw),100px);
 }
 }
 .hamburger-menu .icon__close {
@@ -958,6 +958,28 @@ body{
   opacity: 0;
   transition: visibility 0s, opacity .35s;
 }
+.globalNav-wrapper::after{
+  position: absolute;
+/* Rectangle_background_gradation_top&bottom */
+  top: 0px;
+  left: 0px;
+left: 0px;
+  width: 100%;
+  height: 100%;
+  content: "";
+background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.6) 9.9%, rgba(0, 0, 0, 0.3) 19.69%, rgba(0, 0, 0, 0) 49.75%, rgba(0, 0, 0, 0.3) 79.98%, rgba(0, 0, 0, 0.6) 89.88%, #000000 100%);
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+.globalNav-wrapper::before {
+    position: absolute;
+/* Rectangle_background_gradation_top&bottom */
+  top: 0px;
+  left: 0px;
+left: 0px;
+  width: 100%;
+  height: 100%;
+  content: "";
+}
 @media (min-width: 768px) {
   .globalNav-wrapper{
   left: auto;
@@ -973,15 +995,19 @@ body{
 }
 .globalNav-body{
   position: relative;
+  /* overflow:auto; */
+  /* Rectangle 176 */
   width: 100%;
-  height: 100vh;
+height: 100vh;
   /* padding: calc(185 / 1600 * 100vw) 0 0 min(calc(100 / 1600 * 100vw),100px); */
   color: var(--white);
+background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, rgba(0, 0, 0, 0.3) 19.82%, rgba(0, 0, 0, 0) 49.82%, rgba(0, 0, 0, 0.3) 80.35%, rgba(0, 0, 0, 0.6) 89.96%, #000000 99.77%);
+
   /* background-color: #262626; */
   /* background-image: url(/src/assets/img/globalNav_gradation.png); */
   background-repeat: no-repeat;
   background-size: cover;
-  /* overflow:auto; */
+
 }
 @media (min-width: 768px) {
 .globalNav-body{
@@ -1400,7 +1426,7 @@ body{
   padding-top: calc(178 / 16 * 1rem);
   overflow: hidden;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .category{
   overflow: initial;
   }
@@ -1442,7 +1468,7 @@ body{
   width: calc(184 / 16 * 1rem);
 }
 .company-image--move{
-  width: calc(184 / 16 * 1rem);
+  width: min(calc(184 / 375 * 100vw),244px);
 }
 .coding-image--move{
   width: calc(190 / 16 * 1rem);
@@ -2876,19 +2902,19 @@ img:focus{
 }
 .category-bottom-share{
   position: absolute;
-  right: calc(-10 / 16 * 1rem);
+  right: calc(10 / 16 * 1rem);
   bottom: calc(500 / 16 * 1rem);
 }
 .category-bottom-share--twitter img{
-  width: calc(26 / 16 * 1rem);
+  width: calc(35 / 16 * 1rem);
 }
 .category-bottom-share--facebook img{
-  width: calc(32 / 16 * 1rem);
+  width: calc(40 / 16 * 1rem);
 }
 .category-bottom-share--instagram img{
-  width: calc(32 / 16 * 1rem);
+  width: calc(40 / 16 * 1rem);
 }
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .category-bottom-share{
   position: absolute;
   right: calc(100 / 16 * 1rem);
@@ -2959,7 +2985,7 @@ img:focus{
   right: 200px;
   bottom: -200px;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
 .table_beer1{
   right: calc(300 / 1600 * 100vw);
   bottom: 0px;
@@ -3061,7 +3087,7 @@ img:focus{
   animation-delay: var(--delay, 0s);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .archive-list--text{
       top: -150px;
       left: -300px;
@@ -3283,7 +3309,7 @@ img:focus{
   display: none;
   width: calc(119 / 16 * 1rem);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .archive-category-people1{
 display: block;
 }
@@ -3313,7 +3339,7 @@ display: block;
   width: calc(320 / 16 * 1rem);
   transform: translateX(-40%);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .archive-category-art{
   position: absolute;
   top: 334px;
@@ -3417,6 +3443,16 @@ display: block;
   transform: translateX(-20%) ;
 }
 @media (min-width: 768px) {
+  .archive-people5--wrap{
+  position: absolute;
+  top: 403px;
+  left: 70%;
+  z-index: 2;
+  width: calc(198 / 16 * 1rem);
+  transform: translateX(-300%) ;
+}
+}
+@media (min-width: 1024px) {
   .archive-people5--wrap{
   position: absolute;
   top: 703px;
