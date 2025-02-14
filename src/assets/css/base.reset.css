@@ -960,14 +960,14 @@ body{
 }
 .globalNav-wrapper::after{
   position: absolute;
-/* Rectangle_background_gradation_top&bottom */
   top: 0px;
   left: 0px;
-left: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
+  pointer-events: none;
   content: "";
-background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.6) 9.9%, rgba(0, 0, 0, 0.3) 19.69%, rgba(0, 0, 0, 0) 49.75%, rgba(0, 0, 0, 0.3) 79.98%, rgba(0, 0, 0, 0.6) 89.88%, #000000 100%);
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.6) 9.9%, rgba(0, 0, 0, 0.3) 19.69%, rgba(0, 0, 0, 0) 49.75%, rgba(0, 0, 0, 0.3) 79.98%, rgba(0, 0, 0, 0.6) 89.88%, #000000 100%);
   transform: matrix(1, 0, 0, -1, 0, 0);
 }
 .globalNav-wrapper::before {
@@ -978,6 +978,7 @@ background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.6) 9.9%, rgba(0,
 left: 0px;
   width: 100%;
   height: 100%;
+  pointer-events: none;
   content: "";
 }
 @media (min-width: 768px) {
@@ -1146,7 +1147,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   font-family: var(--font-family-vdl);
   font-size: calc(20 / 16 * 1rem);
   font-weight: 400;
-  color: var(--white);
+  color: #FDD504;
 }
 @media (min-width: 768px) {
   .menu-title .-ja{
@@ -1157,6 +1158,12 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   display: block;
   width: calc(231 / 16 * 1rem);
   padding-left:calc(64 / 16 * 1rem);
+  color: transparent;
+  text-align: center;
+  filter: drop-shadow(0 0 4px rgba(253, 213, 4, 0.4));
+  animation: softStrokeGlow 3s infinite alternate-reverse;
+  -webkit-text-stroke: 1px rgba(253, 213, 4, 0.7);
+  text-stroke: 1px rgba(253, 213, 4, 0.7);
 }
 
 .menu-article--item{
@@ -1863,7 +1870,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 .category-top--text._02{
   position: absolute;
-  top: calc(380 / 16 * 1rem);
+  top: calc(331 / 16 * 1rem);
   right: calc(-60 / 16 * 1rem);
   left: auto;
   /* width: max-content; */
@@ -2526,7 +2533,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 @media (min-width: 768px) {
   .odject-web--people{
-  width: calc(205 / 16 * 1rem);
+  width: calc(225 / 16 * 1rem);
   }
 }
 .odject-coding--people{
@@ -2537,7 +2544,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 @media (min-width: 768px) {
   .odject-coding--people{
-   width: calc(240 / 16 * 1rem);
+   width: calc(250 / 16 * 1rem);
   }
 }
 .odject-portfolio--people{
@@ -2570,7 +2577,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 @media (min-width: 768px) {
   .odject-study--people{
-  width: calc(312 / 16 * 1rem);
+  width: calc(360 / 16 * 1rem);
 }
 }
 .odject-jobHunting--people{
@@ -2592,7 +2599,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 @media (min-width: 768px) {
   .odject-company--people{
-  width: calc(274 / 16 * 1rem);
+  width: calc(304 / 16 * 1rem);
 }
 }
 .odject-menu{
