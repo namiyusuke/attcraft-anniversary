@@ -2023,7 +2023,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 @media (min-width: 768px) {
   .detail-content{
-  padding-top: calc(380 / 16 * 1rem);
+  padding-top: calc(320 / 16 * 1rem);
 }
 }
 .detail-content--inner{
@@ -2577,7 +2577,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 @media (min-width: 768px) {
   .odject-study--people{
-  width: calc(360 / 16 * 1rem);
+  width: calc(380 / 16 * 1rem);
 }
 }
 .odject-jobHunting--people{
@@ -3757,11 +3757,11 @@ display: block;
   .archive-green--wrap{
   position: absolute;
   bottom: 0px;
-  left: 0;
+  left: -50px;
   z-index: 2;
   width: calc(422 / 16 * 1rem);
   height: calc(456 / 16 * 1rem);
-  transform: rotate(-6.54deg);
+  transform: rotate(40.54deg);
 }
 }
 .archive-green--leaf01{
@@ -4361,12 +4361,12 @@ display: block;
 .detail-green{
   position: absolute;
   right: -50px;
-  bottom: 0px;
+  bottom: -100px;
   z-index: 2;
   display: none;
   width: 422px;
   height: 456px;
-  transform: rotate(-6deg) scaleX(-1);
+  transform: rotate(-6deg) scaleX(-.8) scaleY(.8);
 }
 @media (min-width: 768px) {
   .detail-green{
