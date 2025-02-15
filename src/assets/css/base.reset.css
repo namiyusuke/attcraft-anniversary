@@ -2456,6 +2456,8 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   font-family: var(--font-family-kaisei);
   font-size: calc(20 / 16 * 1rem);
   color: var(--white);
+  opacity: 0;
+  transition: opacity 0.6s;
 }
 .loading-btn{
   display: flex;

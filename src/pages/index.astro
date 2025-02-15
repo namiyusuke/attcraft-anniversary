@@ -130,7 +130,12 @@ import bgm from "@assets/audio/bgm.mp3";
           </div>
           <div class="bg-coding js-spotlight">
             <a href="/coding/">
-              <audio controls data-auto-play data-audio="coding"></audio>
+              <audio
+                controls
+                data-auto-play
+                data-audio="coding"
+                src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-11-21/139826716-44100-2-10921d11a17c9.m4a"
+              ></audio>
               <span class="odject-coding--people">
                 <Image src={coding_people} alt="コーディング" />
               </span>
@@ -153,6 +158,7 @@ import bgm from "@assets/audio/bgm.mp3";
               <span class="odject-menu odject-design--menu">
                 <Image src={design_menu} alt="デザインのメニュー" />
               </span>
+              d
             </a>
           </div>
           <div class="bg-bar">
@@ -401,77 +407,7 @@ import bgm from "@assets/audio/bgm.mp3";
 <audio class="js-bgm" src={bgm} loop></audio>
 
 <script>
-  const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
-
-  // 検索キーワードの設定
-  const SEARCH_CONFIGS = {
-    jobHunting: ["就職", "転職"],
-    freeLance: ["フリーランス", "フリランス", "個人事業主"],
-    company: ["制作会社"],
-    work: ["仕事"],
-    web: ["Web"],
-    study: ["勉強"],
-    portfolio: ["ポートフォリオ"],
-    direction: ["ディレクター"],
-    coding: ["コーディング"],
-    design: ["デザイン"],
-  };
-
-  async function fetchAndDisplayFilteredEpisodes() {
-    try {
-      const response = await fetch(xmlUrl);
-      const xmlText = await response.text();
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-
-      const items = xmlDoc.getElementsByTagName("item");
-      const results = {};
-
-      const audioElements = document.querySelectorAll("[data-audio]");
-      const targetCategories = Array.from(audioElements).map((el) => el.dataset.audio);
-
-      targetCategories.forEach((category) => {
-        results[category] = [];
-      });
-
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        const titleElement = item.getElementsByTagName("title")[0];
-        const enclosureElement = item.getElementsByTagName("enclosure")[0];
-        const summaryElements = item.getElementsByTagNameNS("*", "summary");
-
-        const title = titleElement ? titleElement.textContent : "";
-        const summary = summaryElements.length > 0 ? summaryElements[0].textContent : "";
-        const audioUrl = enclosureElement ? enclosureElement.getAttribute("url") : "";
-
-        targetCategories.forEach((category) => {
-          const keywords = SEARCH_CONFIGS[category] || [];
-          if (keywords.some((keyword) => title.includes(keyword) || summary.includes(keyword))) {
-            results[category].push(audioUrl);
-          }
-        });
-      }
-
-      return results;
-    } catch (error) {
-      console.error("Error fetching or parsing the XML:", error);
-      return {};
-    }
-  }
-
-  fetchAndDisplayFilteredEpisodes().then((categoryResults) => {
-    Object.entries(categoryResults).forEach(([category, urls]) => {
-      const elements = document.querySelectorAll(`[data-audio="${category}"]`);
-      elements.forEach((element) => {
-        if (urls.length > 0) {
-          const getRandomUrl = (urlArray) => urlArray[Math.floor(Math.random() * urlArray.length)];
-          const randomUrl = getRandomUrl(urls);
-          element.setAttribute("src", randomUrl);
-          element.setAttribute("data-urls", JSON.stringify(urls));
-        }
-      });
-    });
-  });
+  import { defineCollection } from "astro:content";
 
   function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -482,7 +418,6 @@ import bgm from "@assets/audio/bgm.mp3";
   let isDragging = false;
   let snapLock = false;
   let startX, startY, scrollLeft, scrollTop;
-  console.log("画面描画");
 
   if (!isMobileDevice()) {
     container.style.overflowX = "auto";
@@ -515,46 +450,8 @@ import bgm from "@assets/audio/bgm.mp3";
           // handleAudioOnScrollComplete();
         }
       }
-
       requestAnimationFrame(step);
     }
-
-    // グローバルなスクロールタイムアウトの変数を定義
-    let scrollTimeout;
-
-    // function handleAudioOnScrollComplete() {
-    //   if (!isMobileDevice()) return;
-
-    //   // スクロール完了時の処理をデバウンス
-    //   if (scrollTimeout !== undefined) {
-    //     clearTimeout(scrollTimeout);
-    //   }
-
-    //   scrollTimeout = setTimeout(async () => {
-    //     // 現在表示されている要素を特定（最も中央に近い要素を1つだけ選択）
-    //     const centerY = window.innerHeight / 2;
-    //     let closestElement = null;
-    //     let minDistance = Infinity;
-
-    //     contentBlocks.forEach((element) => {
-    //       const rect = element.getBoundingClientRect();
-    //       const elementCenterY = rect.top + rect.height / 2;
-    //       const distance = Math.abs(elementCenterY - centerY);
-
-    //       if (distance < minDistance) {
-    //         minDistance = distance;
-    //         closestElement = element;
-    //       }
-    //     });
-
-    //      if (closestElement) {
-    //     const audio = closestElement.querySelector("[data-auto-play]");
-    //     if (audio && audio.proximityPlayer) {
-    //       await mobileAudioController.playAudio(audio.proximityPlayer);
-    //      }
-    //     }
-    //   }, 150);
-    // }
 
     // モバイルでの初期インタラクションを管理するクラス
     class MobileInteractionManager {
@@ -562,14 +459,12 @@ import bgm from "@assets/audio/bgm.mp3";
         this.hasInteracted = false;
         this.initialize();
       }
-
       initialize() {
         const initHandler = () => {
           this.hasInteracted = true;
           document.removeEventListener("touchstart", initHandler);
           document.removeEventListener("click", initHandler);
         };
-
         document.addEventListener("touchstart", initHandler, { once: true });
         document.addEventListener("click", initHandler, { once: true });
       }
@@ -581,7 +476,6 @@ import bgm from "@assets/audio/bgm.mp3";
 
     // グローバルなインタラクションマネージャーのインスタンスを作成
     const mobileInteractionManager = new MobileInteractionManager();
-
     async function snapToCenter(targetElement) {
       if (snapLock) return;
       snapLock = true;
@@ -718,7 +612,6 @@ import bgm from "@assets/audio/bgm.mp3";
       this.isPlaying = false;
       this.hasInteracted = false;
       this.lastPlayPosition = this.startTime;
-
       this.isMobile = isMobileDevice();
 
       this.initializeAudio();
@@ -843,8 +736,41 @@ import bgm from "@assets/audio/bgm.mp3";
           console.log("Interaction enabled");
         }
       };
+      const triggerBtn = document.querySelector(".js-bgm-control");
+      if (triggerBtn) {
+        triggerBtn.addEventListener("click", () => {
+          triggerBtnConditions = !triggerBtnConditions;
+          if (triggerBtnConditions) {
+            startPlayback();
+          } else {
+            stop();
+          }
+        });
+      }
 
-      document.addEventListener("click", startPlayback, { once: true });
+      let triggerBtnConditions = false;
+      // if (triggerBtn) {
+      //   triggerBtn.addEventListener("click", startPlayback);
+      // }
+      // 再生開始ボタン
+      const onButton = document.querySelector(".js-loading--on");
+      if (onButton) {
+        onButton.addEventListener("click", startPlayback);
+      }
+      defineCollection;
+      // 停止ボタン
+      const offButton = document.querySelector(".js-loading--off");
+      if (offButton) {
+        offButton.addEventListener("click", () => {
+          // すべての音声を停止
+          document.querySelectorAll("[data-auto-play]").forEach((audio) => {
+            if (audio.proximityPlayer) {
+              audio.proximityPlayer.stop();
+              audio.proximityPlayer.hasInteracted = false; // インタラクション状態をリセット
+            }
+          });
+        });
+      }
       document.addEventListener("mousemove", this.handleMouseMove.bind(this));
     }
 
@@ -876,8 +802,8 @@ import bgm from "@assets/audio/bgm.mp3";
         }
       };
 
-      document.addEventListener("click", enableAudio, { once: true });
-      document.addEventListener("touchstart", enableAudio, { once: true });
+      this.onButton.addEventListener("click", enableAudio, { once: true });
+      // this.offButton.addEventListener("click", enableAudio, { once: true });
     }
 
     isElementInView(element) {
@@ -978,7 +904,7 @@ import bgm from "@assets/audio/bgm.mp3";
     constructor() {
       this.audio = document.querySelector(".js-bgm");
       this.onButton = document.querySelector(".js-loading--on");
-      this.offButton = document.querySelector(".js-loading--open");
+      this.offButton = document.querySelector(".js-loading--off");
       this.audioPlay = document.querySelector(".js-bgm-control");
       this.audioConditions = false;
       if (this.audio) {
@@ -1009,19 +935,19 @@ import bgm from "@assets/audio/bgm.mp3";
             startAudio();
           }
         };
-        // ページ内のどこかをクリックしたら再生開始
         this.onButton.addEventListener("click", startAudio, { once: true });
+        this.offButton.addEventListener("click", stopAudio, { once: true });
         this.audioPlay.addEventListener("click", toggleAudio);
         // スペースキーでも再生開始できるように
-        document.addEventListener(
-          "keydown",
-          (e) => {
-            if (e.code === "Space" && this.audio.paused) {
-              startAudio();
-            }
-          },
-          { once: true }
-        );
+        // document.addEventListener(
+        //   "keydown",
+        //   (e) => {
+        //     if (e.code === "Space" && this.audio.paused) {
+        //       startAudio();
+        //     }
+        //   },
+        //   { once: true }
+        // );
       }
     }
   }

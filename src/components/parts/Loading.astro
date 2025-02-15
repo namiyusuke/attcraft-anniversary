@@ -60,7 +60,7 @@ import { Image } from "astro:assets";
                   <Image class="loading-btn--icon1" src={onMisic} alt="音あり" />
                 </span>
               </button>
-              <button type="button" class="js-loading--open loading-btn">
+              <button type="button" class="js-loading--open js-loading--off loading-btn">
                 <span class="loading-btn--inner">
                   <span class="loading-btn--text">OFF</span>
                   <Image class="loading-btn--icon2" src={offMisic} alt="音なし" />
@@ -127,6 +127,7 @@ import { Image } from "astro:assets";
           flipContainer.style.transform = `scale(${finalScale})`;
           document.querySelectorAll(".flip-finish").forEach((el) => {
             el.style.opacity = "1";
+            document.querySelector(".loading-message").style.opacity = "1";
           });
         }
 
