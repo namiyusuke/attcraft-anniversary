@@ -106,76 +106,78 @@ const jsonLd = schema(description);
   let startX, startY, scrollLeft, scrollTop;
 
   // マウスダウン（ドラッグ開始）
-  container.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    container.style.cursor = "grabbing";
-    startX = e.pageX - container.offsetLeft;
-    startY = e.pageY - container.offsetTop;
-    scrollLeft = container.scrollLeft;
-    scrollTop = container.scrollTop;
-  });
+  if (container) {
+    container.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      container.style.cursor = "grabbing";
+      startX = e.pageX - container.offsetLeft;
+      startY = e.pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+    });
 
-  // マウスムーブ（ドラッグ中）
-  container.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
-    const y = e.pageY - container.offsetTop;
-    const walkX = (x - startX) * -1; // スクロール方向を逆に
-    const walkY = (y - startY) * -1;
-    container.scrollLeft = scrollLeft + walkX;
-    container.scrollTop = scrollTop + walkY;
-    addHiddenClass();
-  });
+    // マウスムーブ（ドラッグ中）
+    container.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const y = e.pageY - container.offsetTop;
+      const walkX = (x - startX) * -1; // スクロール方向を逆に
+      const walkY = (y - startY) * -1;
+      container.scrollLeft = scrollLeft + walkX;
+      container.scrollTop = scrollTop + walkY;
+      addHiddenClass();
+    });
 
-  // マウスアップ（ドラッグ終了）
-  container.addEventListener("mouseup", () => {
-    isDragging = false;
-    container.style.cursor = "grab";
-  });
+    // マウスアップ（ドラッグ終了）
+    container.addEventListener("mouseup", () => {
+      isDragging = false;
+      container.style.cursor = "grab";
+    });
 
-  // マウスが外に出た場合も終了
-  container.addEventListener("mouseleave", () => {
-    isDragging = false;
-    container.style.cursor = "grab";
-  });
+    // マウスが外に出た場合も終了
+    container.addEventListener("mouseleave", () => {
+      isDragging = false;
+      container.style.cursor = "grab";
+    });
 
-  // タッチ対応（モバイル用）
-  container.addEventListener("touchstart", (e) => {
-    isDragging = true;
-    startX = e.touches[0].pageX - container.offsetLeft;
-    startY = e.touches[0].pageY - container.offsetTop;
-    scrollLeft = container.scrollLeft;
-    scrollTop = container.scrollTop;
-    addHiddenClass();
-  });
+    // タッチ対応（モバイル用）
+    container.addEventListener("touchstart", (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX - container.offsetLeft;
+      startY = e.touches[0].pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+      addHiddenClass();
+    });
 
-  container.addEventListener("touchmove", (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - container.offsetLeft;
-    const y = e.touches[0].pageY - container.offsetTop;
-    const walkX = (x - startX) * -1;
-    const walkY = (y - startY) * -1;
-    container.scrollLeft = scrollLeft + walkX;
-    container.scrollTop = scrollTop + walkY;
-  });
+    container.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const y = e.touches[0].pageY - container.offsetTop;
+      const walkX = (x - startX) * -1;
+      const walkY = (y - startY) * -1;
+      container.scrollLeft = scrollLeft + walkX;
+      container.scrollTop = scrollTop + walkY;
+    });
 
-  container.addEventListener("touchend", () => {
-    isDragging = false;
-  });
+    container.addEventListener("touchend", () => {
+      isDragging = false;
+    });
 
-  // スクロール対応（ホイールイベント）
-  container.addEventListener("wheel", (e) => {
-    e.preventDefault(); // デフォルトのスクロール動作を無効化
-    const deltaX = e.deltaX; // 横方向のスクロール量
-    const deltaY = e.deltaY; // 縦方向のスクロール量
+    // スクロール対応（ホイールイベント）
+    container.addEventListener("wheel", (e) => {
+      e.preventDefault(); // デフォルトのスクロール動作を無効化
+      const deltaX = e.deltaX; // 横方向のスクロール量
+      const deltaY = e.deltaY; // 縦方向のスクロール量
 
-    // スクロール量を適用
-    container.scrollLeft += deltaX;
-    container.scrollTop += deltaY;
-    addHiddenClass();
-  });
+      // スクロール量を適用
+      container.scrollLeft += deltaX;
+      container.scrollTop += deltaY;
+      addHiddenClass();
+    });
+  }
   function onHover() {
     const hoverTarget = document.querySelectorAll(".js-hover");
     hoverTarget.forEach((target) => {
