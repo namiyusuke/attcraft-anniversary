@@ -1504,6 +1504,10 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 .study-image--move{
   width: calc(200 / 16 * 1rem);
 }
+.web-image--move{
+  width: calc(200 / 16 * 1rem);
+}
+
 .direction-image--move{
   width: calc(190 / 16 * 1rem);
 }
@@ -1511,32 +1515,35 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   width: calc(210 / 16 * 1rem);
 }
 @media (min-width: 1024px) {
+.web-image--move{
+  width: calc(240 / 16 * 1rem);
+}
 .category-top--people{
   top: 180px;
 }
 .hunting-image--move{
-  width: clamp(320px,calc(366 / 1200 * 100%),366px);
+  width: clamp(340px,calc(386 / 1200 * 100%),386px);
 }
 .design-image--move{
-  width: calc(244 / 16 * 1rem);
+  width: calc(264 / 16 * 1rem);
 }
 .portfolio-image--move{
-  width: calc(247 / 16 * 1rem);
+  width: calc(267 / 16 * 1rem);
 }
 .company-image--move{
-  width: calc(274 / 16 * 1rem);
+  width: calc(304 / 16 * 1rem);
 }
 .coding-image--move{
-  width: calc(237 / 16 * 1rem);
+  width: calc(287 / 16 * 1rem);
 }
 .study-image--move{
   width: calc(312 / 16 * 1rem);
 }
 .direction-image--move{
-  width: calc(302 / 16 * 1rem);
+  width: calc(322 / 16 * 1rem);
 }
 .work-image--move{
-  width: calc(291 / 16 * 1rem);
+  width: calc(321 / 16 * 1rem);
 }
 }
 .hunting-image--move2 img{
@@ -1908,7 +1915,6 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 .category-top--text._03{
   position: absolute;
   top: calc(860 / 16 * 1rem);
-  /* width: max-content; */
 }
 @media (min-width: 1024px) {
 .category-top--text._03{
@@ -1916,6 +1922,8 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   top: calc(340 / 16 * 1rem);
   right: calc(0 / 16 * 1rem);
   left: auto;
+  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%22312%22%20height%3D%22249%22%20viewBox%3D%220%200%20312%20249%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5.54698%20118.667C7.34228%2092.3522%2026.9307%2069.1887%2050.1634%2065.8858C49.8622%2044.1438%2063.7062%2024.4894%2082.01%2017.5948C100.303%2010.7008%20122.077%2016.9261%20135.455%2032.8844C151.987%2010.5401%20180.506%200.468247%20205.658%208.09282C230.81%2015.7174%20251.314%2040.6526%20256.122%2069.4624C278.945%2070.0843%20303.862%2094.6284%20305.729%20123.365C307.596%20152.113%20286.071%20179.864%20260.576%20181.586C260.057%20182.671%20256.778%20183.064%20253.509%20183.456C243.505%20209.543%20221.353%20229.136%20196.423%20233.928C176.284%20237.803%20154.824%20231.92%20138.042%20218.56C129.386%20230.955%20116.879%20240.108%20102.98%20243.871C109.532%20235.669%20114.457%20225.888%20117.48%20215.396C105.595%20222.756%2091.0391%20224.801%2077.9051%20220.429C60.9966%20214.792%2047.0413%20198.747%2042.382%20179.593C19.9116%20171.721%203.7411%20144.982%205.54698%20118.667Z%22%20stroke%3D%22%23FEFEFD%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+
 }
 }
 .footer-copy{
