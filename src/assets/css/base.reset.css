@@ -3063,7 +3063,7 @@ img:focus{
   position: relative;
   z-index: 1;
   display: block;
-  padding-bottom: calc(370 / 16 * 1rem);
+  padding-bottom: calc(320 / 16 * 1rem);
 }
 @media (min-width: 768px) {
 .archive{
@@ -4578,14 +4578,10 @@ display: block;
   top: 0;
   left: 0;
 }
-/* .archive-category-people--wrap{
-  width: calc(240 / 1440 * 100vw);
-  height: calc(240 / 1440 * 100vw);
-} */
 .archive-footer-credit{
   position: absolute;
   right: 24px;
-  bottom: 408px;
+  bottom: 200px;
 }
 @media (min-width: 768px) {
   .archive-footer-credit{
