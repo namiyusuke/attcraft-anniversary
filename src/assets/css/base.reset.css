@@ -1431,7 +1431,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   z-index: 1;
   width: 90%;
   max-width: calc(1200 / 16 * 1rem);
-  padding-bottom: calc(1000 / 16 * 1rem);
+  padding-bottom: calc(950 / 16 * 1rem);
   margin-inline:auto;
 }
 @media (min-width: 1024px) {
@@ -1510,7 +1510,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   width: calc(240 / 16 * 1rem);
 }
 .web-image--move{
-  width: calc(200 / 16 * 1rem);
+  width: calc(180 / 16 * 1rem);
 }
 
 .direction-image--move{
@@ -1604,7 +1604,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 .category-hunting-people-02{
   position: absolute;
-  top: calc(1100 / 16 * 1rem);
+  top: calc(1000 / 16 * 1rem);
   left: 220px;
   z-index: 1;
   max-width: calc(140 / 16 * 1rem);
@@ -1919,7 +1919,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 .category-top--text._03{
   position: absolute;
-  top: calc(860 / 16 * 1rem);
+  top: calc(780 / 16 * 1rem);
 }
 @media (min-width: 1024px) {
 .category-top--text._03{
