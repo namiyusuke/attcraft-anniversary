@@ -153,7 +153,8 @@ import bgm from "@assets/audio/bgm.mp3";
               <span class="odject-menu odject-design--menu">
                 <Image src={design_menu} alt="デザインのメニュー" />
               </span>
-           d </a>
+              d
+            </a>
           </div>
           <div class="bg-bar">
             <Image src={bar} alt="バーカウンター" />
@@ -1000,7 +1001,6 @@ import bgm from "@assets/audio/bgm.mp3";
           this.audio.pause();
         };
         const toggleAudio = () => {
-          console.log(this.audioConditions);
           if (this.audioConditions) {
             this.audioConditions = false;
             stopAudio();
@@ -1009,10 +1009,9 @@ import bgm from "@assets/audio/bgm.mp3";
             startAudio();
           }
         };
-        // ページ内のどこかをクリックしたら再生開始
         this.onButton.addEventListener("click", startAudio, { once: true });
         this.audioPlay.addEventListener("click", toggleAudio);
-        // スペースキーでも再生開始できるように
+
         document.addEventListener(
           "keydown",
           (e) => {

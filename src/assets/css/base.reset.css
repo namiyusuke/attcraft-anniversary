@@ -1013,7 +1013,6 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 @media (min-width: 768px) {
 .globalNav-body{
   position: relative;
-
   margin-inline: auto;
   /* padding: calc(185 / 1600 * 100vw) 0 0 min(calc(100 / 1600 * 100vw),100px); */
   color: var(--white);
@@ -1044,7 +1043,6 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   width: 100%;
   height: 100%;
   content: "";
-  /* background-image: url(/src/assets/img/globalNav_noise.png); */
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -1052,7 +1050,12 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   line-height: 1;
 }
 .globalNav-list .globalNav-item + .globalNav-item{
+  margin-top: calc(22 / 16 * 1rem);
+}
+@media (min-width: 768px) {
+  .globalNav-list .globalNav-item + .globalNav-item{
   margin-top: calc(24 / 16 * 1rem);
+}
 }
 .globalNav-list{
   margin-left:calc(18 / 16 * 1rem);
@@ -1067,10 +1070,15 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   }
 }
 .globalNav-title{
-  font-size: calc(24 / 16 * 1rem);
+  font-size: calc(20 / 16 * 1rem);
   font-weight: 400;
   -webkit-text-stroke: 1px var(--white);
   color: transparent;
+}
+@media (min-width: 768px) {
+  .globalNav-title{
+  font-size: calc(24 / 16 * 1rem);
+}
 }
 .globalNav-list{
   margin-top: 24px;
@@ -1080,8 +1088,12 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   line-height: 1;
 }
 .globalNav-title.-second{
+  margin-top: 24px;
+}
+@media (min-width: 768px) {
+  .globalNav-title.-second{
   margin-top: 64px;
-
+}
 }
 .globalNav-title a{
   margin-top: 64px;
@@ -1113,10 +1125,18 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 }
 .globalNav-inner--scroll{
+  position: relative;
+  z-index: 10;
   height: 100%;
-  padding-top: calc(84 / 16 * 1rem);
+  padding-top: calc(50 / 16 * 1rem);
   padding-bottom: calc(80 / 16 * 1rem);
   overflow: auto;
+}
+@media (min-width: 768px) {
+  .globalNav-inner--scroll{
+  padding-top: calc(84 / 16 * 1rem);
+  padding-bottom: calc(80 / 16 * 1rem);
+}
 }
 .globalNav-inner::-webkit-scrollbar{
   overflow: hidden;
@@ -3229,7 +3249,7 @@ img:focus{
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10000;
+  z-index: 9990;
   width: 100%;
   height: 100%;
   background-color: rgba(38, 38, 38, 0.8);
