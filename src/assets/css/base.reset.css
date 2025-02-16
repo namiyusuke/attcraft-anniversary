@@ -1315,7 +1315,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
     width: 100%;
     background-image: url(/src/assets/img/bg_bricks.png);
     background-repeat: repeat;
-    background-size: 200%;
+    background-size: 160%;
 }
 .bg-main::before{
     position: absolute;
