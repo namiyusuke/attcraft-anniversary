@@ -1315,7 +1315,12 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
     width: 100%;
     background-image: url(/src/assets/img/bg_bricks.png);
     background-repeat: repeat;
+    background-size: 320%;
+}
+@media (min-width: 768px) {
+  .bg-main{
     background-size: 160%;
+}
 }
 .bg-main::before{
     position: absolute;
@@ -1882,8 +1887,8 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 .category-top--text._01{
   position: absolute;
-  top: calc(250 / 16 * 1rem);
-  left: calc(-20 / 16 * 1rem);
+  top: calc(200 / 16 * 1rem);
+  left: calc(-40 / 16 * 1rem);
   background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%22302%22%20height%3D%22236%22%20viewBox%3D%220%200%20302%20236%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M300.416%20104.829C297.323%2078.677%20276.625%2056.5446%20253.272%2054.3968C252.498%2032.7007%20237.707%2013.7842%20219.096%207.81174C200.496%201.8393%20179.069%209.12109%20166.504%2025.6946C148.898%204.22828%20119.933%20-4.40879%2095.204%204.43502C70.4748%2013.2788%2051.2409%2039.1556%2047.8656%2068.1219C25.1156%2069.8677%201.4566%2095.5722%201.01368%20124.32C0.570754%20153.08%2023.4283%20179.692%2048.9626%20180.151C49.5343%20181.208%2052.8267%20181.437%2056.1085%20181.667C67.3844%20207.188%2090.4638%20225.634%20115.585%20229.183C135.88%20232.054%20157.01%20225.128%20173.1%20210.978C182.353%20222.911%20195.29%20231.422%20209.349%20234.489C202.404%20226.633%20197.004%20217.123%20193.468%20206.809C205.696%20213.562%20220.326%20214.883%20233.22%20209.875C249.819%20203.421%20262.956%20186.732%20266.66%20167.402C288.7%20158.444%20303.519%20130.982%20300.416%20104.829Z%22%20stroke%3D%22%23FEFEFD%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
 }
 .category-top--text._03{
@@ -1899,7 +1904,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 .category-top--text._02{
   position: absolute;
   top: calc(331 / 16 * 1rem);
-  right: calc(-60 / 16 * 1rem);
+  right: calc(-30 / 16 * 1rem);
   left: auto;
   /* width: max-content; */
 }
