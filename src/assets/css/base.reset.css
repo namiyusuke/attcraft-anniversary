@@ -823,6 +823,7 @@ body{
   top: calc(1400 / 16 * 1rem);
   right: calc(153 / 16 * 1rem);
   z-index: 1;
+  display: none;
   width: calc(56 / 16 * 1rem);
   animation: loop_pingpong 6.5s infinite;
 }
@@ -830,6 +831,7 @@ body{
   .bg-bottomTableStand{
   top: calc(2179 / 16 * 1rem);
   right: calc(253 / 16 * 1rem);
+  display: block;
   width: calc(64 / 16 * 1rem);
 }
 }
