@@ -5251,9 +5251,7 @@ display: block;
     display: block;
   }
 }
-/* .js-spotlight{
-  position: relative;
-} */
+
 .js-spotlight::before{
   position: absolute;
   inset: 0;
@@ -5271,8 +5269,18 @@ display: block;
   transition: opacity 0.3s ease-in-out;
   animation: scaleupdown 5s linear infinite, movegradient 3s ease-in-out infinite alternate, brightnesspulse 3s ease-in-out infinite alternate;
 }
+@media(any-hover:hover){
 .js-spotlight.is-hover:hover::before{
   opacity: 1;
+}
+}
+.is-lightSpot.js-spotlight::before{
+  opacity: 1;
+}
+@media (min-width: 768px) {
+.is-lightSpot.js-spotlight::before{
+  opacity: 0;
+}
 }
  @keyframes scaleupdown {
       0% {

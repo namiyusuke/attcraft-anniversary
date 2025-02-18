@@ -91,7 +91,11 @@ const jsonLd = schema(description);
   import Loading from "@assets/js/libs/Loading";
   import Toggle from "@assets/js/libs/Toggle";
   import Observer from "@assets/js/libs/Observer";
-  new Observer(".js-observer");
+  new Observer(".js-observer", "is-shown");
+  new Observer(".js-spotlight", "is-lightSpot", true, {
+    rootMargin: "-30% 0px", // 上下30%の範囲を除外
+    threshold: [0.6, 0.8],
+  });
   new Loading();
   new Toggle(".js-toggle");
   const htmlElement = document.documentElement;
