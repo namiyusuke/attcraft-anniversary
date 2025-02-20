@@ -54,9 +54,9 @@ import { Image } from "astro:assets";
           <div class="loading-message">
             <p class="loading-message--text"><span class="-sp">音声をONにすると、</span>ラジオの一部が流れます！</p>
             <div class="loading-btn--wrap">
-              <button type="button" class="js-loading--on js-loading--open loading-btn">
+              <button type="button" class="js-loading--on js-loading--open js-control loading-btn">
                 <span class="loading-btn--inner">
-                  <sapn class="loading-btn--text">ON</sapn>
+                  <span class="loading-btn--text">ON</span>
                   <Image class="loading-btn--icon1" src={onMisic} alt="音あり" />
                 </span>
               </button>
@@ -215,6 +215,7 @@ import { Image } from "astro:assets";
       .to(".loading-layer1", {
         duration: 1.5,
         autoAlpha: 0,
+        delay: 1.5,
         ease: "power2.inOut",
       })
       .to(".loading-layer2", {

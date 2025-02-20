@@ -28,7 +28,7 @@ const jsonLd = schema(description);
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={`${SITE.url}/ogp.png`} />
+    <meta property="og:image" content={`${SITE.base}ogp.png`} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content={SITE.name} />
@@ -41,7 +41,6 @@ const jsonLd = schema(description);
     <link rel="canonical" href={Astro.url} />
     <link rel="icon" type="image/svg+xml" href={`${SITE.base}favicon.svg`} />
     <link rel="apple-touch-icon" sizes="180x180" href={`${SITE.base}apple-touch-icon.png`} />
-    <link rel="stylesheet" href="./" />
     <title>{title}</title>
     <script is:inline>
       (function (d) {
