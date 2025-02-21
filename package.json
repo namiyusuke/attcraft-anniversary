@@ -24,6 +24,7 @@
     "@hilosiva/oreroll": "^0.1.0",
     "@markuplint/astro-parser": "^4.6.1",
     "@types/xml2js": "^0.4.14",
+    "@vercel/edge": "^1.2.1",
     "autoprefixer": "^10.4.19",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^8.2.2",

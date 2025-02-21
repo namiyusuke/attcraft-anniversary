@@ -117,13 +117,13 @@ import bgm from "@assets/audio/bgm.mp3";
             <Image src={drinkMenu} alt="ドリンクメニューの写真" />
           </div>
           <div class="bg-direction js-spotlight">
+            <audio
+              controls
+              data-auto-play
+              data-audio="direction"
+              src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-11-21/139826716-44100-2-10921d11a17c9.m4a"
+            ></audio>
             <a href="/direction/">
-              <audio
-                controls
-                data-auto-play
-                data-audio="direction"
-                src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-11-21/139826716-44100-2-10921d11a17c9.m4a"
-              ></audio>
               <span class="odject-direction--people">
                 <Image src={direction_people} alt="ディレクション" />
               </span>
@@ -133,8 +133,8 @@ import bgm from "@assets/audio/bgm.mp3";
             </a>
           </div>
           <div class="bg-coding js-spotlight">
+            <audio controls data-auto-play data-audio="coding"></audio>
             <a href="/coding/">
-              <audio controls data-auto-play data-audio="coding"></audio>
               <span class="odject-coding--people">
                 <Image src={coding_people} alt="コーディング" />
               </span>

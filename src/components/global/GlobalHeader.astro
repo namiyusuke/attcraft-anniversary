@@ -23,7 +23,7 @@ const navLists = [
   <div>
     <h1 class="l-header--logo">
       <a href={`${SITE.base}`}>
-        <img src={logo.src} alt="" />
+        <img src={logo.src} alt="シバジュク酒場" />
       </a>
     </h1>
     <div class="hamburger-menu">
@@ -34,10 +34,10 @@ const navLists = [
         aria-controls="globalNav"
         class="js-global-hamburger-menu-btn js-hover js-toggle hamburger-menu-comment"
       >
-        <a class="hamburger-menu-link" href="#">
+        <span class="hamburger-menu-link">
           <span class="CommentModal--open"></span>
           <span class="CommentModal--close"></span>
-          <p class="text">
+          <span class="text">
             <span class="text__inner">
               <svg width="182" height="182" viewBox="0 0 182 182" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -147,12 +147,12 @@ const navLists = [
                   fill="#FEFEFD"></path>
               </svg>
             </span>
-          </p>
-          <figure class="beer icon">
+          </span>
+          <span class="beer icon">
             <span class="icon__open"><Image src={beerOpen} alt="ビール中身あり" /> </span>
             <span class="icon__close"> <Image src={beerClose} alt="ビール中身なし" /></span>
-          </figure>
-        </a>
+          </span>
+        </span>
       </button>
       <div class="globalNav-wrapper" aria-hidden="false" id="globalNav">
         <nav class="globalNav-body">

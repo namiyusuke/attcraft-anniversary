@@ -2424,15 +2424,18 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 .category .js-text {
   display: inline-block;
   opacity: 0;
-  /* transform: translateY(calc(sin(var(--index) * 0.9rad) * 10px)); */
   animation: smoothFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: calc(var(--index) * 0.04s);
 }
 .category .js-text {
   display: inline-block;
   opacity: 0;
-  /* transform: translateY(calc(sin(var(--index) * 0.5rad) * 8px)); */
   animation: fadeIn 0.5s ease-in forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+.category .js-text {
+  opacity: 1;
+}
 }
 .category .category-top--text._01,
 .category .category-top--text._02,
