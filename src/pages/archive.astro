@@ -51,8 +51,7 @@ import { Image } from "astro:assets";
 
 <Layout
   title={`エピソード一覧 | ${SITE.name}`}
-  description="すべてのエピソードを集めました。
-サロンメンバーの実体験に基づく会話を、ぜひ盗みぎきしてみてください。"
+  description="すべてのエピソードを集めました。サロンメンバーの実体験に基づく会話を、ぜひ盗みぎきしてみてください。"
 >
   <main class="hunting archive">
     <div class="lower">
@@ -79,13 +78,7 @@ import { Image } from "astro:assets";
             <!-- フリーワード検索用の入力フォーム -->
             <p class="search-text">フリーワード検索</p>
             <div class="search-input--wrap">
-              <input
-                type="text"
-                class="search-input"
-                id="search-input"
-                class="search-input"
-                oninput="filterEpisodes()"
-              />
+              <input type="text" class="search-input" id="search-input" oninput="filterEpisodes()" />
             </div>
           </div>
           <div class="archive-list--wrap">
