@@ -2,8 +2,8 @@
 // サイト共通設定
 // ================================
 export const SITE = {
-  name: "サイト名",
-  description: "Webサイトの説明文",
+  name: "ここはシバジュク酒場 ー隣の人の会話を盗みぎきー",
+  description: "Webクリエイター養成所Shibajukuのメンバーが集う、ポッドキャスト「シバジュク酒場」。Web制作にまつわるメンバー同士のリアルな会話をこっそり盗みぎきしながら、お楽しみください。",
   url: "https://example.com",
   base: "/",
   trackingId: "G-XXXXXX",

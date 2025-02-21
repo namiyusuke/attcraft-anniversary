@@ -24,16 +24,14 @@ import twitter from "@assets/img/logo-x.png";
 import facebook from "@assets/img/logo-facebook.png";
 import instagram from "@assets/img/logo-Instagram.png";
 import table_beer01 from "@assets/img/table_beer01.png";
-import fukidasi from "@assets/img/fukidasi.png";
 import { Image } from "astro:assets";
-import bgm from "@assets/audio/bgm.mp3";
-// // フロントマター内でデータを取得
-// const xmlUrl = "https://anchor.fm/s/132fb79c/podcast/rss";
-// const response = await fetch(xmlUrl);
-// const xmlText = await response.text();
 ---
 
-<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+<Layout
+  title={`制作会社 | ${SITE.name}`}
+  description="制作会社にまつわるエピソードを集めました。
+サロンメンバーの実体験に基づく会話を、ぜひ盗みぎきしてみてください。"
+>
   <main class="hunting category">
     <div class="heading-wrapper">
       <div class="heading__border">

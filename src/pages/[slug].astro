@@ -88,7 +88,7 @@ export async function getStaticPaths() {
 const { title, text, audioUrl } = Astro.props;
 ---
 
-<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+<Layout title={`${title} | ${SITE.name}`} description="これはAboutページ">
   <main class="detail-main detail-wrap">
     <div class="detail-content--wrap">
       <div class="detail-bar--wrap">

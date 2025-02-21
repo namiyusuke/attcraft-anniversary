@@ -1,7 +1,6 @@
 ---
 import { SITE } from "../config";
 import Layout from "@layouts/Layout.astro";
-
 import archive_people1 from "@assets/img/archive_people1.png";
 import archive_people2 from "@assets/img/archive_people2.png";
 import archive_people3 from "@assets/img/archive_people3.png";
@@ -50,7 +49,11 @@ import green_leaf07 from "@assets/img/green_leaf07.svg";
 import { Image } from "astro:assets";
 ---
 
-<Layout title={`About | ${SITE.name}`} description="これはAboutページ">
+<Layout
+  title={`エピソード一覧 | ${SITE.name}`}
+  description="すべてのエピソードを集めました。
+サロンメンバーの実体験に基づく会話を、ぜひ盗みぎきしてみてください。"
+>
   <main class="hunting archive">
     <div class="lower">
       <div class="-archive heading-wrapper">
