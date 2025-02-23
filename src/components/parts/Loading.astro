@@ -165,6 +165,9 @@ import { Image } from "astro:assets";
       },
       onComplete: () => {
         el.classList.add("is-hidden");
+        document.querySelector(".js-transition").style.display = "block";
+        document.querySelector(".js-transition__bg").style.display = "block";
+        // document.querySelector("body").appendChild("<div class='js-transition is-visible'></div>");
       },
     });
   }
@@ -177,6 +180,8 @@ import { Image } from "astro:assets";
     // 訪問済みフラグを設定
     sessionStorage.setItem("hasVisited", "true");
   } else {
+    document.querySelector(".js-transition").style.display = "block";
+    document.querySelector(".js-transition__bg").style.display = "block";
     // 2回目以降の訪問ではローディング画面を非表示
     // document.querySelector(".loading-wrap").style.display = "none";
     document.querySelector(".maps-gesture").classList.add("is-shown");
