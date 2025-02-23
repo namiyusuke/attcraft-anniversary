@@ -758,15 +758,19 @@ body{
   width: calc(98 / 16 * 1rem);
 }
 }
-.bg-bar9{
+.bg-bar9__wrap{
   position: absolute;
   top: calc(443 / 16 * 1rem);
   left: calc(860 / 16 * 1rem);
   width: calc(140 / 16 * 1rem);
   animation: loop_pingpong 8.5s  infinite ;
 }
+.bg-bar9:after{
+  top:0;
+  right:0;
+}
 @media (min-width: 768px) {
-  .bg-bar9{
+  .bg-bar9__wrap{
   top: calc(743 / 16 * 1rem);
   left: calc(1160 / 16 * 1rem);
   width: calc(200 / 16 * 1rem);
@@ -821,7 +825,7 @@ body{
 }
 .bg-bottomTableStand{
   position: absolute;
-  top: calc(1400 / 16 * 1rem);
+  top: calc(1500 / 16 * 1rem);
   right: calc(153 / 16 * 1rem);
   z-index: 1;
   display: none;
@@ -837,12 +841,24 @@ body{
 }
 }
 .bg_bottomTable_chra1{
+  animation: mini-shake 6.5s infinite;
+}
+.bg-bottomTable-char1__wrap{
   position: absolute;
   top: calc(1415 / 16 * 1rem);
   left: calc(437 / 16* 1rem);
   z-index: 1;
   width: calc(64 / 16 * 1rem);
-  animation: mini-shake 6.5s infinite;
+}
+.bg-bottomTable-char1__wrap.decorate-ear:after{
+  top:-5%;
+  left:-40%;
+}
+@media (min-width: 768px) {
+ .bg-bottomTable-char1__wrap.decorate-ear:after{
+  top:-10%;
+  left:-30%;
+}
 }
 .bg_wine_table{
   position: absolute;
@@ -857,7 +873,7 @@ body{
   right: calc(520 / 16* 1rem);
   width: calc(112 / 16 * 1rem);
 }
-  .bg_bottomTable_chra1{
+.bg-bottomTable-char1__wrap{
   top: calc(2211 / 16 * 1rem);
   left: calc(774 / 16 * 1rem);
   width: calc(84 / 16 * 1rem);
@@ -895,16 +911,29 @@ body{
   width: calc(83 / 16 * 1rem);
 }
 }
-.bg_bottomTable_chra4{
+.bg_bottomTable_chra4__wrap{
   position: absolute;
   top: calc(1422 / 16 * 1rem);
   right: calc(735 / 16* 1rem);
   z-index: 1;
   width: calc(52 / 16 * 1rem);
-  animation: mini-bounce 3.5s infinite;
+}
+.bg_bottomTable_chra4__wrap.decorate-ear:after{
+  top:0%;
+  right:-80%;
 }
 @media (min-width: 768px) {
-  .bg_bottomTable_chra4{
+ .bg_bottomTable_chra4__wrap.decorate-ear:after{
+  top:0%;
+  right:-80%;
+}
+}
+.bg_bottomTable_chra4{
+  animation: mini-bounce 3.5s infinite;
+}
+
+@media (min-width: 768px) {
+.bg_bottomTable_chra4__wrap{
   top: calc(2214 / 16 * 1rem);
   right: calc(1135 / 16 * 1rem);
   z-index: 1;
