@@ -3036,7 +3036,7 @@ img:focus{
 }
 .category-bottom-share--list{
   display: flex;
-  gap: calc(1.2 / 16 * 1rem);
+  gap: calc(12 / 16 * 1rem);
   align-items: center;
   justify-content: center;
   margin-block-start: calc(10 / 16 * 1rem);
