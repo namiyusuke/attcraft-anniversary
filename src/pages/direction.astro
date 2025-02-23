@@ -47,7 +47,7 @@ import bgm from "@assets/audio/bgm.mp3";
             <span class="-line">
               <span class="-sm">を</span>
               <span class="-lg -inline">盗</span>
-              <span class="-sm decorate-ear -title">みぎき</span>
+              <span class="decorate-ear -sm -title">みぎき</span>
             </span>
           </span>
         </h1>
@@ -146,10 +146,26 @@ import bgm from "@assets/audio/bgm.mp3";
           <div class="category-bottom-share--text">
             <p><span class="-sm">盗みぎき<br />をシェアしてみませんか？</span></p>
             <ul class="category-bottom-share--list">
-              <li class="category-bottom-share--twitter"><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-              <li class="category-bottom-share--facebook"><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+              <li class="category-bottom-share--twitter">
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(Astro.url.origin)}&text=${encodeURIComponent("盗みぎきをシェア")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"><img src={twitter.src} alt="twitter" /></a
+                >
+              </li>
+              <li class="category-bottom-share--facebook">
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.origin)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"><img src={facebook.src} alt="facebook" />
+                </a>
+              </li>
               <li class="category-bottom-share--instagram">
-                <a href="#"><img src={instagram.src} alt="instagram" /></a>
+                <a
+                  href={`https://www.instagram.com/share?url=${encodeURIComponent(Astro.url.origin)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"><img src={instagram.src} alt="instagram" /></a
+                >
               </li>
             </ul>
           </div>

@@ -23,6 +23,7 @@ import freeLance_menu from "@assets/img/freeLance_menu.png";
 import work_people from "@assets/img/work_people.png";
 import work_menu from "@assets/img/work_menu.png";
 import web_people from "@assets/img/web_people.png";
+import jobHunting_people_sub from "@assets/img/jobHunting_people_sub.png";
 // import web_people from "@assets/img/web.gif";
 import web_menu from "@assets/img/web_menu.png";
 import study_people from "@assets/img/study_people.png";
@@ -51,6 +52,8 @@ import bar_08 from "@assets/img/bar_08.png";
 import bar_09 from "@assets/img/bar_09.png";
 import bar_10 from "@assets/img/bar_10.png";
 import bar_11 from "@assets/img/bar_11.png";
+import bar_13 from "@assets/img/bar_13.png";
+import bar_14 from "@assets/img/bar_14.png";
 import beer from "@assets/img/beer.png";
 import bar_counter_people3 from "@assets/img/bar_counter_people3.png";
 import bar_counter_people4 from "@assets/img/bar_counter_people4.png";
@@ -114,6 +117,16 @@ import bgm from "@assets/audio/bgm.mp3";
           </div>
           <div class="bg-spotlight bg-drinkMenu">
             <Image src={drinkMenu} alt="メニューの写真" />
+          </div>
+          <div class="decorate-ear bg-bar13__wrap -reverse">
+            <div class="bg-bar13">
+              <Image src={bar_13} alt="カバンを持っている人" />
+            </div>
+          </div>
+          <div class="bg-bar14__wrap decorate-ear -reverse">
+            <div class="bg-bar14">
+              <Image src={bar_14} alt="青い服を着た女性" />
+            </div>
           </div>
           <div class="bg-direction js-spotlight">
             <audio
@@ -224,15 +237,17 @@ import bgm from "@assets/audio/bgm.mp3";
           <div class="bg-bottomTable">
             <Image src={bar_bottomTable} alt="バーの下のテーブル" />
           </div>
-          <div class="bg-bottomTableStand">
-            <Image src={bar_bottomTable_stand} alt="バーの下のテーブル" />
+          <div class="bg-bottomTableStand__wrap">
+            <div class="bg-bottomTableStand decorate-ear">
+              <Image src={bar_bottomTable_stand} alt="バーの下のテーブル" />
+            </div>
           </div>
           <div class="bg-">
             <div class="bar-counter-people5">
               <Image src={bar_counter_people5} alt="バーのカウンター" />
             </div>
           </div>
-          <div class="bg-bottomTable-char1__wrap decorate-ear -reverse">
+          <div class="decorate-ear bg-bottomTable-char1__wrap -reverse">
             <div class="bg-bottomTable-char1">
               <Image src={bar_bottomTable_char1} alt="バーの下のテーブル" />
             </div>
@@ -267,6 +282,11 @@ import bgm from "@assets/audio/bgm.mp3";
               <Image src={jobHunting_menu} alt="就活転職のメニュー" />
             </span>
           </a>
+        </div>
+        <div class="decorate-ear bg-jobHuntingSub__wrap">
+          <div class="bg-jobHuntingSub">
+            <Image src={jobHunting_people_sub} alt="就活転職" />
+          </div>
         </div>
         <div class="bg-company js-spotlight">
           <audio

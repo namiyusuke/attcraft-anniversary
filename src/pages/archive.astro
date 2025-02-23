@@ -47,6 +47,8 @@ import green_leaf05 from "@assets/img/green_leaf05.svg";
 import green_leaf06 from "@assets/img/green_leaf06.svg";
 import green_leaf07 from "@assets/img/green_leaf07.svg";
 import { Image } from "astro:assets";
+
+console.log(Astro.url.origin);
 ---
 
 <Layout
@@ -63,7 +65,7 @@ import { Image } from "astro:assets";
               <span class="-line">
                 <span class="-sm">を</span>
                 <span class="-lg -inline">盗</span>
-                <span class="-sm decorate-ear -title">みぎき</span>
+                <span class="decorate-ear -sm -title">みぎき</span>
               </span>
             </span>
           </h1>
@@ -141,12 +143,26 @@ import { Image } from "astro:assets";
             <div class="archive-category-art--inner--content" style="--delay: 0s;">
               <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
               <ul class="category-bottom-share--list">
-                <li class="category-bottom-share--twitter"><a href="#"><img src={x_logo.src} alt="twitter" /></a></li>
+                <li class="category-bottom-share--twitter">
+                  <a
+                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(Astro.url.origin)}&text=${encodeURIComponent("盗みぎきをシェア")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"><img src={x_logo.src} alt="twitter" /></a
+                  >
+                </li>
                 <li class="category-bottom-share--facebook">
-                  <a href="#"><img src={facebook.src} alt="facebook" /></a>
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.origin)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"><img src={facebook.src} alt="facebook" /></a
+                  >
                 </li>
                 <li class="category-bottom-share--instagram">
-                  <a href="#"><img src={instagram.src} alt="instagram" /></a>
+                  <a
+                    href={`https://www.instagram.com/share?url=${encodeURIComponent(Astro.url.origin)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"><img src={instagram.src} alt="instagram" /></a
+                  >
                 </li>
               </ul>
             </div>
@@ -161,10 +177,16 @@ import { Image } from "astro:assets";
               <p class="archive-category-art--txt">ポッドキャストで<br />配信中！</p>
               <ul class="category-bottom-share--list -podcast">
                 <li class="category-bottom-share--list--item">
-                  <a href="#"><Image src={spotify_icon} alt="spotify" /></a>
+                  <a target="_blank" href="https://open.spotify.com/show/4Gq4HUQ3zRmQGI0XfsFPRH"
+                    ><Image src={spotify_icon} alt="spotify" /></a
+                  >
                 </li>
                 <li class="category-bottom-share--list--item">
-                  <a href="#"><Image src={podcast_icon} alt="podcast" /></a>
+                  <a
+                    target="_blank"
+                    href="https://podcasts.apple.com/jp/podcast/%E3%82%B7%E3%83%90%E3%82%B8%E3%83%A5%E3%82%AF%E9%85%92%E5%A0%B4/id1498431281"
+                    ><Image src={podcast_icon} alt="podcast" /></a
+                  >
                 </li>
               </ul>
             </div>
@@ -216,7 +238,7 @@ import { Image } from "astro:assets";
         </figure>
       </div>
     </div>
-    <p class="js-dialog-open archive-footer-credit"><a href="">Credit</a></p>
+    <p class="js-dialog-open archive-footer-credit"><span>Credit</span></p>
     <dialog class="js-dialog-content -closing baseDialog" aria-label="modal">
       <div class="baseDialog_wrapper">
         <div class="baseDialog_content">
@@ -241,7 +263,7 @@ import { Image } from "astro:assets";
                   ><span class="archive-footer-x-text-decorate-inner">Follow us</span></span
                 >
               </p>
-              <a href="#">
+              <a href={Astro.url.origin}>
                 <Image src={x_logo} alt="X" />
               </a>
             </div>

@@ -824,20 +824,26 @@ body{
 }
 }
 .bg-bottomTableStand{
+  animation: loop_pingpong 6.5s infinite;
+}
+.bg-bottomTableStand__wrap{
   position: absolute;
   top: calc(1500 / 16 * 1rem);
   right: calc(153 / 16 * 1rem);
   z-index: 1;
   display: none;
   width: calc(56 / 16 * 1rem);
-  animation: loop_pingpong 6.5s infinite;
 }
 @media (min-width: 768px) {
-  .bg-bottomTableStand{
-  top: calc(2179 / 16 * 1rem);
+  .bg-bottomTableStand__wrap{
+  top: calc(2279 / 16 * 1rem);
   right: calc(253 / 16 * 1rem);
   display: block;
   width: calc(64 / 16 * 1rem);
+}
+.bg-bottomTableStand.decorate-ear:after{
+  top:-5%;
+  right:-100%;
 }
 }
 .bg_bottomTable_chra1{
@@ -895,6 +901,73 @@ body{
   animation: bounce 10.5s infinite;
 }
 }
+.bg-jobHuntingSub__wrap{
+  position: absolute;
+  top: calc(518 / 16* 1rem);
+  right: calc(78 / 16* 1rem);
+  z-index: 1;
+  width: calc(120 / 16 * 1rem);
+}
+.bg-jobHuntingSub__wrap.decorate-ear:after{
+  top:-5%;
+  right:-10%;
+}
+.bg-jobHuntingSub img{
+  animation: loop_rotate2 6.5s infinite;
+}
+.bg-bar13__wrap{
+  position: absolute;
+  top: calc(790 / 16 * 1rem);
+  left: calc(500 / 16 * 1rem);
+  z-index: 1;
+  width: calc(110 / 16 * 1rem);
+}
+.bg-bar13{
+  animation:loop_rotate2 3.5s infinite;
+}
+.bg-bar13__wrap.decorate-ear:after{
+  top:-5%;
+  left:-10%;
+}
+.bg-bar14__wrap{
+  position: absolute;
+  top: calc(1218 / 16* 1rem);
+  right: calc(440 / 16* 1rem);
+  z-index: 1;
+  width: calc(80 / 16 * 1rem);
+}
+.bg-bar14__wrap.decorate-ear:after{
+  top:-5%;
+  left:-40%;
+}
+.bg-bar14{
+ animation:loop_rotate2 3.5s infinite;
+}
+@media (min-width: 768px) {
+.bg-bar14__wrap{
+  position: absolute;
+  top: calc(2018 / 16* 1rem);
+  right: calc(640 / 16* 1rem);
+  z-index: 1;
+  width: calc(120 / 16 * 1rem);
+}
+.bg-bar14__wrap.decorate-ear:after{
+  top:-5%;
+  left:-30%;
+}
+.bg-bar13__wrap{
+  position: absolute;
+  top: calc(1322 / 16 * 1rem);
+  left: calc(700 / 16 * 1rem);
+  z-index: 1;
+  width: calc(163 / 16 * 1rem);
+}
+.bg-bar13__wrap.decorate-ear:after{
+  top:-5%;
+  left:-10%;
+}
+}
+
 .bg_bottomTable_chra3{
   position: absolute;
   top: calc(1422 / 16 * 1rem);
@@ -904,6 +977,17 @@ body{
   animation: mini-shake 3.5s infinite;
 }
 @media (min-width: 768px) {
+.bg-jobHuntingSub__wrap{
+  position: absolute;
+  top: calc(798 / 16 * 1rem);
+  right: calc(116 / 16 * 1rem);
+  z-index: 1;
+  width: calc(181 / 16 * 1rem);
+}
+.bg-jobHuntingSub__wrap.decorate-ear:after{
+  top:-5%;
+  right:-10%;
+}
   .bg_bottomTable_chra3{
   position: absolute;
   top: calc(2223 / 16 * 1rem);
@@ -4769,7 +4853,7 @@ display: block;
   bottom: calc(42 / 16 * 1rem);
 }
 }
-.archive-footer-credit a{
+.archive-footer-credit span{
   display: grid;
   place-items: center;
   width: calc(71 / 16 * 1rem);
@@ -4777,6 +4861,7 @@ display: block;
   font-family: var(--font-family-kaisei);
   font-size: calc(14 / 16 * 1rem);
   font-weight: 500;
+  cursor: pointer;
   background-color: #fff;
 }
 @keyframes fadeIn {

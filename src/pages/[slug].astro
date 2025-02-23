@@ -116,10 +116,26 @@ const { title, text, audioUrl } = Astro.props;
         <div class="archive-category-art--inner--content" style="--delay: 0s;">
           <p class="archive-category-art--txt">盗みぎきを<br />シェアしてみませんか？</p>
           <ul class="category-bottom-share--list">
-            <li class="category-bottom-share--twitter"><a href="#"><img src={twitter.src} alt="twitter" /></a></li>
-            <li class="category-bottom-share--facebook"><a href="#"><img src={facebook.src} alt="facebook" /></a></li>
+            <li class="category-bottom-share--twitter">
+              <a
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(Astro.url.href)}&text=${encodeURIComponent("盗みぎきをシェア")}`}
+                target="_blank"
+                rel="noopener noreferrer"><img src={twitter.src} alt="twitter" /></a
+              >
+            </li>
+            <li class="category-bottom-share--facebook">
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.origin)}`}
+                target="_blank"
+                rel="noopener noreferrer"><img src={facebook.src} alt="facebook" /></a
+              >
+            </li>
             <li class="category-bottom-share--instagram">
-              <a href="#"><img src={instagram.src} alt="instagram" /></a>
+              <a
+                href={`https://www.instagram.com/share?url=${encodeURIComponent(Astro.url.origin)}`}
+                target="_blank"
+                rel="noopener noreferrer"><img src={instagram.src} alt="instagram" /></a
+              >
             </li>
           </ul>
         </div>
