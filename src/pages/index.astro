@@ -123,7 +123,7 @@ import bgm from "@assets/audio/bgm.mp3";
               <Image src={bar_13} alt="カバンを持っている人" />
             </div>
           </div>
-          <div class="bg-bar14__wrap decorate-ear -reverse">
+          <div class="decorate-ear bg-bar14__wrap -reverse">
             <div class="bg-bar14">
               <Image src={bar_14} alt="青い服を着た女性" />
             </div>
@@ -507,7 +507,8 @@ import bgm from "@assets/audio/bgm.mp3";
     initializeAudio() {
       this.audioElement.loop = true;
       this.audioElement.volume = this.minVolume;
-      this.audioElement.preload = "auto";
+      // this.audioElement.preload = "auto";
+      this.audioElement.preload = "metadata";
       this.audioElement.addEventListener("loadeddata", () => {
         console.log("音声データが正常に読み込まれました");
         this.audioElement.currentTime = this.startTime;
