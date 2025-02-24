@@ -3406,7 +3406,9 @@ img:focus{
 }
 }
 .maps-gesture{
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  pointer-events:none;
 }
 .maps-dragscroll {
     position: relative;
@@ -5699,4 +5701,10 @@ body.is-loading-anim-in>* {
 }
 body.is-loading-anim-in> .js-transition__bg.is-visible{
   opacity: 1;
+}
+.js-topPage .l-header{
+  pointer-events: none;
+}
+.js-topPage.is-topPage .l-header{
+  pointer-events: auto;
 }
