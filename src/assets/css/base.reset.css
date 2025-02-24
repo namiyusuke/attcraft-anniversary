@@ -2182,6 +2182,7 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   padding-bottom: calc(30 / 16 * 1rem);
   color: var(--white);
   text-align: center;
+  letter-spacing: 0.16em;
 }
 .footer-copy.-details{
   position: absolute;
@@ -2795,6 +2796,14 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   z-index: 1;
   display: block;
     width: calc(190 / 16 * 1rem);
+}
+.odject-direction--people:after{
+  position: absolute;
+  top: 0;
+  right:100%;
+  width: 100%;
+  height: 100%;
+  content: '';
 
 }
 @media (min-width: 768px) {
@@ -5707,4 +5716,70 @@ body.is-loading-anim-in> .js-transition__bg.is-visible{
 }
 .js-topPage.is-topPage .l-header{
   pointer-events: auto;
+}
+.object_main_icon{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:calc(18 /16*1rem );
+  animation: flash 1.5s steps(1) infinite;
+}
+@media (min-width: 768px) {
+.object_main_icon{
+  width:calc(29 /16*1rem );
+}
+}
+.odject-direction--people .object_main_icon{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.odject-jobHunting--people .object_main_icon{
+  position: absolute;
+  top: 0;
+  left: -8%;
+}
+.odject-jobHunting--people .object_main_icon{
+  position: absolute;
+  top: 0;
+  left: -8%;
+}
+.odject-freeLance--people .object_main_icon{
+  position: absolute;
+  top: 0%;
+  left: -7%;
+}
+.odject-company--people .object_main_icon{
+  position: absolute;
+  top: 0%;
+  left: -10%;
+}
+.odject-web--people .object_main_icon{
+  position: absolute;
+  top: -3%;
+  right: 20%;
+  left: auto;
+  display: block;
+  transform: scaleX(-1);
+}
+.odject-study--people .object_main_icon{
+  position: absolute;
+  top: -3%;
+  left: -10%;
+}
+.odject-portfolio--people .object_main_icon{
+  position: absolute;
+  top: -3%;
+  left: -5%;
+}
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

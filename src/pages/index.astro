@@ -70,6 +70,7 @@ import bar_table1 from "@assets/img/bar_table1.png";
 import bar_table2 from "@assets/img/detail_beer.png";
 import gesture_icon from "@assets/img/gesture_icon.svg";
 import bgm from "@assets/audio/bgm.mp3";
+import object_main_icon from "@assets/img/object_main_icon.png";
 ---
 
 <Layout
@@ -137,6 +138,9 @@ import bgm from "@assets/audio/bgm.mp3";
               src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-11-6/135465423-44100-2-5968f0f452663.m4a"></audio>
             <a href="/direction/">
               <span class="odject-direction--people">
+                <span class="odject-direction--people__icon object_main_icon">
+                  <Image src={object_main_icon} alt="" />
+                </span>
                 <Image src={direction_people} alt="ディレクション" />
               </span>
               <span class="odject-menu odject-direction--menu">
@@ -153,6 +157,9 @@ import bgm from "@assets/audio/bgm.mp3";
             <a href="/coding/">
               <span class="odject-coding--people">
                 <Image src={coding_people} alt="コーディング" />
+                <span class="object_main_icon">
+                  <Image src={object_main_icon} alt="" />
+                </span>
               </span>
               <span class="odject-menu odject-coding--menu">
                 <Image src={coding_menu} alt="コーディングのメニュー" />
@@ -170,6 +177,9 @@ import bgm from "@assets/audio/bgm.mp3";
             <a href="/design/">
               <span class="odject-design--people">
                 <Image src={design_people} alt="デザイン" />
+                <span class="object_main_icon">
+                  <Image src={object_main_icon} alt="" />
+                </span>
               </span>
               <span class="odject-menu odject-design--menu">
                 <Image src={design_menu} alt="デザインのメニュー" />
@@ -275,6 +285,9 @@ import bgm from "@assets/audio/bgm.mp3";
           <a href="/job-hunting/">
             <span class="odject-jobHunting--people">
               <Image src={jobHunting_people} alt="就活転職" />
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
             </span>
             <span class="odject-menu odject-jobHunting--menu">
               <Image src={jobHunting_menu} alt="就活転職のメニュー" />
@@ -295,6 +308,9 @@ import bgm from "@assets/audio/bgm.mp3";
           ></audio>
           <a href="/company/">
             <span class="odject-company--people">
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
               <Image src={company_people} alt="制作会社" />
             </span>
             <span class="odject-menu odject-company--menu">
@@ -312,6 +328,9 @@ import bgm from "@assets/audio/bgm.mp3";
           </audio>
           <a href="/free-lance/">
             <span class="odject-freeLance--people">
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
               <Image src={freeLance_people} alt="フリーランス" />
             </span>
             <span class="odject-menu odject-freeLance--menu">
@@ -326,6 +345,9 @@ import bgm from "@assets/audio/bgm.mp3";
             src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-6-27/278253739-44100-2-52714b8b7c19d.m4a"></audio>
           <a href="/work/">
             <span class="odject-company--people">
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
               <Image src={work_people} alt="仕事" />
             </span>
             <span class="odject-menu odject-company--menu">
@@ -341,9 +363,12 @@ import bgm from "@assets/audio/bgm.mp3";
           <a href="/web/">
             <span class="odject-web--people">
               <Image src={web_people} alt="web" />
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
             </span>
             <span class="odject-menu odject-web--menu">
-              <Image src={web_menu} alt="デザインのメニュー" />
+              <Image src={web_menu} alt="webのメニュー" />
             </span>
           </a>
         </div>
@@ -361,6 +386,9 @@ import bgm from "@assets/audio/bgm.mp3";
           <a href="/study/">
             <span class="odject-study--people">
               <Image src={study_people} alt="勉強法" />
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
             </span>
             <span class="odject-menu odject-study--menu">
               <Image src={study_menu} alt="勉強法のメニュー" />
@@ -376,6 +404,9 @@ import bgm from "@assets/audio/bgm.mp3";
           <a href="/portfolio/">
             <span class="odject-portfolio--people">
               <Image src={portfolio_people} alt="ポートフォリオ" />
+              <span class="object_main_icon">
+                <Image src={object_main_icon} alt="" />
+              </span>
             </span>
             <span class="odject-menu odject-portfolio--menu">
               <Image src={portfolio_menu} alt="ポートフォリオのメニュー" />
@@ -430,7 +461,8 @@ import bgm from "@assets/audio/bgm.mp3";
 
 <script>
   import { defineCollection } from "astro:content";
-
+  // グローバルまたはスコープ外に保持
+  let currentPlayingAudio = null;
   // 最初にAudioStateManagerクラスを定義
   class AudioStateManager {
     static setIsPlaying(isPlaying) {
@@ -463,22 +495,26 @@ import bgm from "@assets/audio/bgm.mp3";
       this.maxVolume = options.maxVolume || 1;
       this.startTime = options.startTime || 0;
       this.isPlaying = false;
-      this.condition = false;
-      this.hasInteracted = false;
+      // 初期状態をAudioStateManagerから取得
+      this.condition = AudioStateManager.getIsPlaying() || false;
+      this.hasInteracted = AudioStateManager.getIsPlaying() || false;
       this.lastPlayPosition = this.startTime;
 
       this.setupBGMControl();
       this.initializeAudio();
-
-      if (document.referrer.includes(window.location.hostname)) {
-        this.hasInteracted = AudioStateManager.getIsPlaying();
-      }
 
       if (isMobileDevice()) {
         this.setupMobileBehavior();
       } else {
         this.setupDesktopBehavior();
       }
+
+      // デバッグ用
+      console.log("Initial state:", {
+        condition: this.condition,
+        hasInteracted: this.hasInteracted,
+        isPlaying: AudioStateManager.getIsPlaying(),
+      });
     }
 
     setupBGMControl() {
@@ -506,7 +542,7 @@ import bgm from "@assets/audio/bgm.mp3";
       this.audioElement.loop = true;
       this.audioElement.volume = this.minVolume;
       // this.audioElement.preload = "auto";
-      this.audioElement.preload = "metadata";
+      this.audioElement.preload = "auto";
       this.audioElement.addEventListener("loadeddata", () => {
         console.log("音声データが正常に読み込まれました");
         this.audioElement.currentTime = this.startTime;
@@ -548,9 +584,9 @@ import bgm from "@assets/audio/bgm.mp3";
     }
 
     async resumeFromLastPosition() {
-      if (!this.condition) return;
-
       try {
+        if (!this.condition) return;
+
         this.audioElement.currentTime = this.lastPlayPosition;
         await this.audioElement.play();
         this.isPlaying = true;
@@ -573,6 +609,8 @@ import bgm from "@assets/audio/bgm.mp3";
           this.hasInteracted = true;
           console.log("Interaction enabled");
           document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+          // フォーカスハンドラーを有効化
+          this.setupFocusHandlers();
         }
       };
 
@@ -645,6 +683,120 @@ import bgm from "@assets/audio/bgm.mp3";
       this.pauseAndSavePosition();
       this.audioElement.removeEventListener("timeupdate", () => {});
       document.removeEventListener("mousemove", this.handleMouseMove.bind(this));
+      if (!isMobileDevice()) {
+        this.triggerElement.removeEventListener("focus", () => {});
+        this.triggerElement.removeEventListener("blur", () => {});
+      }
+    }
+
+    // フォーカス関連のハンドラーを設定
+    setupFocusHandlers() {
+      if (!isMobileDevice()) {
+        this.triggerElement.setAttribute("tabindex", "0"); // フォーカス可能にする
+
+        this.triggerElement.addEventListener("focus", () => {
+          if (this.condition && this.hasInteracted) {
+            this.audioElement.volume = this.maxVolume;
+            this.resumeFromLastPosition();
+          }
+        });
+
+        this.triggerElement.addEventListener("blur", () => {
+          if (this.isPlaying) {
+            this.pauseAndSavePosition();
+          }
+        });
+      }
+    }
+
+    // ---------------------------------------------
+    // モバイル向けのふるまい設定
+    // ---------------------------------------------
+    setupMobileBehavior() {
+      const onButton = document.querySelector(".js-loading--on");
+      const offButton = document.querySelector(".js-loading--off");
+
+      // ONボタン
+      if (onButton) {
+        onButton.addEventListener("click", async () => {
+          // BGM を有効に
+          this.condition = true;
+          this.hasInteracted = true;
+          AudioStateManager.setIsPlaying(true);
+
+          // このタイミングで実際の再生を試みる
+          const rect = this.triggerElement.getBoundingClientRect();
+          const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+          if (isVisible) {
+            await this.attemptPlay();
+          }
+        });
+      }
+
+      // OFFボタン
+      if (offButton) {
+        offButton.addEventListener("click", () => {
+          this.condition = false;
+          AudioStateManager.setIsPlaying(false);
+          this.pauseAndSavePosition();
+        });
+      }
+
+      // IntersectionObserver で可視・不可視を監視
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.3,
+      };
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(async (entry) => {
+          console.log("Intersection状態:", {
+            isIntersecting: entry.isIntersecting,
+            condition: this.condition,
+            isPlaying: this.isPlaying,
+            hasInteracted: this.hasInteracted,
+          });
+
+          // 要素が表示領域に入ったら再生（ただし BGM ON & ユーザー操作済）
+          if (entry.isIntersecting && this.condition && this.hasInteracted && !this.isPlaying) {
+            // 少し遅延を入れて再生を試みる
+            setTimeout(async () => {
+              if (this.condition && this.hasInteracted && !this.isPlaying) {
+                await this.attemptPlay();
+              }
+            }, 300);
+          }
+          // 要素が表示領域を外れたら停止
+          else if (!entry.isIntersecting && this.isPlaying) {
+            this.pauseAndSavePosition();
+          }
+        });
+      }, observerOptions);
+
+      this.observer.observe(this.triggerElement);
+    }
+
+    // ---------------------------------------------
+    // 実際に再生を試みる関数（多重再生防止付き）
+    // ---------------------------------------------
+    async attemptPlay() {
+      // すでに他の audio が再生中なら停止
+      if (currentPlayingAudio && currentPlayingAudio !== this.audioElement) {
+        currentPlayingAudio.pause();
+        // 差し支えなければシークを最初に戻す or 前の音声の状態をリセット
+        // currentPlayingAudio.currentTime = this.startTime;
+      }
+
+      // 自身の再生を試みる
+      try {
+        this.audioElement.currentTime = this.lastPlayPosition;
+        await this.audioElement.play();
+        this.isPlaying = true;
+        currentPlayingAudio = this.audioElement;
+        console.log("Audio started:", this.audioElement.src);
+      } catch (error) {
+        console.warn("再生試行失敗:", error);
+      }
     }
   }
 
