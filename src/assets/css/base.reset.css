@@ -1299,7 +1299,20 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   -webkit-text-stroke: 1px rgba(253, 213, 4, 0.7);
   text-stroke: 1px rgba(253, 213, 4, 0.7);
 }
-
+.menu-article + .menu-article{
+  margin-top: calc(48 / 16 * 1rem);
+}
+.menu-article a{
+  transition: transform .3s var(--ease-power1-out);
+}
+.menu-article a:hover{
+  transform: scale(1.05);
+}
+@media (min-width: 1200px) {
+.menu-article + .menu-article{
+  margin-top: 0;
+}
+}
 .menu-article--item{
   position: relative;
   box-sizing: border-box;
@@ -2419,6 +2432,18 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 .progress{
   z-index: 1;
 }
+.category .category-top--text._01 .js-text {
+  animation-delay: calc(0.4s + (var(--index) * 0.04s));
+}
+
+.category .category-top--text._02 .js-text {
+  animation-delay: calc(.8s + (var(--index) * 0.04s));
+}
+
+.category .category-top--text._03 .js-text {
+  animation-delay: calc(1.2s + (var(--index) * 0.04s));
+}
+
 /* .bg-spotlight::before {
   position: absolute;
   top: -20%;
@@ -2668,17 +2693,6 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   animation-delay: 2.5s;
 }
 1
-.category .category-top--text._01 .js-text {
-  animation-delay: calc(0s + (var(--index) * 0.04s));
-}
-
-.category .category-top--text._02 .js-text {
-  animation-delay: calc(0.5s + (var(--index) * 0.04s));
-}
-
-.category .category-top--text._03 .js-text {
-  animation-delay: calc(1s + (var(--index) * 0.04s));
-}
 
 
 
@@ -2698,9 +2712,6 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   place-content: center;
   width: 238.58px;
   aspect-ratio: 300 / 233;
-  /* padding-block-end: 10%; */
-  /* padding-inline: calc(60 / 16 * 1rem); */
-  font-family: var(--font-family-kaisei);
   color: var(--yellow);
   text-align: center;
   text-wrap: nowrap;
@@ -3204,7 +3215,7 @@ img:focus{
 .category-bottom-share--facebook img{
   width: calc(40 / 16 * 1rem);
 }
-.category-bottom-share--instagram img{
+. img{
   width: calc(40 / 16 * 1rem);
 }
 @media (min-width: 1024px) {
@@ -3231,7 +3242,7 @@ img:focus{
   aspect-ratio: 311 / 248;
   padding-block-end: 10%;
   padding-inline: 1.5em;
-  font-family: var(--font-family-kaisei);
+  font-family: var(--font-family-vdl);
   font-size: calc(18 / 16 * 1rem);
   color: var(--yellow);
   text-align: center;
@@ -3401,6 +3412,7 @@ img:focus{
   align-items: center;
   justify-content: center;
   width: 100%;
+  font-family: var(--font-family-vdl);
 }
 .archive-people--wrap{
     position: absolute;
@@ -3700,7 +3712,7 @@ display: block;
 }
 .archive-category-art--txt{
   margin-bottom: 10px;
-  font-family: var(--font-family-kaisei);
+  font-family: var(--font-family-vdl);
   font-size: calc(20 / 16 * 1rem);
   font-weight: 700;
   color: var(--yellow);
@@ -4936,6 +4948,9 @@ display: block;
   color: #000;
   background-color: #FEFEFD;
   border-radius: calc(14 / 16 * 1rem);
+}
+.baseDialog_close:focus{
+  outline: none;
 }
 @media (min-width: 768px) {
 .baseDialog_close{

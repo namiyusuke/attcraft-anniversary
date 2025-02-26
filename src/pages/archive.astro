@@ -157,13 +157,6 @@ console.log(Astro.url.origin);
                     rel="noopener noreferrer"><img src={facebook.src} alt="facebook" /></a
                   >
                 </li>
-                <li class="category-bottom-share--instagram">
-                  <a
-                    href={`https://www.instagram.com/share?url=${encodeURIComponent(Astro.url.origin)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"><img src={instagram.src} alt="instagram" /></a
-                  >
-                </li>
               </ul>
             </div>
           </div>
@@ -263,7 +256,7 @@ console.log(Astro.url.origin);
                   ><span class="archive-footer-x-text-decorate-inner">Follow us</span></span
                 >
               </p>
-              <a href={Astro.url.origin}>
+              <a target="_blank" href="https://x.com/attcraft_nk">
                 <Image src={x_logo} alt="X" />
               </a>
             </div>

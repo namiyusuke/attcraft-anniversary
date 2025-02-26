@@ -521,10 +521,19 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       const controlButtons = document.querySelectorAll(".js-control");
 
       controlButtons.forEach((button) => {
-        button.addEventListener("click", () => {
+        button.addEventListener("click", async () => {
+          // ① BGMを ON/OFF 切り替え
           this.condition = !this.condition;
           console.log("BGM condition:", this.condition);
 
+          // ② モバイルなら一度だけ再生許可を獲得
+          if (isMobileDevice() && this.condition && !this.hasInteracted) {
+            await this.initialPlayback(); // ← モバイル再生許可用の処理を呼び出す
+            this.hasInteracted = true;
+          }
+
+          // ③ ONのときはマウスムーブ監視を開始（デスクトップ用）
+          //    OFFのときはマウスムーブ監視を停止 & 再生停止
           if (this.condition) {
             document.addEventListener("mousemove", this.handleMouseMove.bind(this));
           } else {
@@ -532,7 +541,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             this.pauseAndSavePosition();
           }
 
-          // ボタンのアクティブ状態を切り替え
+          // ④ ボタンのアクティブ状態を切り替え
           controlButtons.forEach((btn) => btn.classList.toggle("is-active", this.condition));
         });
       });
@@ -607,7 +616,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       const startPlayback = async () => {
         if (!this.hasInteracted) {
           this.hasInteracted = true;
-          console.log("Interaction enabled");
+
           document.addEventListener("mousemove", this.handleMouseMove.bind(this));
           // フォーカスハンドラーを有効化
           this.setupFocusHandlers();
@@ -709,36 +718,51 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       }
     }
 
+    //------------------------------------
+    // ここに追加する: モバイル再生許可用
+    //------------------------------------
+    async initialPlayback() {
+      try {
+        // 一時的に音量0やmutedにして一瞬再生 → すぐ停止
+        this.audioElement.muted = true;
+        this.audioElement.currentTime = 0;
+        await this.audioElement.play();
+        this.audioElement.pause();
+        this.audioElement.muted = false;
+        console.log("Initial user-gesture playback succeeded (再生許可を獲得)");
+      } catch (e) {
+        console.warn("Initial user-gesture playback failed (再生許可を獲得できず)", e);
+      }
+    }
     // ---------------------------------------------
-    // モバイル向けのふるまい設定
+    // モバイル用の挙動
     // ---------------------------------------------
     setupMobileBehavior() {
       const onButton = document.querySelector(".js-loading--on");
       const offButton = document.querySelector(".js-loading--off");
 
-      // ONボタン
+      // ONボタンが押されたとき
       if (onButton) {
         onButton.addEventListener("click", async () => {
-          // BGM を有効に
+          // BGM をON状態に
           this.condition = true;
           this.hasInteracted = true;
           AudioStateManager.setIsPlaying(true);
-
-          // このタイミングで実際の再生を試みる
-          const rect = this.triggerElement.getBoundingClientRect();
-          const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-          if (isVisible) {
-            await this.attemptPlay();
-          }
+          // ここでユーザー操作直後に一度だけ再生(ミュート状態等)
+          // “ユーザー操作直後”に再生許可獲得
+          await this.initialPlayback();
+          // これでブラウザ側に「ユーザーが明示的に再生許可した」状態を認識させる
+          console.log("BGM ON clicked (mobile). condition:", this.condition);
         });
       }
-
-      // OFFボタン
+      console.log(AudioStateManager.getIsPlaying());
+      // OFFボタンが押されたとき
       if (offButton) {
         offButton.addEventListener("click", () => {
           this.condition = false;
           AudioStateManager.setIsPlaying(false);
           this.pauseAndSavePosition();
+          console.log("BGM OFF clicked (mobile).");
         });
       }
 
@@ -757,9 +781,8 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             hasInteracted: this.hasInteracted,
           });
 
-          // 要素が表示領域に入ったら再生（ただし BGM ON & ユーザー操作済）
+          // 要素が表示領域に入ったら再生（BGM ON & ユーザー操作済のとき）
           if (entry.isIntersecting && this.condition && this.hasInteracted && !this.isPlaying) {
-            // 少し遅延を入れて再生を試みる
             setTimeout(async () => {
               if (this.condition && this.hasInteracted && !this.isPlaying) {
                 await this.attemptPlay();
@@ -774,6 +797,13 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       }, observerOptions);
 
       this.observer.observe(this.triggerElement);
+      if (this.condition && this.hasInteracted && !this.isPlaying) {
+        // 少し遅延を入れることでブラウザ描画が終わるのを待つ
+        setTimeout(async () => {
+          console.log("attemptPlay");
+          await this.attemptPlay();
+        }, 300);
+      }
     }
 
     // ---------------------------------------------

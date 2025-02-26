@@ -161,13 +161,6 @@ import bgm from "@assets/audio/bgm.mp3";
                     rel="noopener noreferrer"><img src={facebook.src} alt="facebook" /></a
                   >
                 </li>
-                <li class="category-bottom-share--instagram">
-                  <a
-                    href={`https://www.instagram.com/share?url=${encodeURIComponent(Astro.url.origin)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"><img src={instagram.src} alt="instagram" /></a
-                  >
-                </li>
               </ul>
             </div>
           </div>
@@ -244,14 +237,16 @@ import bgm from "@assets/audio/bgm.mp3";
   // エピソードのHTML生成
   function generateEpisodeHTML(episode, isHidden = false) {
     return `
-      <article class="menu-article--item ${isHidden ? "is-more-button--hidden" : ""}">
-        <div class="menu-article--body">
-          <a href=${episode.url}>
-            <h3 class="menu-article--number">${episode.title}</h3>
-            <p class="menu-article--time">${episode.duration}</p>
-          </a>
-        </div>
-      </article>
+      <article class="menu-article">
+        <a href=${episode.url} class="menu-article--item ${isHidden ? "is-more-button--hidden" : ""}">
+          <span  class="menu-article--body">
+          <span>
+              <h3 class="menu-article--number">${episode.title}</h3>
+              <p class="menu-article--time">${episode.duration}</p>
+          </span>
+         </span>
+        </a>
+    </article>
     `;
   }
 
