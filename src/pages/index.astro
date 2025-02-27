@@ -508,7 +508,8 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       } else {
         this.setupDesktopBehavior();
       }
-
+      // 追加: ページ読み込み時に再生状態を復元
+      this.restorePlaybackState();
       // デバッグ用
       console.log("Initial state:", {
         condition: this.condition,
@@ -516,7 +517,42 @@ import object_main_icon from "@assets/img/object_main_icon.png";
         isPlaying: AudioStateManager.getIsPlaying(),
       });
     }
+    // 新規追加: ページ読み込み時の再生状態復元メソッド
+    async restorePlaybackState() {
+      // 前回再生中だった場合
+      if (AudioStateManager.getIsPlaying()) {
+        this.condition = true;
+        this.hasInteracted = true;
 
+        // デスクトップの場合はマウス移動イベントを設定
+        if (!isMobileDevice()) {
+          document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+          this.setupFocusHandlers();
+        }
+
+        // コントロールボタンの状態を更新
+        const controlButtons = document.querySelectorAll(".js-control");
+        controlButtons.forEach((btn) => btn.classList.add("is-active"));
+
+        // モバイルの場合はIntersectionObserverが処理するので追加処理不要
+        // デスクトップの場合は、一定時間後に再生を試みる
+        if (!isMobileDevice()) {
+          setTimeout(async () => {
+            if (this.condition && !this.isPlaying) {
+              try {
+                this.audioElement.currentTime = this.startTime; // 常に開始位置から
+                await this.audioElement.play();
+                this.isPlaying = true;
+                this.audioElement.volume = 0;
+                console.log("Restored playback");
+              } catch (error) {
+                console.warn("Could not restore playback:", error);
+              }
+            }
+          }, 500);
+        }
+      }
+    }
     setupBGMControl() {
       const controlButtons = document.querySelectorAll(".js-control");
 
@@ -551,7 +587,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       this.audioElement.loop = true;
       this.audioElement.volume = this.minVolume;
       // this.audioElement.preload = "auto";
-      this.audioElement.preload = "auto";
+      this.audioElement.preload = "none";
       this.audioElement.addEventListener("loadeddata", () => {
         console.log("音声データが正常に読み込まれました");
         this.audioElement.currentTime = this.startTime;
@@ -865,53 +901,136 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       this.onButton = document.querySelector(".js-loading--on");
       this.offButton = document.querySelector(".js-loading--off");
       this.audioPlay = document.querySelector(".js-bgm-control");
-      this.audioConditions = false;
+
+      // 初期状態を取得
+      this.audioConditions = !AudioStateManager.getIsPlaying();
+
       if (this.audio) {
         this.audio.volume = 0.2;
+        this.audio.preload = "auto"; // 確実に読み込む
 
         // クリックイベントを待ってから再生開始
         const startAudio = () => {
-          this.audio.play().catch((error) => {
-            console.log("再生エラー:", error);
-          });
+          this.tryPlayAudio();
           this.audioConditions = false;
-        };
-        const conditionBGM = () => {
-          const isPlaying = AudioStateManager.getIsPlaying();
-          console.log(isPlaying);
-          if (isPlaying) {
-            this.audio.play();
-            this.audioConditions = false;
-          } else {
-            this.audio.pause();
+          AudioStateManager.setIsPlaying(true);
 
-            this.audioConditions = true;
-          }
+          // コントロールボタンの状態を更新
+          const controlButtons = document.querySelectorAll(".js-control");
+          controlButtons.forEach((btn) => btn.classList.add("is-active"));
         };
+
         const stopAudio = () => {
           this.audio.pause();
-          this.audioConditions = false;
+          this.audioConditions = true;
+          AudioStateManager.setIsPlaying(false);
+
+          // コントロールボタンの状態を更新
+          const controlButtons = document.querySelectorAll(".js-control");
+          controlButtons.forEach((btn) => btn.classList.remove("is-active"));
         };
+
         const toggleAudio = () => {
           if (this.audioConditions) {
             this.audioConditions = false;
-            AudioStateManager.setIsPlaying(false);
-            this.audio.play().catch((error) => {
-              console.log("再生エラー:", error);
-            });
+            this.tryPlayAudio();
+            AudioStateManager.setIsPlaying(true);
+
+            // コントロールボタンの状態を更新
+            const controlButtons = document.querySelectorAll(".js-control");
+            controlButtons.forEach((btn) => btn.classList.add("is-active"));
           } else {
             this.audioConditions = true;
-            AudioStateManager.setIsPlaying(true);
             this.audio.pause();
+            AudioStateManager.setIsPlaying(false);
+
+            // コントロールボタンの状態を更新
+            const controlButtons = document.querySelectorAll(".js-control");
+            controlButtons.forEach((btn) => btn.classList.remove("is-active"));
           }
         };
+
+        // 音声再生を試みるヘルパーメソッド（複数箇所で使用）
+        this.tryPlayAudio = () => {
+          const playPromise = this.audio.play();
+
+          if (playPromise !== undefined) {
+            playPromise.catch((error) => {
+              console.log("再生エラー:", error);
+
+              // モバイルデバイスでの自動再生制限対策
+              if (error.name === "NotAllowedError") {
+                console.log("ユーザー操作が必要です - ミュートで再生を試みます");
+
+                // ミュートで再生を試みる（多くのブラウザではミュート状態なら自動再生可能）
+                this.audio.muted = true;
+                this.audio
+                  .play()
+                  .then(() => {
+                    // 成功したら徐々にミュートを解除
+                    setTimeout(() => {
+                      this.audio.muted = false;
+                    }, 1000);
+                  })
+                  .catch((e) => console.log("ミュート再生も失敗:", e));
+              }
+            });
+          }
+        };
+
+        // ページ読み込み時の状態確認と再生
+        const initializeAudio = () => {
+          console.log("初期化中...");
+          const isPlaying = AudioStateManager.getIsPlaying();
+          console.log("ページ読み込み時の再生状態:", isPlaying);
+
+          if (isPlaying) {
+            this.audioConditions = false;
+
+            // コントロールボタンの状態を更新
+            const controlButtons = document.querySelectorAll(".js-control");
+            controlButtons.forEach((btn) => btn.classList.add("is-active"));
+
+            // loadedmetadataイベントを確認して再生
+            if (this.audio.readyState >= 2) {
+              // すでにメタデータが読み込まれている場合
+              console.log("メタデータはすでに読み込まれています");
+              this.tryPlayAudio();
+            } else {
+              // メタデータがまだ読み込まれていない場合
+              console.log("メタデータの読み込みを待っています");
+              this.audio.addEventListener(
+                "loadedmetadata",
+                () => {
+                  console.log("メタデータが読み込まれました");
+                  this.tryPlayAudio();
+                },
+                { once: true }
+              );
+            }
+          } else {
+            this.audio.pause();
+            this.audioConditions = true;
+          }
+        };
+
+        // onButton, offButton, audioPlayのイベントリスナー
         this.onButton.addEventListener("click", startAudio);
         this.offButton.addEventListener("click", stopAudio);
         this.audioPlay.addEventListener("click", toggleAudio);
-        document.addEventListener("DOMContentLoaded", conditionBGM);
+
+        // window.onloadイベントで初期化（より確実）
+        if (document.readyState === "complete") {
+          console.log("ドキュメントはすでに完全に読み込まれています");
+          initializeAudio();
+        } else {
+          console.log("window.onloadイベントを待機中");
+          window.addEventListener("load", initializeAudio);
+        }
       }
     }
   }
+
   new BGM();
   function hoverClass() {
     const hoverClass = document.querySelectorAll(".js-spotlight");

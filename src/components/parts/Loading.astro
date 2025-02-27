@@ -171,21 +171,22 @@ import { Image } from "astro:assets";
       },
     });
   }
-  // セッションストレージで初回訪問を管理
-  const isFirstVisit = !sessionStorage.getItem("hasVisited");
-  if (isFirstVisit) {
-    document.querySelector(".loading-wrap").style.display = "block";
-    // 初回訪問時のみアニメーションを実行
-    initializeLoadingAnimation();
-    // 訪問済みフラグを設定
-    sessionStorage.setItem("hasVisited", "true");
-  } else {
-    document.querySelector(".js-transition").style.display = "block";
-    document.querySelector(".js-transition__bg").style.display = "block";
-    // 2回目以降の訪問ではローディング画面を非表示
-    // document.querySelector(".loading-wrap").style.display = "none";
-    document.querySelector(".maps-gesture").classList.add("is-shown");
-  }
+  document.addEventListener("DOMContentLoaded", () => {
+    // セッションストレージで初回訪問を管理
+    const isFirstVisit = !sessionStorage.getItem("hasVisited");
+    if (isFirstVisit) {
+      document.querySelector(".loading-wrap").style.display = "block";
+      // 初回訪問時のみアニメーションを実行
+      initializeLoadingAnimation();
+      // 訪問済みフラグを設定
+    } else {
+      document.querySelector(".js-transition").style.display = "block";
+      document.querySelector(".js-transition__bg").style.display = "block";
+      // 2回目以降の訪問ではローディング画面を非表示
+      // document.querySelector(".loading-wrap").style.display = "none";
+      document.querySelector(".maps-gesture").classList.add("is-shown");
+    }
+  });
   function initializeLoadingAnimation() {
     const counter = { value: 0 };
     document.querySelectorAll(".js-text-target").forEach((el) => spanWrap(el, counter));
@@ -219,6 +220,7 @@ import { Image } from "astro:assets";
     btn.addEventListener("click", () => {
       RootLoading();
       mapsGesture.classList.add("is-shown");
+      sessionStorage.setItem("hasVisited", "true");
     });
   });
 </script>
