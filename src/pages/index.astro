@@ -80,6 +80,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
 >
   <LoadingPage />
   <main class="bg-bricks">
+    <audio id="universalAudio" preload="none"></audio>
     <div class="maps-gesture">
       <div class="maps-gesture__bg"></div>
       <div class="maps-gesture__contents">
@@ -130,12 +131,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
               <Image src={bar_14} alt="青い服を着た女性" />
             </div>
           </div>
-          <div class="bg-direction js-spotlight">
-            <audio
-              controls
-              data-auto-play
-              data-audio="direction"
-              src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-11-6/135465423-44100-2-5968f0f452663.m4a"></audio>
+          <div
+            class="bg-direction js-spotlight"
+            data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-11-6/135465423-44100-2-5968f0f452663.m4a"
+          >
             <a href="/direction/">
               <span class="odject-direction--people">
                 <span class="odject-direction--people__icon object_main_icon">
@@ -148,12 +147,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
               </span>
             </a>
           </div>
-          <div class="bg-coding js-spotlight">
-            <audio
-              controls
-              data-auto-play
-              data-audio="coding"
-              src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2023-4-21/330742665-44100-2-5edfae6160c83.m4a"></audio>
+          <div
+            class="bg-coding js-spotlight"
+            data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2023-4-21/330742665-44100-2-5edfae6160c83.m4a"
+          >
             <a href="/coding/">
               <span class="odject-coding--people">
                 <Image src={coding_people} alt="コーディング" />
@@ -166,14 +163,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
               </span>
             </a>
           </div>
-          <div class="bg-design js-spotlight">
-            <audio
-              controls
-              data-auto-play
-              data-audio="design"
-              src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-1-17/248918979-44100-2-bb6ac1ff83d68.m4a"
-            >
-            </audio>
+          <div
+            class="bg-design js-spotlight"
+            data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-1-17/248918979-44100-2-bb6ac1ff83d68.m4a"
+          >
             <a href="/design/">
               <span class="odject-design--people">
                 <Image src={design_people} alt="デザイン" />
@@ -276,12 +269,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             <Image src={bar_bottomTable_char5} alt="バーの下のテーブル" />
           </div>
         </div>
-        <div class="bg-jobHunting js-spotlight">
-          <audio
-            controls
-            data-auto-play
-            data-audio="jobHunting"
-            src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-7-24/101029684-44100-2-144db6b663639.m4a"></audio>
+        <div
+          class="bg-jobHunting js-spotlight"
+          data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-7-24/101029684-44100-2-144db6b663639.m4a"
+        >
           <a href="/job-hunting/">
             <span class="odject-jobHunting--people">
               <Image src={jobHunting_people} alt="就活転職" />
@@ -299,13 +290,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             <Image src={jobHunting_people_sub} alt="就活転職" />
           </div>
         </div>
-        <div class="bg-company js-spotlight">
-          <audio
-            controls
-            data-auto-play
-            data-audio="company"
-            src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2023-11-14/5f367e6f-b788-50ab-56cc-5c4d7b1bd6f2.mp3"
-          ></audio>
+        <div
+          class="bg-company js-spotlight"
+          data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2023-11-14/5f367e6f-b788-50ab-56cc-5c4d7b1bd6f2.mp3"
+        >
           <a href="/company/">
             <span class="odject-company--people">
               <span class="object_main_icon">
@@ -318,14 +306,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             </span>
           </a>
         </div>
-        <div class="bg-freeLance js-spotlight">
-          <audio
-            controls
-            data-auto-play
-            data-audio="freeLance"
-            src="https://d3ctxlq1ktw2nl.cloudfront.net/production/2020-1-7/47126269-44100-2-d54667e7fd84f.mp3"
-          >
-          </audio>
+        <div
+          class="bg-freeLance js-spotlight"
+          data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/production/2020-1-7/47126269-44100-2-d54667e7fd84f.mp3"
+        >
           <a href="/free-lance/">
             <span class="odject-freeLance--people">
               <span class="object_main_icon">
@@ -338,11 +322,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             </span>
           </a>
         </div>
-        <div class="bg-work js-spotlight">
-          <audio
-            data-auto-play
-            data-audio="work"
-            src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-6-27/278253739-44100-2-52714b8b7c19d.m4a"></audio>
+        <div
+          class="bg-work js-spotlight"
+          data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-6-27/278253739-44100-2-52714b8b7c19d.m4a"
+        >
           <a href="/work/">
             <span class="odject-company--people">
               <span class="object_main_icon">
@@ -355,11 +338,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             </span>
           </a>
         </div>
-        <div class="bg-web js-spotlight">
-          <audio
-            data-auto-play
-            data-audio="web"
-            src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-10-9/126700875-44100-2-40e9aaeb6ca88.m4a"></audio>
+        <div
+          class="bg-web js-spotlight"
+          data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-10-9/126700875-44100-2-40e9aaeb6ca88.m4a"
+        >
           <a href="/web/">
             <span class="odject-web--people">
               <Image src={web_people} alt="web" />
@@ -378,11 +360,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
         <div class="bg-table2">
           <Image src={bar_table2} alt="バーのテーブル2" />
         </div>
-        <div class="bg-study js-spotlight">
-          <audio
-            data-auto-play
-            data-audio="study"
-            src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-4-23/267341869-44100-2-d7c9330350787.m4a"></audio>
+        <div
+          class="bg-study js-spotlight"
+          data-audio-url="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-4-23/267341869-44100-2-d7c9330350787.m4a"
+        >
           <a href="/study/">
             <span class="odject-study--people">
               <Image src={study_people} alt="勉強法" />
@@ -395,12 +376,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
             </span>
           </a>
         </div>
-        <div class="bg-portfolio js-spotlight">
-          <audio
-            data-auto-play
-            data-audio="portfolio"
-            src="https://anchor.fm/s/132fb79c/podcast/play/14878550/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fproduction%2F2020-5-8%2F80381710-44100-2-08285c18a8227.mp3"
-          ></audio>
+        <div
+          class="bg-portfolio js-spotlight"
+          data-audio-url="https://anchor.fm/s/132fb79c/podcast/play/14878550/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fproduction%2F2020-5-8%2F80381710-44100-2-08285c18a8227.mp3"
+        >
           <a href="/portfolio/">
             <span class="odject-portfolio--people">
               <Image src={portfolio_people} alt="ポートフォリオ" />
@@ -460,425 +439,381 @@ import object_main_icon from "@assets/img/object_main_icon.png";
 </Layout>
 
 <script>
-  import { defineCollection } from "astro:content";
-  // グローバルまたはスコープ外に保持
-  let currentPlayingAudio = null;
-  // 最初にAudioStateManagerクラスを定義
+  /*******************************************************
+   * 1) BGMの ON/OFF 状態を sessionStorage で保持
+   *******************************************************/
   class AudioStateManager {
     static setIsPlaying(isPlaying) {
       sessionStorage.setItem("bgmPlaying", isPlaying.toString());
     }
-
     static getIsPlaying() {
       return sessionStorage.getItem("bgmPlaying") === "true";
     }
-
     static clear() {
       sessionStorage.removeItem("bgmPlaying");
     }
   }
 
-  // モバイルデバイスかどうかを判定する関数
+  /*******************************************************
+   * 2) モバイルデバイスかどうかを判定する関数
+   *******************************************************/
   function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
-  const container = document.getElementById("scroll-container");
-  const contentBlocks = document.querySelectorAll(".js-spotlight");
-
-  class ProximityAudioPlayer {
-    constructor(audioElement, triggerElement, options = {}) {
-      this.audioElement = audioElement;
-      this.triggerElement = triggerElement;
-      this.maxDistance = options.maxDistance || 300;
-      this.minVolume = options.minVolume || 0;
-      this.maxVolume = options.maxVolume || 1;
-      this.startTime = options.startTime || 0;
-      this.isPlaying = false;
-      // 初期状態をAudioStateManagerから取得
-      this.condition = AudioStateManager.getIsPlaying() || false;
-      this.hasInteracted = AudioStateManager.getIsPlaying() || false;
-      this.lastPlayPosition = this.startTime;
-
-      this.setupBGMControl();
-      this.initializeAudio();
-
-      if (isMobileDevice()) {
-        this.setupMobileBehavior();
-      } else {
-        this.setupDesktopBehavior();
-      }
-      // 追加: ページ読み込み時に再生状態を復元
-      this.restorePlaybackState();
-      // デバッグ用
-      console.log("Initial state:", {
-        condition: this.condition,
-        hasInteracted: this.hasInteracted,
-        isPlaying: AudioStateManager.getIsPlaying(),
-      });
-    }
-    // 新規追加: ページ読み込み時の再生状態復元メソッド
-    async restorePlaybackState() {
-      // 前回再生中だった場合
-      if (AudioStateManager.getIsPlaying()) {
-        this.condition = true;
-        this.hasInteracted = true;
-
-        // デスクトップの場合はマウス移動イベントを設定
-        if (!isMobileDevice()) {
-          document.addEventListener("mousemove", this.handleMouseMove.bind(this));
-          this.setupFocusHandlers();
-        }
-
-        // コントロールボタンの状態を更新
-        const controlButtons = document.querySelectorAll(".js-control");
-        controlButtons.forEach((btn) => btn.classList.add("is-active"));
-
-        // モバイルの場合はIntersectionObserverが処理するので追加処理不要
-        // デスクトップの場合は、一定時間後に再生を試みる
-        if (!isMobileDevice()) {
-          setTimeout(async () => {
-            if (this.condition && !this.isPlaying) {
-              try {
-                this.audioElement.currentTime = this.startTime; // 常に開始位置から
-                await this.audioElement.play();
-                this.isPlaying = true;
-                this.audioElement.volume = 0;
-                console.log("Restored playback");
-              } catch (error) {
-                console.warn("Could not restore playback:", error);
-              }
-            }
-          }, 500);
-        }
-      }
-    }
-    setupBGMControl() {
-      const controlButtons = document.querySelectorAll(".js-control");
-
-      controlButtons.forEach((button) => {
-        button.addEventListener("click", async () => {
-          // ① BGMを ON/OFF 切り替え
-          this.condition = !this.condition;
-          console.log("BGM condition:", this.condition);
-
-          // ② モバイルなら一度だけ再生許可を獲得
-          if (isMobileDevice() && this.condition && !this.hasInteracted) {
-            await this.initialPlayback(); // ← モバイル再生許可用の処理を呼び出す
-            this.hasInteracted = true;
-          }
-
-          // ③ ONのときはマウスムーブ監視を開始（デスクトップ用）
-          //    OFFのときはマウスムーブ監視を停止 & 再生停止
-          if (this.condition) {
-            document.addEventListener("mousemove", this.handleMouseMove.bind(this));
-          } else {
-            document.removeEventListener("mousemove", this.handleMouseMove.bind(this));
-            this.pauseAndSavePosition();
-          }
-
-          // ④ ボタンのアクティブ状態を切り替え
-          controlButtons.forEach((btn) => btn.classList.toggle("is-active", this.condition));
-        });
-      });
+  document.addEventListener("DOMContentLoaded", () => {
+    /*******************************************************
+     * (A) ページに1つだけある<audio>要素
+     *******************************************************/
+    const universalAudio = document.getElementById("universalAudio");
+    if (!universalAudio) {
+      console.warn("universalAudio 要素が見つかりません。HTMLに <audio id='universalAudio'> を配置してください。");
+      return;
     }
 
-    initializeAudio() {
-      this.audioElement.loop = true;
-      this.audioElement.volume = this.minVolume;
-      // this.audioElement.preload = "auto";
-      this.audioElement.preload = "none";
-      this.audioElement.addEventListener("loadeddata", () => {
-        console.log("音声データが正常に読み込まれました");
-        this.audioElement.currentTime = this.startTime;
-      });
+    // ★音量を初期化（例: 0.2 を最大値とする）
+    let baseVolume = 0.2;
+    universalAudio.volume = baseVolume;
 
-      this.audioElement.addEventListener("timeupdate", () => {
-        this.lastPlayPosition = this.audioElement.currentTime;
-      });
-    }
+    // 先読みを抑えて表示を軽く
+    universalAudio.preload = "none";
+    // 必要に応じてループする
+    universalAudio.loop = false;
 
-    handleMouseMove(event) {
-      if (!this.hasInteracted || !this.condition) return;
+    /*******************************************************
+     * (B) BGM ON/OFF 状態を sessionStorage で管理
+     *******************************************************/
+    let isBgmOn = AudioStateManager.getIsPlaying();
+    let hasUserInteracted = false; // モバイルの自動再生制限対策
+    let currentAudioUrl = null; // 今再生中の音源URL（切り替え時に活用）
+    let mostVisibleElement = null; // いま最も可視のセクションを保持
+    let pendingAudioPlay = false; // モバイルでの初回クリック待ち状態を表すフラグ
 
-      if (this.animationFrame) {
-        cancelAnimationFrame(this.animationFrame);
-      }
-
-      this.animationFrame = requestAnimationFrame(() => {
-        const rect = this.triggerElement.getBoundingClientRect();
-        const elementCenter = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-        };
-        const distance = Math.sqrt(
-          Math.pow(event.clientX - elementCenter.x, 2) + Math.pow(event.clientY - elementCenter.y, 2)
-        );
-
-        if (distance <= this.maxDistance) {
-          if (!this.isPlaying) {
-            this.resumeFromLastPosition();
-          }
-          const newVolume =
-            this.minVolume + (this.maxVolume - this.minVolume) * Math.pow(1 - distance / this.maxDistance, 2);
-          this.audioElement.volume = Math.max(0, Math.min(1, newVolume));
-        } else if (this.isPlaying) {
-          this.pauseAndSavePosition();
-        }
-      });
-    }
-
-    async resumeFromLastPosition() {
+    /*******************************************************
+     * (C) 初回だけモバイル再生許可を獲得する関数
+     *******************************************************/
+    async function initialPlayback() {
       try {
-        if (!this.condition) return;
+        // ミュート状態で再生→停止して「ユーザー操作で再生した」実績を得る
+        universalAudio.muted = true;
+        await universalAudio.play();
+        universalAudio.pause();
+        universalAudio.muted = false;
 
-        this.audioElement.currentTime = this.lastPlayPosition;
-        await this.audioElement.play();
-        this.isPlaying = true;
-        console.log("Resumed from position:", this.lastPlayPosition);
-      } catch (error) {
-        console.warn("Resume playback failed:", error);
+        hasUserInteracted = true;
+        console.log("初回再生許可を獲得しました。");
+        return true;
+      } catch (err) {
+        console.warn("初回再生許可獲得に失敗:", err);
+        return false;
       }
     }
 
-    pauseAndSavePosition() {
-      this.lastPlayPosition = this.audioElement.currentTime;
-      this.audioElement.pause();
-      this.isPlaying = false;
-      console.log("Paused at position:", this.lastPlayPosition);
-    }
+    /*******************************************************
+     * (D) BGM ON / OFF ボタン処理
+     *******************************************************/
+    const loadingOnButton = document.querySelector(".js-loading--on");
+    const loadingOffButton = document.querySelector(".js-loading--off");
+    const controlButton = document.querySelectorAll(".js-control");
 
-    setupDesktopBehavior() {
-      const startPlayback = async () => {
-        if (!this.hasInteracted) {
-          this.hasInteracted = true;
+    controlButton.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        isBgmOn = !isBgmOn;
+        console.log("BGMの状態:", isBgmOn);
 
-          document.addEventListener("mousemove", this.handleMouseMove.bind(this));
-          // フォーカスハンドラーを有効化
-          this.setupFocusHandlers();
-        }
-      };
-
-      const controlButtons = document.querySelectorAll(".js-control");
-      controlButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (this.condition) {
-            startPlayback();
-          } else {
-            this.pauseAndSavePosition();
-          }
-        });
-      });
-
-      const onButton = document.querySelector(".js-loading--on");
-      if (onButton) {
-        onButton.addEventListener("click", startPlayback);
-      }
-
-      const offButton = document.querySelector(".js-loading--off");
-      if (offButton) {
-        offButton.addEventListener("click", () => {
-          document.querySelectorAll("[data-auto-play]").forEach((audio) => {
-            if (audio.proximityPlayer) {
-              audio.proximityPlayer.stop();
-              audio.proximityPlayer.hasInteracted = false;
-            }
-          });
-          AudioStateManager.setIsPlaying(false);
-        });
-      }
-    }
-
-    async startPlaying() {
-      if (!this.audioElement.src || !this.condition) return;
-
-      try {
-        if (AudioStateManager.getIsPlaying()) {
-          this.audioElement.currentTime = this.startTime;
-          this.audioElement.play();
-          this.audioElement.volume = this.maxVolume;
-          this.isPlaying = true;
-        }
-        AudioStateManager.setIsPlaying(true);
-      } catch (error) {
-        console.error("Audio playback failed:", error);
-      }
-    }
-
-    async stop() {
-      try {
-        this.audioElement.volume = 0;
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        this.audioElement.pause();
-        this.audioElement.currentTime = this.startTime;
-        this.isPlaying = false;
-        AudioStateManager.setIsPlaying(false);
-      } catch (error) {
-        console.error("Failed to stop audio:", error);
-      }
-    }
-
-    destroy() {
-      if (this.observer) {
-        this.observer.disconnect();
-      }
-      if (this.animationFrame) {
-        cancelAnimationFrame(this.animationFrame);
-      }
-      this.pauseAndSavePosition();
-      this.audioElement.removeEventListener("timeupdate", () => {});
-      document.removeEventListener("mousemove", this.handleMouseMove.bind(this));
-      if (!isMobileDevice()) {
-        this.triggerElement.removeEventListener("focus", () => {});
-        this.triggerElement.removeEventListener("blur", () => {});
-      }
-    }
-
-    // フォーカス関連のハンドラーを設定
-    setupFocusHandlers() {
-      if (!isMobileDevice()) {
-        this.triggerElement.setAttribute("tabindex", "0"); // フォーカス可能にする
-
-        this.triggerElement.addEventListener("focus", () => {
-          if (this.condition && this.hasInteracted) {
-            this.audioElement.volume = this.maxVolume;
-            this.resumeFromLastPosition();
-          }
-        });
-
-        this.triggerElement.addEventListener("blur", () => {
-          if (this.isPlaying) {
-            this.pauseAndSavePosition();
-          }
-        });
-      }
-    }
-
-    //------------------------------------
-    // ここに追加する: モバイル再生許可用
-    //------------------------------------
-    async initialPlayback() {
-      try {
-        // 一時的に音量0やmutedにして一瞬再生 → すぐ停止
-        this.audioElement.muted = true;
-        this.audioElement.currentTime = 0;
-        await this.audioElement.play();
-        this.audioElement.pause();
-        this.audioElement.muted = false;
-        console.log("Initial user-gesture playback succeeded (再生許可を獲得)");
-      } catch (e) {
-        console.warn("Initial user-gesture playback failed (再生許可を獲得できず)", e);
-      }
-    }
-    // ---------------------------------------------
-    // モバイル用の挙動
-    // ---------------------------------------------
-    setupMobileBehavior() {
-      const onButton = document.querySelector(".js-loading--on");
-      const offButton = document.querySelector(".js-loading--off");
-
-      // ONボタンが押されたとき
-      if (onButton) {
-        onButton.addEventListener("click", async () => {
-          // BGM をON状態に
-          this.condition = true;
-          this.hasInteracted = true;
+        if (isBgmOn) {
           AudioStateManager.setIsPlaying(true);
-          // ここでユーザー操作直後に一度だけ再生(ミュート状態等)
-          // “ユーザー操作直後”に再生許可獲得
-          await this.initialPlayback();
-          // これでブラウザ側に「ユーザーが明示的に再生許可した」状態を認識させる
-          console.log("BGM ON clicked (mobile). condition:", this.condition);
-        });
-      }
-      console.log(AudioStateManager.getIsPlaying());
-      // OFFボタンが押されたとき
-      if (offButton) {
-        offButton.addEventListener("click", () => {
-          this.condition = false;
-          AudioStateManager.setIsPlaying(false);
-          this.pauseAndSavePosition();
-          console.log("BGM OFF clicked (mobile).");
-        });
-      }
 
-      // IntersectionObserver で可視・不可視を監視
-      const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.3,
-      };
-      this.observer = new IntersectionObserver((entries) => {
-        entries.forEach(async (entry) => {
-          console.log("Intersection状態:", {
-            isIntersecting: entry.isIntersecting,
-            condition: this.condition,
-            isPlaying: this.isPlaying,
-            hasInteracted: this.hasInteracted,
-          });
-
-          // 要素が表示領域に入ったら再生（BGM ON & ユーザー操作済のとき）
-          if (entry.isIntersecting && this.condition && this.hasInteracted && !this.isPlaying) {
-            setTimeout(async () => {
-              if (this.condition && this.hasInteracted && !this.isPlaying) {
-                await this.attemptPlay();
+          if (isMobileDevice()) {
+            if (!hasUserInteracted) {
+              const success = await initialPlayback();
+              if (success && mostVisibleElement) {
+                const audioUrl = mostVisibleElement.dataset.audioUrl;
+                if (audioUrl) {
+                  switchAudio(audioUrl);
+                }
+              } else {
+                pendingAudioPlay = true;
+                console.log("モバイル: ユーザー操作待ちをセットしました");
               }
-            }, 300);
+            } else if (mostVisibleElement) {
+              const audioUrl = mostVisibleElement.dataset.audioUrl;
+              if (audioUrl) {
+                switchAudio(audioUrl);
+              }
+            }
+          } else if (mostVisibleElement) {
+            const audioUrl = mostVisibleElement.dataset.audioUrl;
+            if (audioUrl) {
+              switchAudio(audioUrl);
+            }
           }
-          // 要素が表示領域を外れたら停止
-          else if (!entry.isIntersecting && this.isPlaying) {
-            this.pauseAndSavePosition();
-          }
-        });
-      }, observerOptions);
-
-      this.observer.observe(this.triggerElement);
-      if (this.condition && this.hasInteracted && !this.isPlaying) {
-        // 少し遅延を入れることでブラウザ描画が終わるのを待つ
-        setTimeout(async () => {
-          console.log("attemptPlay");
-          await this.attemptPlay();
-        }, 300);
-      }
-    }
-
-    // ---------------------------------------------
-    // 実際に再生を試みる関数（多重再生防止付き）
-    // ---------------------------------------------
-    async attemptPlay() {
-      // すでに他の audio が再生中なら停止
-      if (currentPlayingAudio && currentPlayingAudio !== this.audioElement) {
-        currentPlayingAudio.pause();
-        // 差し支えなければシークを最初に戻す or 前の音声の状態をリセット
-        // currentPlayingAudio.currentTime = this.startTime;
-      }
-
-      // 自身の再生を試みる
-      try {
-        this.audioElement.currentTime = this.lastPlayPosition;
-        await this.audioElement.play();
-        this.isPlaying = true;
-        currentPlayingAudio = this.audioElement;
-        console.log("Audio started:", this.audioElement.src);
-      } catch (error) {
-        console.warn("再生試行失敗:", error);
-      }
-    }
-  }
-
-  document.querySelectorAll("[data-auto-play]").forEach((audio) => {
-    const triggerElement = audio.closest("div");
-    if (triggerElement) {
-      const player = new ProximityAudioPlayer(audio, triggerElement, {
-        maxDistance: 300,
-        minVolume: 0,
-        maxVolume: 0.6,
-        startTime: 30,
+        } else {
+          AudioStateManager.setIsPlaying(false);
+          universalAudio.pause();
+          pendingAudioPlay = false;
+        }
       });
-      // プレイヤーインスタンスを要素に保存
-      audio.proximityPlayer = player;
+    });
+
+    if (loadingOnButton) {
+      loadingOnButton.addEventListener("click", async () => {
+        isBgmOn = true;
+        AudioStateManager.setIsPlaying(true);
+
+        if (isMobileDevice() && !hasUserInteracted) {
+          const success = await initialPlayback();
+          if (!success) {
+            pendingAudioPlay = true;
+            console.log("モバイル: ユーザー操作待ちをセットしました");
+          }
+        }
+
+        // 現在最も可視な要素があれば、その音声をロードするが再生は開始しない
+        if (mostVisibleElement) {
+          const audioUrl = mostVisibleElement.dataset.audioUrl;
+          if (audioUrl) {
+            universalAudio.src = audioUrl;
+            universalAudio.currentTime = START_TIME;
+            currentAudioUrl = audioUrl;
+
+            // PCまたはユーザー操作済みなら再生開始
+            if (!isMobileDevice() || hasUserInteracted) {
+              switchAudio(audioUrl);
+            }
+
+            console.log("Loading ON: 音声ソースを設定しました", audioUrl);
+          }
+        }
+      });
+    }
+
+    if (loadingOffButton) {
+      loadingOffButton.addEventListener("click", () => {
+        isBgmOn = false;
+        AudioStateManager.setIsPlaying(false);
+        pendingAudioPlay = false;
+
+        // 今の音声を停止
+        universalAudio.pause();
+        currentAudioUrl = null;
+        console.log("Loading OFF で音声停止");
+      });
+    }
+
+    /*******************************************************
+     * モバイルの初回クリック検出と再生実行
+     *******************************************************/
+    if (isMobileDevice()) {
+      document.addEventListener("click", () => {
+        if (!hasUserInteracted && isBgmOn) {
+          hasUserInteracted = true;
+          console.log("モバイル: ユーザークリックを検出しました");
+
+          if (pendingAudioPlay && mostVisibleElement) {
+            const audioUrl = mostVisibleElement.dataset.audioUrl;
+            if (audioUrl) {
+              console.log("モバイル: 保留中の音声を再生します", audioUrl);
+              switchAudio(audioUrl);
+              pendingAudioPlay = false;
+            }
+          }
+        }
+      });
+    }
+
+    /*******************************************************
+     * (E) Intersection Observerでセクション監視
+     *******************************************************/
+    const spotlights = document.querySelectorAll(".js-spotlight");
+
+    let visibleList = []; // { target: Element, ratio: number } の配列
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-10% 0px", // より敏感に反応するように調整
+      threshold: [0, 0.25, 0.5, 0.75, 1.0], // しきい値を簡略化して処理を軽く
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const existing = visibleList.find((v) => v.target === entry.target);
+          if (existing) {
+            existing.ratio = entry.intersectionRatio;
+          } else {
+            visibleList.push({ target: entry.target, ratio: entry.intersectionRatio });
+          }
+          console.log("可視要素:", entry.target.dataset.audioUrl, "表示率:", entry.intersectionRatio);
+        } else {
+          visibleList = visibleList.filter((v) => v.target !== entry.target);
+        }
+      });
+
+      // 可視要素リストの状態をログ
+      console.log(
+        "現在の可視要素リスト:",
+        visibleList.map((v) => ({
+          url: v.target.dataset.audioUrl,
+          ratio: v.ratio,
+        }))
+      );
+
+      // 何も見えていなければ停止
+      if (visibleList.length === 0) {
+        universalAudio.pause();
+        currentAudioUrl = null;
+        mostVisibleElement = null;
+        return;
+      }
+
+      // intersectionRatio がもっとも大きい要素を探す
+      let mostVisible = visibleList.reduce((prev, current) => (current.ratio > prev.ratio ? current : prev));
+
+      const VISIBLE_THRESHOLD = 0.3; // しきい値を下げて反応を敏感に
+
+      if (mostVisible.ratio < VISIBLE_THRESHOLD) {
+        universalAudio.pause();
+        currentAudioUrl = null;
+        mostVisibleElement = null;
+        return;
+      }
+
+      mostVisibleElement = mostVisible.target;
+      const newUrl = mostVisibleElement.dataset.audioUrl;
+
+      if (isBgmOn && newUrl !== currentAudioUrl) {
+        console.log("音源切り替え:", {
+          from: currentAudioUrl,
+          to: newUrl,
+          ratio: mostVisible.ratio,
+        });
+
+        // モバイルでユーザー操作がまだの場合は再生をペンディング
+        if (isMobileDevice() && !hasUserInteracted) {
+          pendingAudioPlay = true;
+          console.log("モバイル: ユーザー操作待ちをセットしました");
+          return;
+        }
+
+        // 初回のボタン押下直後は少し遅延させて再生開始
+        if (!currentAudioUrl) {
+          setTimeout(() => switchAudio(newUrl), 500);
+        } else {
+          switchAudio(newUrl);
+        }
+      }
+    }, observerOptions);
+
+    spotlights.forEach((elem) => observer.observe(elem));
+
+    /*******************************************************
+     * (F) 音源を切り替えて「途中(例:30秒)から再生」する関数
+     *******************************************************/
+    const START_TIME = 30; // 途中再生開始位置(秒) ここをお好みで調整
+
+    async function switchAudio(audioUrl) {
+      // 一旦停止
+      universalAudio.pause();
+
+      // 切り替え
+      universalAudio.src = audioUrl;
+      universalAudio.currentTime = START_TIME; // ★途中から再生
+      currentAudioUrl = audioUrl;
+
+      // PC or モバイルでユーザー操作済なら再生
+      if (!isMobileDevice() || hasUserInteracted) {
+        try {
+          await universalAudio.play();
+          console.log(`音源を「${audioUrl}」に切り替え、${START_TIME}秒目から再生開始`);
+        } catch (err) {
+          console.warn("再生に失敗:", err);
+
+          // 失敗した場合、モバイルでのユーザー操作待ち
+          // if (isMobileDevice()) {
+          pendingAudioPlay = true;
+          console.log("モバイル: 再生失敗のためユーザー操作待ちをセットしました");
+          // }
+        }
+      } else {
+        console.log("モバイル: ユーザー操作前のため再生ブロックされる可能性があります");
+        pendingAudioPlay = true;
+      }
+    }
+
+    /*******************************************************
+     * (G) threshold を 0.0 ~ 1.0 まで 0.01 刻みで生成
+     *******************************************************/
+    function buildThresholdList() {
+      const thresholds = [];
+      for (let i = 0; i <= 1.0; i += 0.01) {
+        thresholds.push(i);
+      }
+      return thresholds;
+    }
+
+    /*******************************************************
+     * (H) ページ読込時、前回がONならONで開始
+     *******************************************************/
+    if (isBgmOn) {
+      console.log("前回BGM ONのためON状態で開始");
+      // PCなら自動再生されるブラウザが多い
+      if (!isMobileDevice()) {
+        hasUserInteracted = true;
+      } else {
+        // モバイルは初回クリック時の再生フラグを立てる
+        pendingAudioPlay = true;
+        console.log("モバイル: BGMはONですがユーザー操作待ちをセットしました");
+      }
     } else {
-      console.log("no");
+      console.log("前回BGM OFFのためOFF状態で開始");
+      universalAudio.pause();
+      currentAudioUrl = null;
+    }
+
+    /*******************************************************
+     * (I) マウスの位置に応じて音量を変化させる
+     *******************************************************/
+    // 例: 近いほどボリュームが大きく、遠いと小さくなる
+    //     「距離 = 0」で volume = baseVolume（最大）、
+    //     「距離 >= maxDistance」で volume = 0 とするイメージ
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    // 適宜調整する
+    const maxDistance = 300; // この距離以上は無音になるイメージ
+
+    // mousemove イベントリスナー
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      // いま最も可視な要素が存在し、かつBGMがONで再生中の場合のみ
+      if (mostVisibleElement && isBgmOn && !universalAudio.paused) {
+        updateVolumeByMouseDistance(mostVisibleElement);
+      }
+    });
+
+    // 距離に応じて volume を更新する関数
+    function updateVolumeByMouseDistance(targetElem) {
+      // 要素の中心を求める
+      const rect = targetElem.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      // マウスとの距離を計算 (2次元のユークリッド距離)
+      const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
+
+      // 0～maxDistance の範囲を 1.0 ~ 0.0 に正規化
+      // （distance=0 → volume=1, distance=maxDistance → volume=0）
+      let vol = 1 - distance / maxDistance;
+      // 0～1の範囲を超えないようにクランプ
+      if (vol < 0) vol = 0;
+      if (vol > 1) vol = 1;
+
+      // 実際の音量には baseVolume を掛ける（例: baseVolume=0.2 を最大値とする）
+      universalAudio.volume = vol * baseVolume;
     }
   });
 
@@ -893,258 +828,287 @@ import object_main_icon from "@assets/img/object_main_icon.png";
     // スクロール位置を中央に設定
     container.scrollLeft = (containerWidth - containerVisibleWidth) / 2;
     container.scrollTop = (containerHeight - containerVisibleHeight) / 2;
-  });
 
-  class BGM {
-    constructor() {
-      this.audio = document.querySelector(".js-bgm");
-      this.onButton = document.querySelector(".js-loading--on");
-      this.offButton = document.querySelector(".js-loading--off");
-      this.audioPlay = document.querySelector(".js-bgm-control");
+    class BGM {
+      constructor() {
+        this.audio = document.querySelector(".js-bgm");
+        this.onButton = document.querySelector(".js-loading--on");
+        this.offButton = document.querySelector(".js-loading--off");
+        this.audioPlay = document.querySelector(".js-bgm-control");
 
-      // 初期状態を取得
-      this.audioConditions = !AudioStateManager.getIsPlaying();
+        // モバイルデバイス検出
+        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-      if (this.audio) {
-        this.audio.volume = 0.2;
-        this.audio.preload = "auto"; // 確実に読み込む
+        // ユーザーインタラクションフラグ
+        this.hasUserInteracted = false;
 
-        // クリックイベントを待ってから再生開始
-        const startAudio = () => {
-          this.tryPlayAudio();
-          this.audioConditions = false;
-          AudioStateManager.setIsPlaying(true);
+        // 初期状態を取得
+        this.audioConditions = !AudioStateManager.getIsPlaying();
 
-          // コントロールボタンの状態を更新
-          const controlButtons = document.querySelectorAll(".js-control");
-          controlButtons.forEach((btn) => btn.classList.add("is-active"));
-        };
+        if (this.audio) {
+          this.audio.volume = 0.2;
+          this.audio.preload = "auto"; // 確実に読み込む
 
-        const stopAudio = () => {
-          this.audio.pause();
-          this.audioConditions = true;
-          AudioStateManager.setIsPlaying(false);
-
-          // コントロールボタンの状態を更新
-          const controlButtons = document.querySelectorAll(".js-control");
-          controlButtons.forEach((btn) => btn.classList.remove("is-active"));
-        };
-
-        const toggleAudio = () => {
-          if (this.audioConditions) {
-            this.audioConditions = false;
+          // クリックイベントを待ってから再生開始
+          const startAudio = () => {
             this.tryPlayAudio();
+            this.audioConditions = false;
             AudioStateManager.setIsPlaying(true);
+            this.hasUserInteracted = true;
 
             // コントロールボタンの状態を更新
             const controlButtons = document.querySelectorAll(".js-control");
             controlButtons.forEach((btn) => btn.classList.add("is-active"));
-          } else {
-            this.audioConditions = true;
+          };
+
+          const stopAudio = () => {
             this.audio.pause();
+            this.audioConditions = true;
             AudioStateManager.setIsPlaying(false);
 
             // コントロールボタンの状態を更新
             const controlButtons = document.querySelectorAll(".js-control");
             controlButtons.forEach((btn) => btn.classList.remove("is-active"));
-          }
-        };
+          };
 
-        // 音声再生を試みるヘルパーメソッド（複数箇所で使用）
-        this.tryPlayAudio = () => {
-          const playPromise = this.audio.play();
-
-          if (playPromise !== undefined) {
-            playPromise.catch((error) => {
-              console.log("再生エラー:", error);
-
-              // モバイルデバイスでの自動再生制限対策
-              if (error.name === "NotAllowedError") {
-                console.log("ユーザー操作が必要です - ミュートで再生を試みます");
-
-                // ミュートで再生を試みる（多くのブラウザではミュート状態なら自動再生可能）
-                this.audio.muted = true;
-                this.audio
-                  .play()
-                  .then(() => {
-                    // 成功したら徐々にミュートを解除
-                    setTimeout(() => {
-                      this.audio.muted = false;
-                    }, 1000);
-                  })
-                  .catch((e) => console.log("ミュート再生も失敗:", e));
-              }
-            });
-          }
-        };
-
-        // ページ読み込み時の状態確認と再生
-        const initializeAudio = () => {
-          console.log("初期化中...");
-          const isPlaying = AudioStateManager.getIsPlaying();
-          console.log("ページ読み込み時の再生状態:", isPlaying);
-
-          if (isPlaying) {
-            this.audioConditions = false;
-
-            // コントロールボタンの状態を更新
-            const controlButtons = document.querySelectorAll(".js-control");
-            controlButtons.forEach((btn) => btn.classList.add("is-active"));
-
-            // loadedmetadataイベントを確認して再生
-            if (this.audio.readyState >= 2) {
-              // すでにメタデータが読み込まれている場合
-              console.log("メタデータはすでに読み込まれています");
+          const toggleAudio = () => {
+            if (this.audioConditions) {
+              this.audioConditions = false;
               this.tryPlayAudio();
+              AudioStateManager.setIsPlaying(true);
+              this.hasUserInteracted = true;
+
+              // コントロールボタンの状態を更新
+              const controlButtons = document.querySelectorAll(".js-control");
+              controlButtons.forEach((btn) => btn.classList.add("is-active"));
             } else {
-              // メタデータがまだ読み込まれていない場合
-              console.log("メタデータの読み込みを待っています");
-              this.audio.addEventListener(
-                "loadedmetadata",
-                () => {
-                  console.log("メタデータが読み込まれました");
-                  this.tryPlayAudio();
-                },
-                { once: true }
-              );
+              this.audioConditions = true;
+              this.audio.pause();
+              AudioStateManager.setIsPlaying(false);
+
+              // コントロールボタンの状態を更新
+              const controlButtons = document.querySelectorAll(".js-control");
+              controlButtons.forEach((btn) => btn.classList.remove("is-active"));
             }
-          } else {
-            this.audio.pause();
-            this.audioConditions = true;
+          };
+
+          // 音声再生を試みるヘルパーメソッド（複数箇所で使用）
+          this.tryPlayAudio = () => {
+            const playPromise = this.audio.play();
+
+            if (playPromise !== undefined) {
+              playPromise.catch((error) => {
+                console.log("再生エラー:", error);
+
+                // モバイルデバイスでの自動再生制限対策
+                if (error.name === "NotAllowedError") {
+                  console.log("ユーザー操作が必要です - ミュートで再生を試みます");
+
+                  // ミュートで再生を試みる（多くのブラウザではミュート状態なら自動再生可能）
+                  this.audio.muted = true;
+                  this.audio
+                    .play()
+                    .then(() => {
+                      // 成功したら徐々にミュートを解除
+                      setTimeout(() => {
+                        this.audio.muted = false;
+                      }, 1000);
+                    })
+                    .catch((e) => console.log("ミュート再生も失敗:", e));
+                }
+              });
+            }
+          };
+
+          // ページ読み込み時の状態確認と再生
+          const initializeAudio = () => {
+            console.log("初期化中...");
+            const isPlaying = AudioStateManager.getIsPlaying();
+            console.log("ページ読み込み時の再生状態:", isPlaying);
+
+            if (isPlaying) {
+              this.audioConditions = false;
+
+              // コントロールボタンの状態を更新
+              const controlButtons = document.querySelectorAll(".js-control");
+              controlButtons.forEach((btn) => btn.classList.add("is-active"));
+
+              // モバイルではユーザーインタラクションを待つ
+              if (!this.isMobile) {
+                // PCの場合は通常通り再生を試みる
+                if (this.audio.readyState >= 2) {
+                  console.log("メタデータはすでに読み込まれています");
+                  this.tryPlayAudio();
+                } else {
+                  console.log("メタデータの読み込みを待っています");
+                  this.audio.addEventListener(
+                    "loadedmetadata",
+                    () => {
+                      console.log("メタデータが読み込まれました");
+                      this.tryPlayAudio();
+                    },
+                    { once: true }
+                  );
+                }
+              } else {
+                console.log("モバイルデバイス: ユーザーインタラクションを待ちます");
+                // モバイルではロード時に再生せず、ユーザーインタラクションを待つ
+                // この状態は後で使う
+              }
+            } else {
+              this.audio.pause();
+              this.audioConditions = true;
+            }
+          };
+
+          // モバイルでの初回画面クリックイベント
+          if (this.isMobile) {
+            document.addEventListener(
+              "click",
+              () => {
+                // まだインタラクションがなく、BGMがONに設定されている場合
+                if (!this.hasUserInteracted && !this.audioConditions) {
+                  console.log("モバイル: 初回クリックを検出、音声再生を試みます");
+                  this.tryPlayAudio();
+                  this.hasUserInteracted = true;
+                }
+              },
+              { once: true }
+            ); // 最初のクリックだけで十分
           }
-        };
 
-        // onButton, offButton, audioPlayのイベントリスナー
-        this.onButton.addEventListener("click", startAudio);
-        this.offButton.addEventListener("click", stopAudio);
-        this.audioPlay.addEventListener("click", toggleAudio);
+          // onButton, offButton, audioPlayのイベントリスナー
+          this.onButton.addEventListener("click", startAudio);
+          this.offButton.addEventListener("click", stopAudio);
+          this.audioPlay.addEventListener("click", toggleAudio);
 
-        // window.onloadイベントで初期化（より確実）
-        if (document.readyState === "complete") {
-          console.log("ドキュメントはすでに完全に読み込まれています");
-          initializeAudio();
-        } else {
-          console.log("window.onloadイベントを待機中");
-          window.addEventListener("load", initializeAudio);
+          // window.onloadイベントで初期化（より確実）
+          if (document.readyState === "complete") {
+            console.log("ドキュメントはすでに完全に読み込まれています");
+            initializeAudio();
+          } else {
+            console.log("window.onloadイベントを待機中");
+            window.addEventListener("load", initializeAudio);
+          }
         }
       }
     }
-  }
 
-  new BGM();
-  function hoverClass() {
-    const hoverClass = document.querySelectorAll(".js-spotlight");
-    hoverClass.forEach((element) => {
-      element.addEventListener("mouseenter", () => {
-        element.classList.add("is-hover");
+    new BGM();
+    function hoverClass() {
+      const hoverClass = document.querySelectorAll(".js-spotlight");
+      hoverClass.forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+          element.classList.add("is-hover");
+        });
+        element.addEventListener("mouseleave", () => {
+          element.classList.remove("is-hover");
+        });
       });
-      element.addEventListener("mouseleave", () => {
-        element.classList.remove("is-hover");
-      });
-    });
-  }
-  hoverClass();
-
-  class MobileAudioController {
-    constructor() {
-      this.currentPlayingAudio = null;
-      this.isInitialized = false;
     }
+    hoverClass();
 
-    async initialize() {
-      if (this.isInitialized) return;
-
-      // ユーザーインタラクション待機
-      await new Promise((resolve) => {
-        const initHandler = () => {
-          document.removeEventListener("touchstart", initHandler);
-          document.removeEventListener("click", initHandler);
-          resolve();
-        };
-        // document.addEventListener("touchstart", initHandler);
-        // document.addEventListener("click", initHandler);
-      });
-
-      this.isInitialized = true;
-    }
-
-    async playAudio(player) {
-      // 現在再生中の音声があれば停止
-      if (this.currentPlayingAudio && this.currentPlayingAudio !== player) {
-        await this.currentPlayingAudio.stop();
-      }
-
-      try {
-        await player.startPlaying();
-        this.currentPlayingAudio = player;
-      } catch (error) {
-        console.error("Failed to play audio:", error);
-      }
-    }
-
-    stopAllAudio() {
-      if (this.currentPlayingAudio) {
-        this.currentPlayingAudio.stop();
+    class MobileAudioController {
+      constructor() {
         this.currentPlayingAudio = null;
+        this.isInitialized = false;
       }
-    }
-  }
 
-  // グローバルなオーディオコントローラーのインスタンスを作成
-  const mobileAudioController = new MobileAudioController();
+      async initialize() {
+        if (this.isInitialized) return;
 
-  // スクロールイベントの処理を最適化
-  if (isMobileDevice()) {
-    let scrollEndTimeout;
-
-    container.addEventListener(
-      "scroll",
-      () => {
-        if (scrollEndTimeout) {
-          clearTimeout(scrollEndTimeout);
-        }
-
-        // scrollEndTimeout = setTimeout(() => {
-        //   handleAudioOnScrollComplete();
-        // }, 100);
-      },
-      { passive: true }
-    );
-
-    // ページ離脱時に音声を停止
-    window.addEventListener("beforeunload", () => {
-      mobileAudioController.stopAllAudio();
-    });
-
-    // ページがバックグラウンドに移動した時に音声を停止
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        mobileAudioController.stopAllAudio();
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const isFromInternalPage = document.referrer.includes(window.location.hostname);
-
-    if (isFromInternalPage && isMobileDevice()) {
-      // セッションストレージからBGMの状態を確認
-      const shouldPlayBGM = AudioStateManager.getIsPlaying();
-
-      if (shouldPlayBGM) {
-        const visibleElement = Array.from(contentBlocks).find((element) => {
-          const rect = element.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          return rect.top >= 0 && rect.top < viewportHeight;
+        // ユーザーインタラクション待機
+        await new Promise((resolve) => {
+          const initHandler = () => {
+            document.removeEventListener("touchstart", initHandler);
+            document.removeEventListener("click", initHandler);
+            resolve();
+          };
+          // document.addEventListener("touchstart", initHandler);
+          // document.addEventListener("click", initHandler);
         });
 
-        if (visibleElement) {
-          mobileInteractionManager.hasInteracted = true;
-          setTimeout(() => {
-            snapToCenter(visibleElement);
-          }, 1000);
+        this.isInitialized = true;
+      }
+
+      async playAudio(player) {
+        // 現在再生中の音声があれば停止
+        if (this.currentPlayingAudio && this.currentPlayingAudio !== player) {
+          await this.currentPlayingAudio.stop();
+        }
+
+        try {
+          await player.startPlaying();
+          this.currentPlayingAudio = player;
+        } catch (error) {
+          console.error("Failed to play audio:", error);
+        }
+      }
+
+      stopAllAudio() {
+        if (this.currentPlayingAudio) {
+          this.currentPlayingAudio.stop();
+          this.currentPlayingAudio = null;
         }
       }
     }
+
+    // グローバルなオーディオコントローラーのインスタンスを作成
+    const mobileAudioController = new MobileAudioController();
+
+    // スクロールイベントの処理を最適化
+    if (isMobileDevice()) {
+      let scrollEndTimeout;
+
+      container.addEventListener(
+        "scroll",
+        () => {
+          if (scrollEndTimeout) {
+            clearTimeout(scrollEndTimeout);
+          }
+
+          // scrollEndTimeout = setTimeout(() => {
+          //   handleAudioOnScrollComplete();
+          // }, 100);
+        },
+        { passive: true }
+      );
+
+      // ページ離脱時に音声を停止
+      window.addEventListener("beforeunload", () => {
+        mobileAudioController.stopAllAudio();
+      });
+
+      // ページがバックグラウンドに移動した時に音声を停止
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          mobileAudioController.stopAllAudio();
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const isFromInternalPage = document.referrer.includes(window.location.hostname);
+
+      if (isFromInternalPage && isMobileDevice()) {
+        // セッションストレージからBGMの状態を確認
+        const shouldPlayBGM = AudioStateManager.getIsPlaying();
+
+        if (shouldPlayBGM) {
+          const visibleElement = Array.from(contentBlocks).find((element) => {
+            const rect = element.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            return rect.top >= 0 && rect.top < viewportHeight;
+          });
+
+          if (visibleElement) {
+            mobileInteractionManager.hasInteracted = true;
+            setTimeout(() => {
+              snapToCenter(visibleElement);
+            }, 1000);
+          }
+        }
+      }
+    });
   });
 </script>

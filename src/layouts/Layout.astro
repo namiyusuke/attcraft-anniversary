@@ -100,12 +100,16 @@ const jsonLd = schema(description);
       new Loading();
       new Toggle(".js-toggle");
       const htmlElement = document.documentElement;
+
       const addHiddenClass = () => {
         if (!htmlElement.classList.contains("is-hidden")) {
           htmlElement.classList.add("is-hidden");
           document.querySelector(".js-topPage").classList.add("is-topPage");
         }
       };
+      document.querySelector(".maps-gesture").addEventListener("click", () => {
+        addHiddenClass();
+      });
       const container = document.getElementById("scroll-container");
       const content = document.getElementById("scroll-content");
       let isDragging = false;
@@ -132,7 +136,7 @@ const jsonLd = schema(description);
           const walkY = (y - startY) * -1;
           container.scrollLeft = scrollLeft + walkX;
           container.scrollTop = scrollTop + walkY;
-          addHiddenClass();
+          // addHiddenClass();
         });
 
         // マウスアップ（ドラッグ終了）
@@ -154,7 +158,7 @@ const jsonLd = schema(description);
           startY = e.touches[0].pageY - container.offsetTop;
           scrollLeft = container.scrollLeft;
           scrollTop = container.scrollTop;
-          addHiddenClass();
+          // addHiddenClass();
         });
 
         container.addEventListener("touchmove", (e) => {
@@ -181,7 +185,7 @@ const jsonLd = schema(description);
           // スクロール量を適用
           container.scrollLeft += deltaX;
           container.scrollTop += deltaY;
-          addHiddenClass();
+          // addHiddenClass();
         });
       }
       function onHover() {
