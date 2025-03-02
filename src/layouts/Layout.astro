@@ -107,9 +107,11 @@ const jsonLd = schema(description);
           document.querySelector(".js-topPage").classList.add("is-topPage");
         }
       };
-      document.querySelector(".maps-gesture").addEventListener("click", () => {
-        addHiddenClass();
-      });
+      if (document.querySelector(".maps-gesture")) {
+        document.querySelector(".maps-gesture").addEventListener("click", () => {
+          addHiddenClass();
+        });
+      }
       const container = document.getElementById("scroll-container");
       const content = document.getElementById("scroll-content");
       let isDragging = false;
