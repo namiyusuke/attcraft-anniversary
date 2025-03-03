@@ -84,6 +84,21 @@ import bgm from "@assets/audio/bgm.mp3";
         </div>
         <p class="c-crop c-ls maps-gesture__contents__txt">DRAG &amp; DROP<br />or<br /> SWIPE</p>
         <div class="maps-gesture__contents__character"></div>
+        <p class="maps-gesture-btn">start</p>
+      </div>
+      <div class="loading-btn--wrap">
+        <button type="button" class="js-loading--on js-loading--open js-control loading-btn">
+          <span class="loading-btn--inner">
+            <span class="loading-btn--text">ON</span>
+            <Image class="loading-btn--icon1" src={onMisic} alt="音あり" />
+          </span>
+        </button>
+        <button type="button" class="js-loading--open js-loading--off loading-btn">
+          <span class="loading-btn--inner">
+            <span class="loading-btn--text">OFF</span>
+            <Image class="loading-btn--icon2" src={offMisic} alt="音なし" />
+          </span>
+        </button>
       </div>
     </div>
     <div id="scroll-container">

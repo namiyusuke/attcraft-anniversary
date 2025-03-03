@@ -80,7 +80,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
 >
   <LoadingPage />
   <main class="bg-bricks">
-    <audio id="universalAudio" preload="none"></audio>
+    <audio id="universalAudio" preload="auto"></audio>
     <div class="maps-gesture">
       <div class="maps-gesture__bg"></div>
       <div class="maps-gesture__contents">
@@ -90,6 +90,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
         <p class="c-crop c-ls maps-gesture__contents__txt">DRAG &amp; DROP<br />or<br /> SWIPE</p>
         <div class="maps-gesture__contents__character"></div>
       </div>
+      <p class="maps-gesture-btn"><span class="maps-gesture-btn--text">START</span></p>
     </div>
     <div id="scroll-container">
       <div id="scroll-content">
@@ -428,10 +429,30 @@ import object_main_icon from "@assets/img/object_main_icon.png";
   <button class="js-control js-bgm-control">
     <span class="js-bgm-control--text">BGM</span>
     <span class="js-bgm-control--icon">
-      <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        class="js-bgm-control--icon--on"
+        width="16"
+        height="22"
+        viewBox="0 0 16 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
-          d="M8.08133 0C7.00969 0 5.98194 0.425706 5.22418 1.18347C4.46642 1.94123 4.04072 2.96897 4.04072 4.04061V9.69747C4.04072 10.7691 4.46642 11.7968 5.22418 12.5546C5.98194 13.3124 7.00969 13.7381 8.08133 13.7381C9.15296 13.7381 10.1807 13.3124 10.9385 12.5546C11.6962 11.7968 12.1219 10.7691 12.1219 9.69747V4.04061C12.1219 2.96897 11.6962 1.94123 10.9385 1.18347C10.1807 0.425706 9.15296 0 8.08133 0ZM1.61635 8.88934C1.83068 8.88934 2.03623 8.97448 2.18778 9.12604C2.33933 9.27759 2.42447 9.48314 2.42447 9.69747C2.42447 11.1978 3.02046 12.6366 4.08133 13.6975C5.14219 14.7583 6.58103 15.3543 8.08133 15.3543C9.58162 15.3543 11.0205 14.7583 12.0813 13.6975C13.1422 12.6366 13.7382 11.1978 13.7382 9.69747C13.7382 9.48314 13.8233 9.27759 13.9749 9.12604C14.1264 8.97448 14.332 8.88934 14.5463 8.88934C14.7606 8.88934 14.9662 8.97448 15.1177 9.12604C15.2693 9.27759 15.3544 9.48314 15.3544 9.69747C15.3548 11.4867 14.6955 13.2133 13.5028 14.5471C12.3101 15.8808 10.6676 16.7281 8.88945 16.9269V18.5868C8.88945 18.8011 8.80431 19.0067 8.65275 19.1582C8.5012 19.3098 8.29565 19.3949 8.08133 19.3949C7.867 19.3949 7.66145 19.3098 7.5099 19.1582C7.35834 19.0067 7.2732 18.8011 7.2732 18.5868V16.9269C5.49502 16.7281 3.85252 15.8808 2.65981 14.5471C1.4671 13.2133 0.807884 11.4867 0.808228 9.69747C0.808228 9.48314 0.893369 9.27759 1.04492 9.12604C1.19647 8.97448 1.40202 8.88934 1.61635 8.88934Z"
-          fill="black"></path>
+          d="M8 0C6.82126 0 5.6908 0.468253 4.8573 1.30175C4.02381 2.13524 3.55556 3.2657 3.55556 4.44444V10.6667C3.55556 11.8454 4.02381 12.9759 4.8573 13.8094C5.6908 14.6429 6.82126 15.1111 8 15.1111C9.17874 15.1111 10.3092 14.6429 11.1427 13.8094C11.9762 12.9759 12.4444 11.8454 12.4444 10.6667V4.44444C12.4444 3.2657 11.9762 2.13524 11.1427 1.30175C10.3092 0.468253 9.17874 0 8 0ZM0.888889 9.77778C1.12464 9.77778 1.35073 9.87143 1.51743 10.0381C1.68413 10.2048 1.77778 10.4309 1.77778 10.6667C1.77778 12.3169 2.43333 13.8995 3.60022 15.0664C4.76712 16.2333 6.34976 16.8889 8 16.8889C9.65024 16.8889 11.2329 16.2333 12.3998 15.0664C13.5667 13.8995 14.2222 12.3169 14.2222 10.6667C14.2222 10.4309 14.3159 10.2048 14.4826 10.0381C14.6493 9.87143 14.8754 9.77778 15.1111 9.77778C15.3469 9.77778 15.573 9.87143 15.7397 10.0381C15.9064 10.2048 16 10.4309 16 10.6667C16.0004 12.6348 15.2753 14.5339 13.9634 16.001C12.6514 17.468 10.8448 18.4 8.88889 18.6187V20.4444C8.88889 20.6802 8.79524 20.9063 8.62854 21.073C8.46184 21.2397 8.23575 21.3333 8 21.3333C7.76425 21.3333 7.53816 21.2397 7.37146 21.073C7.20476 20.9063 7.11111 20.6802 7.11111 20.4444V18.6187C5.15521 18.4 3.34856 17.468 2.03664 16.001C0.724725 14.5339 -0.00037774 12.6348 1.47628e-07 10.6667C1.47628e-07 10.4309 0.0936509 10.2048 0.26035 10.0381C0.427049 9.87143 0.653141 9.77778 0.888889 9.77778Z"
+          fill="#FDD504"></path>
+      </svg>
+      <svg
+        class="js-bgm-control--icon--off"
+        width="18"
+        height="20"
+        viewBox="0 0 18 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.0812 0C9.00957 0 7.98182 0.425706 7.22406 1.18347C6.4663 1.94123 6.04059 2.96897 6.04059 4.04061V9.69746C6.04059 10.7691 6.4663 11.7968 7.22406 12.5546C7.98182 13.3124 9.00957 13.7381 10.0812 13.7381C11.1528 13.7381 12.1806 13.3124 12.9383 12.5546C13.6961 11.7968 14.1218 10.7691 14.1218 9.69746V4.04061C14.1218 2.96897 13.6961 1.94123 12.9383 1.18347C12.1806 0.425706 11.1528 0 10.0812 0ZM3.61623 8.88934C3.83055 8.88934 4.0361 8.97448 4.18766 9.12604C4.33921 9.27759 4.42435 9.48314 4.42435 9.69746C4.42435 11.1978 5.02034 12.6366 6.0812 13.6975C7.14207 14.7583 8.58091 15.3543 10.0812 15.3543C11.5815 15.3543 13.0203 14.7583 14.0812 13.6975C15.1421 12.6366 15.7381 11.1978 15.7381 9.69746C15.7381 9.48314 15.8232 9.27759 15.9747 9.12604C16.1263 8.97448 16.3319 8.88934 16.5462 8.88934C16.7605 8.88934 16.9661 8.97448 17.1176 9.12604C17.2692 9.27759 17.3543 9.48314 17.3543 9.69746C17.3546 11.4867 16.6954 13.2133 15.5027 14.5471C14.31 15.8808 12.6675 16.7281 10.8893 16.9269V18.5868C10.8893 18.8011 10.8042 19.0067 10.6526 19.1582C10.5011 19.3098 10.2955 19.3949 10.0812 19.3949C9.86688 19.3949 9.66133 19.3098 9.50977 19.1582C9.35822 19.0067 9.27308 18.8011 9.27308 18.5868V16.9269C7.4949 16.7281 5.8524 15.8808 4.65969 14.5471C3.46698 13.2133 2.80776 11.4867 2.80811 9.69746C2.80811 9.48314 2.89325 9.27759 3.0448 9.12604C3.19635 8.97448 3.4019 8.88934 3.61623 8.88934Z"
+          fill="#FDD504"></path>
+        <line x1="1.29289" y1="16.8862" x2="17.2929" y2="0.886155" stroke="#FDD504" stroke-width="2"></line>
       </svg>
     </span>
   </button>
@@ -466,6 +487,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
      * (A) ページに1つだけある<audio>要素
      *******************************************************/
     const universalAudio = document.getElementById("universalAudio");
+
     if (!universalAudio) {
       console.warn("universalAudio 要素が見つかりません。HTMLに <audio id='universalAudio'> を配置してください。");
       return;
@@ -493,22 +515,22 @@ import object_main_icon from "@assets/img/object_main_icon.png";
     /*******************************************************
      * (C) 初回だけモバイル再生許可を獲得する関数
      *******************************************************/
-    async function initialPlayback() {
-      try {
-        // ミュート状態で再生→停止して「ユーザー操作で再生した」実績を得る
-        universalAudio.muted = true;
-        await universalAudio.play();
-        universalAudio.pause();
-        universalAudio.muted = false;
+    // async function initialPlayback() {
+    //   try {
+    //     // ミュート状態で再生→停止して「ユーザー操作で再生した」実績を得る
+    //     universalAudio.muted = true;
+    //     await universalAudio.play();
+    //     universalAudio.pause();
+    //     universalAudio.muted = false;
 
-        hasUserInteracted = true;
-        console.log("初回再生許可を獲得しました。");
-        return true;
-      } catch (err) {
-        console.warn("初回再生許可獲得に失敗:", err);
-        return false;
-      }
-    }
+    //     hasUserInteracted = true;
+    //     console.log("初回再生許可を獲得しました。");
+    //     return true;
+    //   } catch (err) {
+    //     console.warn("初回再生許可獲得に失敗:", err);
+    //     return false;
+    //   }
+    // }
 
     /*******************************************************
      * (D) BGM ON / OFF ボタン処理
@@ -520,15 +542,15 @@ import object_main_icon from "@assets/img/object_main_icon.png";
     controlButton.forEach((btn) => {
       btn.addEventListener("click", async () => {
         isBgmOn = !isBgmOn;
-        console.log("BGMの状態:", isBgmOn);
 
         if (isBgmOn) {
           AudioStateManager.setIsPlaying(true);
 
           if (isMobileDevice()) {
             if (!hasUserInteracted) {
-              const success = await initialPlayback();
-              if (success && mostVisibleElement) {
+              // const success = await initialPlayback();
+              if (mostVisibleElement) {
+                console.log("モバイル: ユーザー操作待ちをセットしました");
                 const audioUrl = mostVisibleElement.dataset.audioUrl;
                 if (audioUrl) {
                   switchAudio(audioUrl);
@@ -557,36 +579,33 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       });
     });
 
+    // コメントアウトを外す or 新たに書き直す
     if (loadingOnButton) {
-      loadingOnButton.addEventListener("click", async () => {
+      loadingOnButton.addEventListener("click", function () {
+        console.log("Loading ON ボタンがクリックされました");
+        // (1) BGM ON フラグ
         isBgmOn = true;
+        pendingAudioPlay = true;
         AudioStateManager.setIsPlaying(true);
+        hasUserInteracted = true; // 「ユーザー操作済み」として扱う
+        universalAudio.load();
+        // (2) audio 要素をすぐに実際の音源へ切り替え
+        // ここは好きな音源URL（または intersectionObserver で判定した要素の data-audio-url）でもOK
+        const audioUrl = "";
+        universalAudio.src = audioUrl;
 
-        if (isMobileDevice() && !hasUserInteracted) {
-          const success = await initialPlayback();
-          if (!success) {
-            pendingAudioPlay = true;
-            console.log("モバイル: ユーザー操作待ちをセットしました");
-          }
-        }
+        universalAudio.currentTime = 0;
 
-        // 現在最も可視な要素があれば、その音声をロードするが再生は開始しない
-        if (mostVisibleElement) {
-          const audioUrl = mostVisibleElement.dataset.audioUrl;
-          if (AudioScheduledSourceNode) {
-            universalAudio.src = audioUrl;
-            universalAudio.currentTime = START_TIME;
-            currentAudioUrl = audioUrl;
-
-            // PCまたはユーザー操作済みなら再生開始
-            if (!isMobileDevice() || hasUserInteracted) {
-              pcAudio = true;
-              switchAudio(audioUrl);
-            }
-
-            console.log("Loading ON: 音声ソースを設定しました", audioUrl);
-          }
-        }
+        // (3) このタイミングで audio.play()
+        //    同期的に呼ばれることでモバイルブラウザでも許可されやすい
+        universalAudio
+          .play()
+          .then(() => {
+            console.log("音声再生に成功");
+          })
+          .catch((err) => {
+            console.error("音声再生がブロックされた可能性:", err);
+          });
       });
     }
 
@@ -610,7 +629,6 @@ import object_main_icon from "@assets/img/object_main_icon.png";
     document.addEventListener("click", () => {
       if (!hasUserInteracted && isBgmOn) {
         hasUserInteracted = true;
-        pcAudio = true;
         console.log("モバイル: ユーザークリックを検出しました");
 
         if (pendingAudioPlay && mostVisibleElement) {
@@ -686,18 +704,12 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       const newUrl = mostVisibleElement.dataset.audioUrl;
 
       if (isBgmOn && newUrl !== currentAudioUrl) {
-        console.log("音源切り替え:", {
-          from: currentAudioUrl,
-          to: newUrl,
-          ratio: mostVisible.ratio,
-        });
-
         // モバイルでユーザー操作がまだの場合は再生をペンディング
-        if (isMobileDevice() && !hasUserInteracted) {
-          pendingAudioPlay = true;
-          console.log("モバイル: ユーザー操作待ちをセットしました");
-          return;
-        }
+        // if (isMobileDevice() && !hasUserInteracted) {
+        //   pendingAudioPlay = true;
+        //   console.log("モバイル: ユーザー操作待ちをセットしました");
+        //   return;
+        // }
 
         // 初回のボタン押下直後は少し遅延させて再生開始
         if (!currentAudioUrl) {
@@ -708,12 +720,21 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       }
     }, observerOptions);
     document.addEventListener("click", () => {
-      spotlights.forEach((elem) => observer.observe(elem));
-      if (pcAudio) {
-        pcAudio = false;
-        console.log("PC: ユーザークリックを検出しました");
-      }
+       spotlights.forEach((elem) => observer.observe(elem));
     });
+
+    // if (!isMobileDevice()) {
+    //   document.addEventListener("click", () => {
+    //     universalAudio.volume = 0;
+
+    //     if (pcAudio) {
+    //       pcAudio = false;
+    //     }
+    //   });
+    // } else {
+    //   // universalAudio.volume = ;
+    //   spotlights.forEach((elem) => observer.observe(elem));
+    // }
 
     /*******************************************************
      * (F) 音源を切り替えて「途中(例:30秒)から再生」する関数
@@ -731,19 +752,16 @@ import object_main_icon from "@assets/img/object_main_icon.png";
 
       // PC or モバイルでユーザー操作済なら再生
       if (!isMobileDevice() || hasUserInteracted) {
+        universalAudio.volume = 0;
         try {
           await universalAudio.play();
         } catch (err) {
-          console.warn("再生に失敗:", err);
-
           // 失敗した場合、モバイルでのユーザー操作待ち
           // if (isMobileDevice()) {
           pendingAudioPlay = true;
-          console.log("モバイル: 再生失敗のためユーザー操作待ちをセットしました");
           // }
         }
       } else {
-        console.log("モバイル: ユーザー操作前のため再生ブロックされる可能性があります");
         pendingAudioPlay = true;
       }
     }
@@ -763,10 +781,11 @@ import object_main_icon from "@assets/img/object_main_icon.png";
      * (H) ページ読込時、前回がONならONで開始
      *******************************************************/
     if (isBgmOn) {
-      console.log("前回BGM ONのためON状態で開始");
       // PCなら自動再生されるブラウザが多い
       if (!isMobileDevice()) {
+        console.log("PC: 前回がONならONで開始");
         hasUserInteracted = true;
+        universalAudio.volume = 0;
       } else {
         // モバイルは初回クリック時の再生フラグを立てる
         pendingAudioPlay = true;
@@ -959,9 +978,6 @@ import object_main_icon from "@assets/img/object_main_icon.png";
                   );
                 }
               } else {
-                console.log("モバイルデバイス: ユーザーインタラクションを待ちます");
-                // モバイルではロード時に再生せず、ユーザーインタラクションを待つ
-                // この状態は後で使う
               }
             } else {
               this.audio.pause();

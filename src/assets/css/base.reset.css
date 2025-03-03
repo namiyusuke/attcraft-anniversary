@@ -373,7 +373,7 @@ body{
 }
 .bg-work{
   position: absolute;
-  top: calc(1290 / 16 * 1rem);
+  top: calc(1200 / 16 * 1rem);
   right: calc(114 / 16 * 1rem);
   width: calc(192 / 16 * 1rem);
 }
@@ -2752,7 +2752,9 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   justify-content: center;
   width: calc(60 / 16 * 1rem);
   height: calc(60 / 16 * 1rem);
-  background-color: #fff;
+  color:#FDD504;
+  background-color: transparent;
+  border: 1px solid #FDD504;
   border-radius:9999rem;
 }
 .loading-btn--wrap{
@@ -2763,15 +2765,18 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 .loading-btn--text{
   font-size: calc(14 / 16 * 1rem);
   line-height: 1;
-  color: #000;
 }
-.loading-btn--icon1{
+.flip-container .loading-btn--icon1{
+  position: static;
   width: calc(16 / 16 * 1rem);
   margin-inline:auto;
+  opacity: 1;
 }
-.loading-btn--icon2{
+.flip-container .loading-btn--icon2{
+  position: static;
   width: calc(18 / 16 * 1rem);
   margin-inline:auto;
+  opacity: 1;
 }
 .loading-btn--inner{
   display:inline-block;
@@ -3258,27 +3263,49 @@ img:focus{
   right: calc(40 / 16 * 1rem);
   bottom: calc(40 / 16 * 1rem);
   z-index: 1000;
-  width: calc(60 / 16 * 1rem);
-  height: calc(60 / 16 * 1rem);
+  width: calc(80 / 16 * 1rem);
+  height: calc(80 / 16 * 1rem);
   cursor: pointer;
-  background: #fff;
+  background: transparent;
   border: none;
+  border: 1px solid #FDD504;
   border-radius: calc(1px/0);
   outline: none;
-  transition: transform 0.2s ease-in;
+  transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .js-bgm-control--text{
   font-family: var(--font-family-kaisei);
   font-size: calc(12 / 16 * 1rem);
+  color: #FDD504;
 }
 .js-bgm-control--icon{
+  position: relative;
   display: block;
-  width: calc(14 / 16 * 1rem);
+  width: calc(16 / 16 * 1rem);
   margin-inline: auto;
   text-align: center;
 }
-.js-bgm-control:hover {
+.js-bgm-control--icon--on{
+  width: 84%;
+}
+.js-bgm-control--icon--off{
+  position: absolute;
+  top: -1px;
+  left: -2px;
+  width: 110%;
+  height: 110%;
+  opacity: 0;
+}
+.is-active .js-bgm-control--icon--on{
+  opacity: 0;
+}
+.is-active .js-bgm-control--icon--off{
+  opacity: 1;
+}
+@media (any-hover: hover) {
+  .js-bgm-control:hover {
   transform: scale(1.18);
+}
 }
 .table_beer1{
   position: absolute;
@@ -3429,7 +3456,7 @@ img:focus{
 .maps-gesture{
   width: 100%;
   height: 100%;
-  /* pointer-events:none; */
+
 }
 .maps-dragscroll {
     position: relative;
@@ -3455,6 +3482,7 @@ img:focus{
   transition-delay: 1.5s;
 }
  .maps-gesture__bg{
+  cursor: pointer;
   transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
 }
 .is-hidden .maps-gesture__bg{
@@ -5752,12 +5780,7 @@ body.is-loading-anim-in> .js-transition__bg.is-visible{
 .odject-jobHunting--people .object_main_icon{
   position: absolute;
   top: 0;
-  left: -8%;
-}
-.odject-jobHunting--people .object_main_icon{
-  position: absolute;
-  top: 0;
-  left: -8%;
+  left: -3%;
 }
 .odject-freeLance--people .object_main_icon{
   position: absolute;
@@ -5767,7 +5790,7 @@ body.is-loading-anim-in> .js-transition__bg.is-visible{
 .odject-company--people .object_main_icon{
   position: absolute;
   top: 0%;
-  left: -10%;
+  left: 2%;
 }
 .odject-web--people .object_main_icon{
   position: absolute;
@@ -5797,4 +5820,36 @@ body.is-loading-anim-in> .js-transition__bg.is-visible{
   100% {
     opacity: 1;
   }
+}
+.maps-gesture-btn{
+  position: absolute;
+  right:0;
+  bottom: 15%;
+  left: 0;
+  z-index: 9990;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+  color: #fff;
+  opacity: 1;
+  transition: opacity .3s;
+}
+@media (min-width: 768px) {
+.maps-gesture-btn{
+  bottom: 10%;
+}
+}
+.maps-gesture-btn--text{
+  display: inline-block;
+  padding: 10px 16px;
+  font-family: var(--font-family-kaisei);
+  font-size: calc(16 / 16 * 1rem );
+  cursor: pointer;
+  border: 2px solid #FDD504;
+  border-radius:1.5rem;
+}
+.is-hidden .maps-gesture-btn{
+  opacity: 0;
 }
