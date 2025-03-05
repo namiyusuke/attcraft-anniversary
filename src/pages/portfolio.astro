@@ -198,7 +198,6 @@ import bgm from "@assets/audio/bgm.mp3";
       // 表示件数を制限するか全件返すか
       return limit ? allEpisodes.slice(0, limit) : allEpisodes;
     } catch (error) {
-      console.error("Error fetching episodes:", error);
       return [];
     }
   }

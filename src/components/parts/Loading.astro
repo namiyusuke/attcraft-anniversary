@@ -197,12 +197,26 @@ import { Image } from "astro:assets";
       ease: "power2.inOut",
       stagger: 0.02,
     })
-      .to(".loading-layer1", {
-        duration: 1.5,
-        autoAlpha: 0,
-        delay: 1.5,
-        ease: "power2.inOut",
+      .to(".loading-text--em", {
+        scale: 1.07,
+        duration: 0.7,
+        ease: "power4.in",
       })
+      .to(".loading-text--em", {
+        scale: 1,
+        duration: 1.1,
+        ease: "elastic.out(1, 0.2)", // エラスティックな跳ね返り効果
+      })
+      .to(
+        ".loading-layer1",
+        {
+          duration: 1.5,
+          autoAlpha: 0,
+          delay: 1.5,
+          ease: "power2.inOut",
+        },
+        "-=.5"
+      )
       .to(".loading-layer2", {
         duration: 1.5,
         autoAlpha: 1,

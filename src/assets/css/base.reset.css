@@ -216,6 +216,29 @@ body{
   background-repeat: repeat;
   background-size: cover;
 }
+.bg-black--gradation{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.bg-black--gradation:after,
+.bg-black--gradation:before{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  content: "";
+}
+.bg-black--gradation:after{
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.6) 5%, rgba(0, 0, 0, 0.3) 10%, rgba(0, 0, 0, 0) 49.81%, rgba(0, 0, 0, 0.3) 90%, rgba(0, 0, 0, 0.6) 95%, #000000 100%);
+}
+.bg-black--gradation:before{
+  background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 5.24%, rgba(0, 0, 0, 0.3) 10.21%, rgba(0, 0, 0, 0) 49.82%, rgba(0, 0, 0, 0.3) 89.82%, rgba(0, 0, 0, 0.6) 94.79%, #000000 99.77%);
+}
 .scroll-body{
  position: relative;
  z-index: 1;
@@ -454,6 +477,10 @@ body{
   margin: auto;
   color: transparent;
   text-align: center;
+   -webkit-user-select: none; /* Chrome / Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer / Edge */
+  user-select: none;
 }
 .mv-bg{
   position: absolute;
@@ -2192,6 +2219,8 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
 }
 }
 .footer-copy{
+  position: relative;
+  z-index: 1;
   padding-bottom: calc(30 / 16 * 1rem);
   color: var(--white);
   text-align: center;
@@ -2758,6 +2787,8 @@ background: linear-gradient(89.71deg, #000000 0.26%, rgba(0, 0, 0, 0.6) 9.87%, r
   border-radius:9999rem;
 }
 .loading-btn--wrap{
+  position: relative;
+  z-index: 51;
   display: flex;
   column-gap: calc(26 / 16 * 1rem);
   justify-content: center;
@@ -3515,17 +3546,21 @@ img:focus{
 }
 
 .is-shown .maps-gesture__contents {
-  transform: translate(-50%, -50%) scale(1);
+  transform:  scale(1);
 }
 .is-hidden .maps-gesture__contents {
   transition-timing-function: var(--ease-back-in);
-  transform: translate(-50%, -50%) scale(0);
-
+  transform:  scale(0);
+}
+.maps-gesture__contents__wrap{
+  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
 }
 .maps-gesture__contents {
-    position: fixed;
-    top: 50%;
-    left: 50%;
     z-index: 10001;
     display: flex;
     flex-direction: column;
@@ -3539,12 +3574,12 @@ img:focus{
     transition: transform 0.5s;
     transition-delay: 0.5s;
     transition-timing-function: var(--ease-back-out);
-    transform: translate(-50%, -50%) scale(0);
+    transform: scale(0);
     }
 @media (min-width: 768px) {
   .maps-gesture__contents {
-    width: 30.6rem;
-    height: 30.6rem;
+    width: clamp(360px, calc(500 / 1600 * 100vw), 30.6rem);
+    height: clamp(360px, calc(500 / 1600 * 100vw), 30.6rem);
   }
 }
 .maps-gesture__contents__txt{
@@ -4867,9 +4902,9 @@ display: block;
   top: calc(400 / 16 * 1rem);
 }
 }
-.is-more-button--hidden {
+/* .is-more-button--hidden {
   display: none;
-}
+} */
 
 .more-button-wrapper {
   margin-top: 2rem;
@@ -4999,6 +5034,7 @@ display: block;
 
 .baseDialog_content_image img{
   width: 100%;
+  margin-top: 40px;
   margin-bottom: 15%;
   text-align: center;
 }
@@ -5058,6 +5094,7 @@ display: block;
   background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%22303%22%20height%3D%22241%22%20viewBox%3D%220%200%20303%20241%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M301.639%20114.667C299.844%2088.3522%20280.256%2065.1887%20257.023%2061.8858C257.324%2040.1438%20243.48%2020.4894%20225.176%2013.5948C206.883%206.70084%20185.109%2012.9261%20171.731%2028.8844C155.199%206.54014%20126.68%20-3.53175%20101.528%204.09282C76.3762%2011.7174%2055.8723%2036.6526%2051.0641%2065.4624C28.2418%2066.0843%203.32411%2090.6284%201.45732%20119.365C-0.410033%20148.113%2021.115%20175.864%2046.6108%20177.586C47.1298%20178.671%2050.4087%20179.064%2053.6771%20179.456C63.6818%20205.543%2085.8331%20225.136%20110.763%20229.928C130.903%20233.803%20152.363%20227.92%20169.144%20214.56C177.8%20226.955%20190.308%20236.108%20204.206%20239.871C197.654%20231.669%20192.729%20221.888%20189.706%20211.396C201.591%20218.756%20216.147%20220.801%20229.281%20216.429C246.19%20210.792%20260.145%20194.747%20264.804%20175.593C287.275%20167.721%20303.445%20140.982%20301.639%20114.667Z%22%20stroke%3D%22%23FEFEFD%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
   background-repeat: no-repeat;
   background-size: contain;
+animation: comment-balloon 8s infinite;
 }
 }
 .archive-footer-x{
@@ -5145,6 +5182,10 @@ display: block;
   background-repeat: repeat;
   background-size: contain;
 }
+#scroll-content{
+  z-index: 1;
+}
+
 .bg-main::after{
   position: absolute;
   inset: 0;
@@ -5823,24 +5864,32 @@ body.is-loading-anim-in> .js-transition__bg.is-visible{
 }
 .maps-gesture-btn{
   position: absolute;
+  top: calc(100% + 30px);
   right:0;
-  bottom: 15%;
   left: 0;
-  z-index: 9990;
+  z-index: 50;
   display: block;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-inline: auto;
   color: #fff;
-  opacity: 1;
+  pointer-events: none;
+  opacity: 0;
   transition: opacity .3s;
+}
+.is-shown .maps-gesture-btn{
+  opacity: 1;
+}
+.is-hidden .is-shown .maps-gesture-btn{
+  opacity: 0;
 }
 @media (min-width: 768px) {
 .maps-gesture-btn{
-  bottom: 10%;
+  top: calc(100% + 50px);
 }
 }
+
 .maps-gesture-btn--text{
   display: inline-block;
   padding: 10px 16px;

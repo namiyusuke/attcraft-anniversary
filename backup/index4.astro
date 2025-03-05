@@ -83,21 +83,17 @@ import object_main_icon from "@assets/img/object_main_icon.png";
     <audio id="universalAudio" preload="auto"></audio>
     <div class="maps-gesture">
       <div class="maps-gesture__bg"></div>
-      <div class="maps-gesture__contents__wrap">
-        <div class="maps-gesture__contents">
-          <div class="maps-gesture__contents__icon">
-            <Image src={gesture_icon} alt="ジェスチャー" />
-          </div>
-          <p class="c-crop c-ls maps-gesture__contents__txt">DRAG &amp; DROP<br />or<br /> SWIPE</p>
-          <div class="maps-gesture__contents__character"></div>
+      <div class="maps-gesture__contents">
+        <div class="maps-gesture__contents__icon">
+          <Image src={gesture_icon} alt="ジェスチャー" />
         </div>
-        <p class="maps-gesture-btn"><span class="maps-gesture-btn--text">START</span></p>
+        <p class="c-crop c-ls maps-gesture__contents__txt">DRAG &amp; DROP<br />or<br /> SWIPE</p>
+        <div class="maps-gesture__contents__character"></div>
       </div>
+      <p class="maps-gesture-btn"><span class="maps-gesture-btn--text">START</span></p>
     </div>
     <div id="scroll-container">
-      <div class="bg-main--gradient"></div>
       <div id="scroll-content">
-        <div class="bg-black--gradation"></div>
         <div class="mv-kanpai">
           <Image src={kanpai} alt="乾杯" />
         </div>
@@ -480,17 +476,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
   }
 
   /*******************************************************
-   * hasUserInteracted も sessionStorage に保存・復元
-   *******************************************************/
-  function loadUserInteractedFlag() {
-    return sessionStorage.getItem("hasUserInteracted") === "true";
-  }
-  function saveUserInteractedFlag(value) {
-    sessionStorage.setItem("hasUserInteracted", value ? "true" : "false");
-  }
-
-  /*******************************************************
-   * モバイルデバイスかどうかを判定
+   * 2) モバイルデバイスかどうかを判定する関数
    *******************************************************/
   function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -501,37 +487,89 @@ import object_main_icon from "@assets/img/object_main_icon.png";
      * (A) ページに1つだけある<audio>要素
      *******************************************************/
     const universalAudio = document.getElementById("universalAudio");
+
     if (!universalAudio) {
+      console.warn("universalAudio 要素が見つかりません。HTMLに <audio id='universalAudio'> を配置してください。");
       return;
     }
 
-    // ★音量を初期化
+    // ★音量を初期化（例: 0.2 を最大値とする）
     let baseVolume = 0.4;
     universalAudio.volume = baseVolume;
-    universalAudio.preload = "none"; // 先読み控えめ
+
+    // 先読みを抑えて表示を軽く
+    universalAudio.preload = "none";
+    // 必要に応じてループする
     universalAudio.loop = false;
+    let pcAudio = false;
 
     /*******************************************************
-     * (B) BGM ON/OFF と ユーザー操作フラグを sessionStorage から復元
+     * (B) BGM ON/OFF 状態を sessionStorage で管理
      *******************************************************/
     let isBgmOn = AudioStateManager.getIsPlaying();
-    let hasUserInteracted = loadUserInteractedFlag(); // 前回フラグを復元
-    let currentAudioUrl = null; // 現在再生中の音源URL
-    let mostVisibleElement = null; // (モバイル向け)最も可視の要素
-    let pendingAudioPlay = false; // モバイルの初回クリック待ち
+    let hasUserInteracted = false; // モバイルの自動再生制限対策
+    let currentAudioUrl = null; // 今再生中の音源URL（切り替え時に活用）
+    let mostVisibleElement = null; // いま最も可視のセクションを保持
+    let pendingAudioPlay = false; // モバイルでの初回クリック待ち状態を表すフラグ
 
     /*******************************************************
-     * BGM ON / OFF ボタン
+     * (C) 初回だけモバイル再生許可を獲得する関数
      *******************************************************/
+    // async function initialPlayback() {
+    //   try {
+    //     // ミュート状態で再生→停止して「ユーザー操作で再生した」実績を得る
+    //     universalAudio.muted = true;
+    //     await universalAudio.play();
+    //     universalAudio.pause();
+    //     universalAudio.muted = false;
+
+    //     hasUserInteracted = true;
+    //     console.log("初回再生許可を獲得しました。");
+    //     return true;
+    //   } catch (err) {
+    //     console.warn("初回再生許可獲得に失敗:", err);
+    //     return false;
+    //   }
+    // }
+
+    /*******************************************************
+     * (D) BGM ON / OFF ボタン処理
+     *******************************************************/
+    const loadingOnButton = document.querySelector(".js-loading--on");
+    const loadingOffButton = document.querySelector(".js-loading--off");
     const controlButton = document.querySelectorAll(".js-control");
+
     controlButton.forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         isBgmOn = !isBgmOn;
+
         if (isBgmOn) {
           AudioStateManager.setIsPlaying(true);
-          // もしモバイルでユーザー操作がまだなら pending
-          if (isMobileDevice() && !hasUserInteracted) {
-            pendingAudioPlay = true;
+
+          if (isMobileDevice()) {
+            if (!hasUserInteracted) {
+              // const success = await initialPlayback();
+              if (mostVisibleElement) {
+                console.log("モバイル: ユーザー操作待ちをセットしました");
+                const audioUrl = mostVisibleElement.dataset.audioUrl;
+                if (audioUrl) {
+                  switchAudio(audioUrl);
+                }
+              } else {
+                pendingAudioPlay = true;
+                console.log("モバイル: ユーザー操作待ちをセットしました");
+              }
+            } else if (mostVisibleElement) {
+              const audioUrl = mostVisibleElement.dataset.audioUrl;
+              if (audioUrl) {
+                switchAudio(audioUrl);
+              }
+            }
+          } else if (mostVisibleElement) {
+            const audioUrl = mostVisibleElement.dataset.audioUrl;
+            if (audioUrl) {
+              switchAudio(audioUrl);
+            }
           }
         } else {
           AudioStateManager.setIsPlaying(false);
@@ -541,30 +579,32 @@ import object_main_icon from "@assets/img/object_main_icon.png";
       });
     });
 
-    /*******************************************************
-     * (任意) Loading ON / OFF ボタンの例
-     *******************************************************/
-    const loadingOnButton = document.querySelector(".js-loading--on");
-    const loadingOffButton = document.querySelector(".js-loading--off");
-
+    // コメントアウトを外す or 新たに書き直す
     if (loadingOnButton) {
       loadingOnButton.addEventListener("click", function () {
+        console.log("Loading ON ボタンがクリックされました");
+        // (1) BGM ON フラグ
         isBgmOn = true;
+        pendingAudioPlay = true;
         AudioStateManager.setIsPlaying(true);
+        hasUserInteracted = true; // 「ユーザー操作済み」として扱う
+        universalAudio.load();
+        // (2) audio 要素をすぐに実際の音源へ切り替え
+        // ここは好きな音源URL（または intersectionObserver で判定した要素の data-audio-url）でもOK
+        const audioUrl = "";
+        universalAudio.src = audioUrl;
 
-        // クリックでユーザー操作が発生 → hasUserInteracted = true
-        hasUserInteracted = true;
-        saveUserInteractedFlag(true);
-
-        // 例: 何らかの音源をセット
-        universalAudio.src = "https://example.com/anyAudio.mp3";
         universalAudio.currentTime = 0;
 
+        // (3) このタイミングで audio.play()
+        //    同期的に呼ばれることでモバイルブラウザでも許可されやすい
         universalAudio
           .play()
           .then(() => {
+            console.log("音声再生に成功");
           })
           .catch((err) => {
+            console.error("音声再生がブロックされた可能性:", err);
           });
       });
     }
@@ -574,240 +614,231 @@ import object_main_icon from "@assets/img/object_main_icon.png";
         isBgmOn = false;
         AudioStateManager.setIsPlaying(false);
         pendingAudioPlay = false;
+
+        // 今の音声を停止
         universalAudio.pause();
         currentAudioUrl = null;
+        console.log("Loading OFF で音声停止");
       });
     }
 
     /*******************************************************
-     * モバイルの初回クリック → ユーザー操作フラグをtrueに
+     * モバイルの初回クリック検出と再生実行
      *******************************************************/
+    // if (isMobileDevice()) {
     document.addEventListener("click", () => {
-      // すでにフラグがtrueなら何もしない
-      if (hasUserInteracted) return;
-
-      // BGM ONの状態で初回クリックなら 再生許可獲得
-      if (isBgmOn) {
+      if (!hasUserInteracted && isBgmOn) {
         hasUserInteracted = true;
-        saveUserInteractedFlag(true);
+        console.log("モバイル: ユーザークリックを検出しました");
+
         if (pendingAudioPlay && mostVisibleElement) {
           const audioUrl = mostVisibleElement.dataset.audioUrl;
           if (audioUrl) {
+            console.log("モバイル: 保留中の音声を再生します", audioUrl);
             switchAudio(audioUrl);
             pendingAudioPlay = false;
           }
         }
       }
     });
+    // }
 
     /*******************************************************
-     * [モバイル向け] Intersection Observer
+     * (E) Intersection Observerでセクション監視
      *******************************************************/
-    function setupIntersectionObserverForMobile() {
-      const spotlights = document.querySelectorAll(".js-spotlight");
-      if (!spotlights.length) return;
+    const spotlights = document.querySelectorAll(".js-spotlight");
 
-      let visibleList = [];
+    let visibleList = []; // { target: Element, ratio: number } の配列
 
-      const observerOptions = {
-        root: null,
-        rootMargin: "-10% 0px",
-        threshold: [0, 0.25, 0.5, 0.75, 1.0],
-      };
+    const observerOptions = {
+      root: null,
+      rootMargin: "-10% 0px", // より敏感に反応するように調整
+      threshold: [0, 0.25, 0.5, 0.75, 1.0], // しきい値を簡略化して処理を軽く
+    };
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const existing = visibleList.find((v) => v.target === entry.target);
-            if (existing) {
-              existing.ratio = entry.intersectionRatio;
-            } else {
-              visibleList.push({
-                target: entry.target,
-                ratio: entry.intersectionRatio,
-              });
-            }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const existing = visibleList.find((v) => v.target === entry.target);
+          if (existing) {
+            existing.ratio = entry.intersectionRatio;
           } else {
-            visibleList = visibleList.filter((v) => v.target !== entry.target);
+            visibleList.push({ target: entry.target, ratio: entry.intersectionRatio });
           }
-        });
-
-        if (visibleList.length === 0) {
-          universalAudio.pause();
-          currentAudioUrl = null;
-          mostVisibleElement = null;
-          return;
-        }
-
-        let mostVisible = visibleList.reduce((prev, current) => (current.ratio > prev.ratio ? current : prev));
-        const VISIBLE_THRESHOLD = 0.3;
-        if (mostVisible.ratio < VISIBLE_THRESHOLD) {
-          universalAudio.pause();
-          currentAudioUrl = null;
-          mostVisibleElement = null;
-          return;
-        }
-
-        mostVisibleElement = mostVisible.target;
-        // BGMがOFFなら再生しない
-        if (!isBgmOn) return;
-
-        const newUrl = mostVisibleElement.dataset.audioUrl;
-        if (newUrl) {
-          switchAudio(newUrl);
-        }
-      }, observerOptions);
-
-      spotlights.forEach((elem) => observer.observe(elem));
-    }
-
-    /*******************************************************
-     * [PC向け] マウス位置で一番近い .js-spotlight を再生
-     *******************************************************/
-    function setupAudioSwitchByMouse() {
-      const spotlights = document.querySelectorAll(".js-spotlight");
-      if (!spotlights.length) return;
-
-      const THRESHOLD = 300;
-      let lastUrl = null;
-
-      document.addEventListener("mousemove", (e) => {
-        // BGM OFFなら再生しない
-        if (!isBgmOn) return;
-
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-
-        let closestElement = null;
-        let minDist = Infinity;
-
-        spotlights.forEach((elem) => {
-          const rect = elem.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          const dist = Math.hypot(mouseX - centerX, mouseY - centerY);
-          if (dist < minDist) {
-            minDist = dist;
-            closestElement = elem;
-          }
-        });
-
-        if (!closestElement) return;
-
-        if (minDist <= THRESHOLD) {
-          const newUrl = closestElement.dataset.audioUrl;
-          if (newUrl) {
-            if (newUrl === lastUrl) {
-              return; // 同じURLなら再生し直し不要
-            }
-            switchAudio(newUrl);
-            lastUrl = newUrl;
-          }
+          console.log("可視要素:", entry.target.dataset.audioUrl, "表示率:", entry.intersectionRatio);
         } else {
-          universalAudio.pause();
-          currentAudioUrl = null;
-          lastUrl = null;
+          visibleList = visibleList.filter((v) => v.target !== entry.target);
         }
       });
-    }
 
-    // PC or モバイルで分けて初期化
-    if (isMobileDevice()) {
-      setupIntersectionObserverForMobile();
-    } else {
-      setupAudioSwitchByMouse();
-    }
+      // 可視要素リストの状態をログ
+      console.log(
+        "現在の可視要素リスト:",
+        visibleList.map((v) => ({
+          url: v.target.dataset.audioUrl,
+          ratio: v.ratio,
+        }))
+      );
 
-    /*******************************************************
-     * 音源URLごとに最後に聴いていた再生位置を記憶
-     *******************************************************/
-    const lastPositions = {};
-    // 初回なら35秒から、それ以降は続き
-    const START_TIME = 35;
-
-    async function switchAudio(newUrl) {
-      // 現在の音源位置を保存
-      if (currentAudioUrl) {
-        lastPositions[currentAudioUrl] = universalAudio.currentTime;
-      }
-
-      // 同じURLなら停止している場合だけ再生再開
-      if (newUrl === currentAudioUrl) {
-        if (universalAudio.paused) {
-          try {
-            await universalAudio.play();
-          } catch (err) {
-            console.warn("再生ブロック:", err);
-          }
-        }
+      // 何も見えていなければ停止
+      if (visibleList.length === 0) {
+        universalAudio.pause();
+        currentAudioUrl = null;
+        mostVisibleElement = null;
         return;
       }
 
-      universalAudio.pause();
-      universalAudio.src = newUrl;
-      currentAudioUrl = newUrl;
+      // intersectionRatio がもっとも大きい要素を探す
+      let mostVisible = visibleList.reduce((prev, current) => (current.ratio > prev.ratio ? current : prev));
 
-      if (lastPositions[newUrl] !== undefined) {
-        universalAudio.currentTime = lastPositions[newUrl];
-      } else {
-        universalAudio.currentTime = START_TIME;
+      const VISIBLE_THRESHOLD = 0.3; // しきい値を下げて反応を敏感に
+
+      if (mostVisible.ratio < VISIBLE_THRESHOLD) {
+        universalAudio.pause();
+        currentAudioUrl = null;
+        mostVisibleElement = null;
+        return;
       }
 
-      try {
-        await universalAudio.play();
-      } catch (err) {
-        console.warn("再生ブロック:", err);
+      mostVisibleElement = mostVisible.target;
+      const newUrl = mostVisibleElement.dataset.audioUrl;
+
+      if (isBgmOn && newUrl !== currentAudioUrl) {
+        // モバイルでユーザー操作がまだの場合は再生をペンディング
+        // if (isMobileDevice() && !hasUserInteracted) {
+        //   pendingAudioPlay = true;
+        //   console.log("モバイル: ユーザー操作待ちをセットしました");
+        //   return;
+        // }
+
+        // 初回のボタン押下直後は少し遅延させて再生開始
+        if (!currentAudioUrl) {
+          setTimeout(() => switchAudio(newUrl), 500);
+        } else {
+          switchAudio(newUrl);
+        }
+      }
+    }, observerOptions);
+    document.addEventListener("click", () => {
+      spotlights.forEach((elem) => observer.observe(elem));
+    });
+
+    // if (!isMobileDevice()) {
+    //   document.addEventListener("click", () => {
+    //     universalAudio.volume = 0;
+
+    //     if (pcAudio) {
+    //       pcAudio = false;
+    //     }
+    //   });
+    // } else {
+    //   // universalAudio.volume = ;
+    //   spotlights.forEach((elem) => observer.observe(elem));
+    // }
+
+    /*******************************************************
+     * (F) 音源を切り替えて「途中(例:30秒)から再生」する関数
+     *******************************************************/
+    const START_TIME = 30; // 途中再生開始位置(秒) ここをお好みで調整
+
+    async function switchAudio(audioUrl) {
+      // 一旦停止
+      universalAudio.pause();
+
+      // 切り替え
+      universalAudio.src = audioUrl;
+      universalAudio.currentTime = START_TIME; // ★途中から再生
+      currentAudioUrl = audioUrl;
+
+      // PC or モバイルでユーザー操作済なら再生
+      if (!isMobileDevice() || hasUserInteracted) {
+        universalAudio.volume = 0;
+        try {
+          await universalAudio.play();
+        } catch (err) {
+          // 失敗した場合、モバイルでのユーザー操作待ち
+          // if (isMobileDevice()) {
+          pendingAudioPlay = true;
+          // }
+        }
+      } else {
+        pendingAudioPlay = true;
       }
     }
 
     /*******************************************************
-     * (H) ページ読込時の処理
+     * (G) threshold を 0.0 ~ 1.0 まで 0.01 刻みで生成
+     *******************************************************/
+    function buildThresholdList() {
+      const thresholds = [];
+      for (let i = 0; i <= 1.0; i += 0.01) {
+        thresholds.push(i);
+      }
+      return thresholds;
+    }
+
+    /*******************************************************
+     * (H) ページ読込時、前回がONならONで開始
      *******************************************************/
     if (isBgmOn) {
-      // もしユーザー操作済み かつ PC(またはモバイルでも再生が許される状況) ならすぐ自動再生
-      if (hasUserInteracted) {
-        // 必要なら「デフォルト音源」を自動再生してもOK
-        // 例: switchAudio("https://example.com/default.mp3");
-        // ここではあえて呼んでいませんが、
-        // "必ず自動で鳴らしたい" 場合はここで switchAudio(...) を実行してください。
+      // PCなら自動再生されるブラウザが多い
+      if (!isMobileDevice()) {
+        console.log("PC: 前回がONならONで開始");
+        hasUserInteracted = true;
+        universalAudio.volume = 0;
       } else {
-        // モバイルなら click イベントを待つ
-        if (isMobileDevice()) {
-          pendingAudioPlay = true;
-        }
+        // モバイルは初回クリック時の再生フラグを立てる
+        pendingAudioPlay = true;
+        console.log("モバイル: BGMはONですがユーザー操作待ちをセットしました");
       }
     } else {
+      console.log("前回BGM OFFのためOFF状態で開始");
       universalAudio.pause();
       currentAudioUrl = null;
     }
 
     /*******************************************************
-     * (I) マウス位置で音量を変化させる (オプション)
+     * (I) マウスの位置に応じて音量を変化させる
      *******************************************************/
+    // 例: 近いほどボリュームが大きく、遠いと小さくなる
+    //     「距離 = 0」で volume = baseVolume（最大）、
+    //     「距離 >= maxDistance」で volume = 0 とするイメージ
+
     let mouseX = 0;
     let mouseY = 0;
-    const maxDistance = 700;
 
+    // 適宜調整する
+    const maxDistance = 700; // この距離以上は無音になるイメージ
+
+    // mousemove イベントリスナー
     document.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
 
-      // モバイル用のmostVisibleElement があるなら、その要素との距離で音量変化
+      // いま最も可視な要素が存在し、かつBGMがONで再生中の場合のみ
       if (mostVisibleElement && isBgmOn && !universalAudio.paused) {
         updateVolumeByMouseDistance(mostVisibleElement);
       }
     });
 
+    // 距離に応じて volume を更新する関数
     function updateVolumeByMouseDistance(targetElem) {
+      // 要素の中心を求める
       const rect = targetElem.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
+
+      // マウスとの距離を計算 (2次元のユークリッド距離)
       const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
 
+      // 0～maxDistance の範囲を 1.0 ~ 0.0 に正規化
+      // （distance=0 → volume=1, distance=maxDistance → volume=0）
       let vol = 1 - distance / maxDistance;
+      // 0～1の範囲を超えないようにクランプ
       if (vol < 0) vol = 0;
       if (vol > 1) vol = 1;
 
+      // 実際の音量には baseVolume を掛ける（例: baseVolume=0.2 を最大値とする）
       universalAudio.volume = vol * baseVolume;
     }
   });
@@ -893,9 +924,11 @@ import object_main_icon from "@assets/img/object_main_icon.png";
 
             if (playPromise !== undefined) {
               playPromise.catch((error) => {
+                console.log("再生エラー:", error);
 
                 // モバイルデバイスでの自動再生制限対策
                 if (error.name === "NotAllowedError") {
+                  console.log("ユーザー操作が必要です - ミュートで再生を試みます");
 
                   // ミュートで再生を試みる（多くのブラウザではミュート状態なら自動再生可能）
                   this.audio.muted = true;
@@ -916,7 +949,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
           // ページ読み込み時の状態確認と再生
 
           const initializeAudio = () => {
+            console.log("初期化中...");
             const isPlaying = AudioStateManager.getIsPlaying();
+            console.log("ページ読み込み時の再生状態:", isPlaying);
+
             if (isPlaying) {
               this.audioConditions = false;
 
@@ -928,11 +964,14 @@ import object_main_icon from "@assets/img/object_main_icon.png";
               if (!this.isMobile) {
                 // PCの場合は通常通り再生を試みる
                 if (this.audio.readyState >= 2) {
+                  console.log("メタデータはすでに読み込まれています");
                   this.tryPlayAudio();
                 } else {
+                  console.log("メタデータの読み込みを待っています");
                   this.audio.addEventListener(
                     "loadedmetadata",
                     () => {
+                      console.log("メタデータが読み込まれました");
                       this.tryPlayAudio();
                     },
                     { once: true }
@@ -953,6 +992,7 @@ import object_main_icon from "@assets/img/object_main_icon.png";
               () => {
                 // まだインタラクションがなく、BGMがONに設定されている場合
                 if (!this.hasUserInteracted && !this.audioConditions) {
+                  console.log("モバイル: 初回クリックを検出、音声再生を試みます");
                   this.tryPlayAudio();
                   this.hasUserInteracted = true;
                 }
@@ -968,8 +1008,10 @@ import object_main_icon from "@assets/img/object_main_icon.png";
 
           // window.onloadイベントで初期化（より確実）
           if (document.readyState === "complete") {
+            console.log("ドキュメントはすでに完全に読み込まれています");
             initializeAudio();
           } else {
+            console.log("window.onloadイベントを待機中");
             window.addEventListener("load", initializeAudio);
           }
         }
