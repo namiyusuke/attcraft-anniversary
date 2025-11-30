@@ -16,6 +16,59 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    <main id="swup">
+      <slot />
+    </main>
   </body>
 </html>
+
+<script>
+  import Swup from "swup";
+  import SwupJsPlugin from "@swup/js-plugin";
+  import SwupHeadPlugin from "@swup/head-plugin";
+  import gsap from "gsap";
+  const swup = new Swup({
+    plugins: [
+      new SwupHeadPlugin(),
+      new SwupJsPlugin({
+        animations: [
+          {
+            from: "(.*)", // 全ページから
+            to: "(.*)", // 全ページへ
+            out: (done) => {
+              // 離脱アニメーション
+              gsap.to("#swup", {
+                opacity: 0,
+                y: -20,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: done, // 完了後にSwupに通知
+              });
+            },
+            in: (done) => {
+              // 入場アニメーション
+              gsap.fromTo(
+                "#swup",
+                { opacity: 0, y: 20 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.3,
+                  ease: "power2.out",
+                  onComplete: done,
+                }
+              );
+            },
+          },
+        ],
+      }),
+    ],
+  });
+  window.swup = swup; // グローバルに公開
+  // ページ遷移完了時（ブラウザバック含む）にカスタムイベントを発火
+  swup.hooks.on("page:view", () => {
+    window.dispatchEvent(new Event("swup:pageview"));
+  });
+  import "../scripts/main.js";
+</script>
+<style></style>

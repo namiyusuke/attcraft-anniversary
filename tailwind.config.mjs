@@ -66,6 +66,10 @@ export default {
         "light-gray": "#E6E6E6",
         line: "#B6C1D3",
       },
+    width: {
+      'lower-content-left': 'calc(480 / 1220 * 100%)',
+      'lower-content-right': 'calc(700 / 1220 * 100%)',
+      }
     },
   },
   plugins: [
