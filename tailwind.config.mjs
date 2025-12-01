@@ -60,6 +60,20 @@ export default {
       sans: ["Roboto", "Noto Sans JP", "sans-serif"],
     },
     extend: {
+      animation: {
+        wiggle01: 'wiggle01 2s ease-in-out infinite',
+        wiggle02: 'wiggle02 3s ease-in-out infinite',
+    },
+    keyframes: {
+      wiggle01: {
+        '0%, 100%': { transform: 'rotate(-3deg)' },
+        '50%': { transform: 'rotate(3deg)' },
+      },
+      wiggle02: {
+        '0%, 100%': { transform: 'rotate(-4deg)' },
+        '50%': { transform: 'rotate(6deg)' },
+      },
+    },
       colors: {
         dark: "#151313",
         navy: "#15143F",

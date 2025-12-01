@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import podcast from "@assets/img/podcast.webp";
 import icon_kuu from "@assets/img/icon_kuu.png";
 import icon_nami from "@assets/img/icon_nami.png";
+import detail_kuu from "@assets/img/detail-kuu.png";
+import detail_nami from "@assets/img/detail-nami.png";
 import { Image } from "astro:assets";
 ---
 
@@ -13,66 +15,116 @@ import { Image } from "astro:assets";
         <div class="flex justify-between">
           <div class="w-lower-content-left">
             <div class="sticky top-20">
+              <Image
+                class="animate-wiggle01 absolute bottom-[calc(100%-30px)] left-0 w-[min(calc(128/1440*100vw),128px)]"
+                src={detail_kuu}
+                alt=""
+              />
+              <Image
+                class="animate-wiggle02 absolute right-0 top-[calc(100%-60px)] w-[min(calc(128/1440*100vw),128px)]"
+                src={detail_nami}
+                alt=""
+              />
               <Image src={podcast} alt="" />
             </div>
           </div>
           <div class="w-lower-content-right">
-            <p class="message message-kuu">
-              <span class="message-icon">
-                <Image src={icon_kuu} alt="" />
-              </span>
-              <span class="message-text">これはページ1です。</span>
-            </p>
-            <p class="message message-nami">
-              <span class="message-icon">
-                <Image src={icon_nami} alt="" />
-              </span>
-              <span class="message-text"
-                >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-              >
-            </p>
-            <p class="message message-kuu">
-              <span class="message-icon">
-                <Image src={icon_kuu} alt="" />
-              </span>
-              <span class="message-text">これはページ1です。</span>
-            </p>
-            <p class="message message-nami">
-              <span class="message-icon">
-                <Image src={icon_nami} alt="" />
-              </span>
-              <span class="message-text"
-                >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-              >
-            </p>
-            <p class="message message-kuu">
-              <span class="message-icon">
-                <Image src={icon_kuu} alt="" />
-              </span>
-              <span class="message-text">これはページ1です。</span>
-            </p>
-            <p class="message message-nami">
-              <span class="message-icon">
-                <Image src={icon_nami} alt="" />
-              </span>
-              <span class="message-text"
-                >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-              >
-            </p>
-            <p class="message message-kuu">
-              <span class="message-icon">
-                <Image src={icon_kuu} alt="" />
-              </span>
-              <span class="message-text">これはページ1です。</span>
-            </p>
-            <p class="message message-nami">
-              <span class="message-icon">
-                <Image src={icon_nami} alt="" />
-              </span>
-              <span class="message-text"
-                >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-              >
-            </p>
+            <div class="js-detail">
+              <p class="message message-kuu">
+                <span class="message-icon">
+                  <Image src={icon_kuu} alt="" />
+                </span>
+                <span class="message-text">これはページ1です。</span>
+              </p>
+              <p class="message message-nami">
+                <span class="message-icon">
+                  <Image src={icon_nami} alt="" />
+                </span>
+                <span class="message-text"
+                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                >
+              </p>
+            </div>
+            <div class="js-detail">
+              <p class="message message-kuu">
+                <span class="message-icon">
+                  <Image src={icon_kuu} alt="" />
+                </span>
+                <span class="message-text">これはページ1です。</span>
+              </p>
+              <p class="message message-nami">
+                <span class="message-icon">
+                  <Image src={icon_nami} alt="" />
+                </span>
+                <span class="message-text"
+                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                >
+              </p>
+            </div>
+            <div class="js-detail">
+              <p class="message message-kuu">
+                <span class="message-icon">
+                  <Image src={icon_kuu} alt="" />
+                </span>
+                <span class="message-text">これはページ1です。</span>
+              </p>
+              <p class="message message-nami">
+                <span class="message-icon">
+                  <Image src={icon_nami} alt="" />
+                </span>
+                <span class="message-text"
+                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                >
+              </p>
+            </div>
+            <div class="js-detail">
+              <p class="message message-kuu">
+                <span class="message-icon">
+                  <Image src={icon_kuu} alt="" />
+                </span>
+                <span class="message-text">これはページ1です。</span>
+              </p>
+              <p class="message message-nami">
+                <span class="message-icon">
+                  <Image src={icon_nami} alt="" />
+                </span>
+                <span class="message-text"
+                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                >
+              </p>
+            </div>
+            <div class="js-detail">
+              <p class="message message-kuu">
+                <span class="message-icon">
+                  <Image src={icon_kuu} alt="" />
+                </span>
+                <span class="message-text">これはページ1です。</span>
+              </p>
+              <p class="message message-nami">
+                <span class="message-icon">
+                  <Image src={icon_nami} alt="" />
+                </span>
+                <span class="message-text"
+                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                >
+              </p>
+            </div>
+            <div class="js-detail">
+              <p class="message message-kuu">
+                <span class="message-icon">
+                  <Image src={icon_kuu} alt="" />
+                </span>
+                <span class="message-text">これはページ1です。</span>
+              </p>
+              <p class="message message-nami">
+                <span class="message-icon">
+                  <Image src={icon_nami} alt="" />
+                </span>
+                <span class="message-text"
+                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                >
+              </p>
+            </div>
             <p class="mt-8 flex justify-center">
               <a class="bg-white px-8 py-1 font-black text-black" href="/">Topへ</a>
             </p>
@@ -140,4 +192,5 @@ import { Image } from "astro:assets";
       transform: scale(1.5, 0.5) rotate(-75deg);
     }
   </style>
+  <script></script>
 </Layout>

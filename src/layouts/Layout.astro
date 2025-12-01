@@ -19,6 +19,12 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     <main id="swup">
       <slot />
     </main>
+    <!-- トランジション用SVG -->
+    <svg class="transition-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path class="transition-path1" d="M 0 0 V 0 Q 50 0 100 0 V 0 z"></path>
+      <path class="transition-path2" d="M 0 0 V 0 Q 50 0 100 0 V 0 z"></path>
+      <path class="transition-path3" d="M 0 0 V 0 Q 50 0 100 0 V 0 z"></path>
+    </svg>
   </body>
 </html>
 
@@ -27,48 +33,105 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   import SwupJsPlugin from "@swup/js-plugin";
   import SwupHeadPlugin from "@swup/head-plugin";
   import gsap from "gsap";
+
+  // SVGパス要素を取得
+  const path1 = document.querySelector(".transition-path1") as SVGPathElement;
+  const path2 = document.querySelector(".transition-path2") as SVGPathElement;
+  const path3 = document.querySelector(".transition-path3") as SVGPathElement;
+
+  // SVGパスの状態
+  const F = "M 0 100 V 150 Q 50 50 100 150 V 100 z"; // 画面外下部（開始）
+  const E = "M 0 100 V 0 Q 50 -1 100 0 V 100 z"; // 画面全体を覆う
+  const G = "M 0 0 V 150 Q 50 50 100 150 V 0 z"; // 画面を覆った状態
+  const H = "M 0 0 V 0 Q 50 0 100 0 V 0 z"; // 画面外上部（消えた状態）
+
+  // 色の組み合わせセット
+  const colorSets: [string, string, string][] = [
+    ["#d71e7b", "#ff4d9d", "#ffb3d9"], // ピンク系
+    ["#1e90ff", "#4da6ff", "#b3d9ff"], // 青系
+    ["#2ecc71", "#58d68d", "#abebc6"], // 緑系
+    ["#9b59b6", "#bb8fce", "#d7bde2"], // 紫系
+    ["#f39c12", "#f7dc6f", "#fdebd0"], // オレンジ・黄色系
+    ["#e74c3c", "#f1948a", "#fadbd8"], // 赤系
+  ];
+
+  // ランダムに色の組み合わせを取得
+  function getRandomColors(): [string, string, string] {
+    const index = Math.floor(Math.random() * colorSets.length);
+    return colorSets[index];
+  }
+
+  // パスの色を更新する関数
+  function updatePathColors(colors: [string, string, string]) {
+    path1.setAttribute("fill", colors[0]);
+    path2.setAttribute("fill", colors[1]);
+    path3.setAttribute("fill", colors[2]);
+  }
+
   const swup = new Swup({
     plugins: [
       new SwupHeadPlugin(),
       new SwupJsPlugin({
         animations: [
           {
-            from: "(.*)", // 全ページから
-            to: "(.*)", // 全ページへ
-            out: (done) => {
-              // 離脱アニメーション
-              gsap.to("#swup", {
-                opacity: 0,
-                y: -20,
-                duration: 0.3,
-                ease: "power2.in",
-                onComplete: done, // 完了後にSwupに通知
-              });
+            from: "(.*)",
+            to: "(.*)",
+            out: async () => {
+              // ランダムな色を適用
+              const colors = getRandomColors();
+              updatePathColors(colors);
+
+              // 離脱アニメーション：下から波が覆う
+              const tl = gsap.timeline();
+              await tl
+                .set(path1, { attr: { d: F } })
+                .set(path2, { attr: { d: F } })
+                .set(path3, { attr: { d: F } })
+                .to(path1, { duration: 0.6, attr: { d: E }, ease: "power3.inOut" })
+                .to(path2, { duration: 0.6, attr: { d: E }, ease: "power3.inOut" }, "-=0.45")
+                .to(path3, { duration: 0.6, attr: { d: E }, ease: "power3.inOut" }, "-=0.45");
             },
-            in: (done) => {
-              // 入場アニメーション
-              gsap.fromTo(
-                "#swup",
-                { opacity: 0, y: 20 },
-                {
-                  opacity: 1,
-                  y: 0,
-                  duration: 0.3,
-                  ease: "power2.out",
-                  onComplete: done,
-                }
-              );
+            in: async () => {
+              // 入場アニメーション：上へ波が抜ける
+              const tl = gsap.timeline();
+              await tl
+                .set(path1, { attr: { d: G } })
+                .set(path2, { attr: { d: G } })
+                .set(path3, { attr: { d: G } })
+                .to(path1, { duration: 0.6, attr: { d: H }, ease: "power3.inOut" })
+                .to(path2, { duration: 0.6, attr: { d: H }, ease: "power3.inOut" }, "-=0.45")
+                .to(path3, { duration: 0.6, attr: { d: H }, ease: "power3.inOut" }, "-=0.45");
             },
           },
         ],
       }),
     ],
   });
-  window.swup = swup; // グローバルに公開
-  // ページ遷移完了時（ブラウザバック含む）にカスタムイベントを発火
+
+  (window as any).swup = swup;
   swup.hooks.on("page:view", () => {
     window.dispatchEvent(new Event("swup:pageview"));
   });
   import "../scripts/main.js";
+  import observer from "../assets/js/libs/observer.js";
+
+  // observerを初期化する関数
+  function initDetailObserver() {
+    new observer(".js-detail", "detail-visible");
+  }
+  // 初回実行
+  initDetailObserver();
+  // swupページ遷移後に再実行
+  window.addEventListener("swup:pageview", initDetailObserver);
 </script>
-<style></style>
+<style>
+  .transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+</style>
