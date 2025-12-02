@@ -135,6 +135,15 @@ class App3 {
     this.touchStartX = 0;
     this.isInitialAnimation = true; // 初期アニメーションフラグ
     this.initialAnimationProgress = 0; // 初期アニメーションの進捗
+    this.cameraTargetPosition = null; // カメラの目標位置
+    this.isCameraAnimating = false;
+    this.isCameraMoved = false; // カメラが移動済みかどうか
+    // カメラの初期位置を保存
+    this.cameraInitialPosition = new THREE.Vector3(
+      App3.CAMERA_PARAM.x,
+      App3.CAMERA_PARAM.y,
+      App3.CAMERA_PARAM.z
+    );
   }
 
   /**
@@ -262,6 +271,27 @@ class App3 {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
     }, false);
+    // カメラ移動ボタン
+    const cameraMoveBtn = document.querySelector('#camera-move-btn');
+    if (cameraMoveBtn) {
+      cameraMoveBtn.addEventListener('click', () => {
+        // 目標位置を設定（例: x=5, y=2, z=5）
+        this.cameraTargetPosition = new THREE.Vector3(0, 0, 3);
+        this.isCameraAnimating = true;
+        this.isCameraMoved = true; // カメラ移動モードON
+      });
+    }
+
+    // 元に戻るボタン
+    const cameraResetBtn = document.querySelector('#camera-reset-btn');
+    if (cameraResetBtn) {
+      cameraResetBtn.addEventListener('click', () => {
+        // 初期位置に戻す
+        this.cameraTargetPosition = this.cameraInitialPosition.clone();
+        this.isCameraAnimating = true;
+        this.isCameraMoved = false; // カメラ移動モードOFF
+      });
+    }
   }
 
   /**
@@ -410,6 +440,19 @@ class App3 {
    * 描画処理
    */
   render() {
+      // render()内でカメラをアニメーション
+      if (this.isCameraAnimating && this.cameraTargetPosition) {
+        // lerpで滑らかに移動（0.05は補間係数、小さいほどゆっくり）
+        this.camera.position.lerp(this.cameraTargetPosition, 0.09);
+        this.meshes.forEach((mesh) => {
+          // メッシュをカメラの方向に向ける
+          mesh.lookAt(this.camera.position);
+        });
+        // 目標位置に十分近づいたらアニメーション終了
+        if (this.camera.position.distanceTo(this.cameraTargetPosition) < 0.01) {
+          this.isCameraAnimating = false;
+        }
+      }
     // 破棄済みならアニメーションループを停止
     if (this.isDisposed) return;
 
@@ -454,7 +497,6 @@ class App3 {
           mesh.position.x = mesh.userData.targetX;
         });
       }
-
       this.renderer.render(this.scene, this.camera);
       return; // 初期アニメーション中はスクロール処理をスキップ
     }
@@ -510,9 +552,14 @@ this.scrollOffset += 0.01;
         mesh.position.z += (mesh.userData.originalZ - mesh.position.z) * 0.1;
         mesh.quaternion.slerp(mesh.userData.originalQuaternion, 0.1);
       }
-      const Rotate = mesh.userData.isClick ? 0 :  Math.PI / 2 ;
-      // Y軸の回転を滑らかに補間
-      mesh.rotation.y += (Rotate - mesh.rotation.y) * 0.1;
+      // カメラ移動モード中はメッシュをカメラに向ける、それ以外は元の回転
+      if (this.isCameraMoved) {
+        mesh.lookAt(this.camera.position);
+      } else {
+        const Rotate = mesh.userData.isClick ? 0 : Math.PI / 2;
+        // Y軸の回転を滑らかに補間
+        mesh.rotation.y += (Rotate - mesh.rotation.y) * 0.1;
+      }
       // クリック時にスケールも拡大
       const targetScale = mesh.userData.isClick ? 3.0 : 1.0;
       mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
