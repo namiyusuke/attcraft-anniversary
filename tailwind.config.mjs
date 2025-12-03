@@ -63,6 +63,7 @@ export default {
       animation: {
         wiggle01: 'wiggle01 2s ease-in-out infinite',
         wiggle02: 'wiggle02 3s ease-in-out infinite',
+        loop_x: 'loop_x 50s linear infinite',
     },
     keyframes: {
       wiggle01: {
@@ -73,6 +74,10 @@ export default {
         '0%, 100%': { transform: 'rotate(-4deg)' },
         '50%': { transform: 'rotate(6deg)' },
       },
+        loop_x:{
+          '0%': { transform: 'translate3d(0, 0, 0)' },
+          '100%': { transform: 'translate3d(-100%, 0, 0)' },
+      }
     },
       colors: {
         dark: "#151313",

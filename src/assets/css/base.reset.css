@@ -64,3 +64,28 @@ html{
   opacity:1;
   transform:translateY(0);
 }
+.detail-content{
+  position:relative;
+  z-index:1;
+}
+.loop__x img{
+  width:auto;
+  max-width:none;
+  height:calc(300 /1600 * 100vw)
+}
+.loop__x-item{
+  padding-inline:calc(120 /1600 * 100vw);
+}
+.loop__x-wrap{
+  width:100vw;
+  overflow:hidden;
+
+}
+.loop__x{
+  overflow:hidden;
+}
+.loop__x-item{
+  position:relative;
+  z-index:0;
+  width:100vw;
+}
