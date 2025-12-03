@@ -138,6 +138,8 @@ class App3 {
     this.cameraTargetPosition = null; // カメラの目標位置
     this.isCameraAnimating = false;
     this.isCameraMoved = false; // カメラが移動済みかどうか
+    this.isReturning = false; // 戻り中かどうか
+    this.circleRotation = 0; // 円状配置の回転角度
     // カメラの初期位置を保存
     this.cameraInitialPosition = new THREE.Vector3(
       App3.CAMERA_PARAM.x,
@@ -275,10 +277,19 @@ class App3 {
     const cameraMoveBtn = document.querySelector('#camera-move-btn');
     if (cameraMoveBtn) {
       cameraMoveBtn.addEventListener('click', () => {
-        // 目標位置を設定（例: x=5, y=2, z=5）
-        this.cameraTargetPosition = new THREE.Vector3(0, 0, 3);
+        // 目標位置を原点の上に設定（メッシュを見下ろす）
+        this.cameraTargetPosition = new THREE.Vector3(0, 0, 0);
         this.isCameraAnimating = true;
         this.isCameraMoved = true; // カメラ移動モードON
+        // 円状配置の目標位置を計算
+        const radius = 2; // 円の半径
+        const count = this.meshes.length;
+        this.meshes.forEach((mesh, i) => {
+          const angle = (i / count) * Math.PI * 2; // 360度を均等に分割
+          mesh.userData.circleX = Math.sin(angle) * radius;
+          mesh.userData.circleZ = Math.cos(angle) * radius;
+          mesh.userData.circleY = 0;
+        });
       });
     }
 
@@ -289,7 +300,7 @@ class App3 {
         // 初期位置に戻す
         this.cameraTargetPosition = this.cameraInitialPosition.clone();
         this.isCameraAnimating = true;
-        this.isCameraMoved = false; // カメラ移動モードOFF
+        this.isReturning = true; // 戻り中フラグ
       });
     }
   }
@@ -425,7 +436,7 @@ class App3 {
     }
     // コントロール
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enabled = false;
+    this.controls.enabled = true;
 
     // ヘルパー
     const axesBarLength = 5.0;
@@ -444,13 +455,32 @@ class App3 {
       if (this.isCameraAnimating && this.cameraTargetPosition) {
         // lerpで滑らかに移動（0.05は補間係数、小さいほどゆっくり）
         this.camera.position.lerp(this.cameraTargetPosition, 0.09);
+
+        // カメラ移動中は正面を向ける
+        if (!this.isReturning) {
+          this.camera.lookAt(0, 0, -1);
+        }
+
         this.meshes.forEach((mesh) => {
-          // メッシュをカメラの方向に向ける
-          mesh.lookAt(this.camera.position);
+          if (this.isReturning) {
+            // 戻り中は元の回転（Math.PI / 2）へ滑らかに補間
+            mesh.rotation.x = 0;
+            mesh.rotation.z = 0;
+            mesh.rotation.y += (Math.PI / 2 - mesh.rotation.y) * 0.1;
+          } else {
+            // メッシュを正面（Z軸方向）に向ける
+            mesh.rotation.x = 0;
+            mesh.rotation.z = 0;
+            mesh.rotation.y += (0 - mesh.rotation.y) * 0.1;
+          }
         });
         // 目標位置に十分近づいたらアニメーション終了
         if (this.camera.position.distanceTo(this.cameraTargetPosition) < 0.01) {
           this.isCameraAnimating = false;
+          if (this.isReturning) {
+            this.isCameraMoved = false;
+            this.isReturning = false;
+          }
         }
       }
     // 破棄済みならアニメーションループを停止
@@ -520,6 +550,11 @@ this.scrollOffset += 0.01;
     // スクロールオフセットをリセット（次フレームで使用するため）
     this.scrollOffset = 0;
 
+    // 円状配置モード中は自動回転
+    if (this.isCameraMoved && !this.isReturning) {
+      this.circleRotation += 0.005; // 回転速度
+    }
+
     // メッシュをホバー時に滑らかに浮かせる（lerp による補間アニメーション）
     // lerp（線形補間）とは、現在の値から目標値へ徐々に近づける手法
     // 計算式: 現在値 += (目標値 - 現在値) * 補間係数
@@ -545,21 +580,53 @@ this.scrollOffset += 0.01;
             mesh.position.z += (targetZ - mesh.position.z) * 0.1; // カメラの前
             const targetQuaternion = this.camera.quaternion.clone();
             mesh.quaternion.slerp(targetQuaternion, 0.5);
-          }else {
-        // 元の位置に戻す（X座標はスクロール位置、Y/Zは補間）
+      } else if (this.isCameraMoved && !this.isReturning) {
+        // 円状配置を回転
+        const radius = 2;
+        const count = this.meshes.length;
+        const index = this.meshes.indexOf(mesh);
+        const baseAngle = (index / count) * Math.PI * 2;
+        const currentAngle = baseAngle + this.circleRotation;
+
+        // 回転後の目標位置を計算
+        const targetX = Math.sin(currentAngle) * radius;
+        const targetZ = Math.cos(currentAngle) * radius;
+
+        // カメラ移動モード中は円状配置へ補間
+        mesh.position.x += (targetX - mesh.position.x) * 0.1;
+        mesh.position.y += (mesh.userData.circleY - mesh.position.y) * 0.1;
+        mesh.position.z += (targetZ - mesh.position.z) * 0.1;
+        // カメラを正面（Z軸マイナス方向）に向ける
+        this.camera.lookAt(0, 0, -1);
+      } else if (this.isReturning) {
+        // 戻り中は補間で元の位置へ
+        mesh.position.x += (mesh.userData.currentX - mesh.position.x) * 0.1;
+        mesh.position.y += (mesh.userData.originalY - mesh.position.y) * 0.1;
+        mesh.position.z += (mesh.userData.originalZ - mesh.position.z) * 0.1;
+      } else {
+        // 通常時はX座標を直接代入（無限ループ対応）、Y/Zは補間
         mesh.position.x = mesh.userData.currentX;
         mesh.position.y += (mesh.userData.originalY - mesh.position.y) * 0.1;
         mesh.position.z += (mesh.userData.originalZ - mesh.position.z) * 0.1;
+        // quaternionを元に戻す
         mesh.quaternion.slerp(mesh.userData.originalQuaternion, 0.1);
       }
-      // カメラ移動モード中はメッシュをカメラに向ける、それ以外は元の回転
-      if (this.isCameraMoved) {
-        mesh.lookAt(this.camera.position);
-      } else {
+      // カメラ移動モード中はメッシュをカメラ（原点）に向ける、それ以外は元の回転
+      if (this.isCameraMoved && !this.isReturning) {
+        // カメラを向くようにY軸回転を計算（+Math.PIで表面をカメラに向ける）
+        const targetRotationY = Math.atan2(
+          this.camera.position.x - mesh.position.x,
+          this.camera.position.z - mesh.position.z
+        ) + Math.PI;
+        mesh.rotation.x = 0;
+        mesh.rotation.z = 0;
+        mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.1;
+      } else if (!this.isReturning) {
         const Rotate = mesh.userData.isClick ? 0 : Math.PI / 2;
         // Y軸の回転を滑らかに補間
         mesh.rotation.y += (Rotate - mesh.rotation.y) * 0.1;
       }
+      // 戻り中は上のカメラアニメーション部分で回転を処理
       // クリック時にスケールも拡大
       const targetScale = mesh.userData.isClick ? 3.0 : 1.0;
       mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
