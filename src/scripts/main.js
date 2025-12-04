@@ -408,10 +408,10 @@ class App3 {
 
     // 各画像の遷移先URL
     const urls = [
-      '/page1',
-      '/page2',
-      '/page3',
-      '/page4',
+      '/detail/page1',
+      '/detail/page2',
+      '/detail/page3',
+      '/detail/page4',
     ];
 
     for (let i = 0; i < this.materials.length; i++) {

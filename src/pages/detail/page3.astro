@@ -1,6 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Sakura from "../components/Sakura.astro";
+import Layout from "../../layouts/Layout.astro";
+import Sakura from "../../components/Sakura.astro";
 import forth from "@assets/img/4th.png";
 import icon_kuu from "@assets/img/icon_kuu.png";
 import icon_nami from "@assets/img/icon_nami.png";
@@ -13,7 +13,7 @@ import { Image } from "astro:assets";
   <div class="relative min-h-screen bg-[#F0F0F0]">
     <div class="detail-content md:pb-32 md:pt-32">
       <div class="wrapper">
-        <div class="flex justify-between">
+        <div class="relative z-10 flex justify-between">
           <div class="w-lower-content-left">
             <div class="sticky top-20">
               <Image src={forth} alt="" />

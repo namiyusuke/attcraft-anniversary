@@ -73,6 +73,22 @@ const { title, description = "Astro テンプレート" } = Astro.props;
       new SwupHeadPlugin(),
       new SwupJsPlugin({
         animations: [
+          // detail配下のページ遷移: フェードのみ
+          {
+            from: "/detail/:path*",
+            to: "/detail/:path*",
+            out: async () => {
+              updatePathColors(["#f39c12", "#e67e22", "#d35400"]);
+              const tl = gsap.timeline();
+              await tl.to("main", { duration: 0.6, opacity: 0, ease: "power1.out" });
+            },
+            in: async () => {
+              const tl = gsap.timeline();
+              await tl.to("main", { duration: 1, opacity: 1, ease: "power1.in" });
+            },
+          },
+
+          // デフォルト（その他のページ遷移）
           {
             from: "(.*)",
             to: "(.*)",
@@ -123,6 +139,70 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   initDetailObserver();
   // swupページ遷移後に再実行
   window.addEventListener("swup:pageview", initDetailObserver);
+
+  // スクロール遷移の設定
+  const scrollNavigationMap: { [key: string]: string } = {
+    "/detail/page1": "/detail/page2",
+    "/detail/page2": "/detail/page3",
+    "/detail/page3": "/detail/page4",
+    // 必要に応じて追加
+  };
+
+  let currentScrollHandler: (() => void) | null = null;
+
+  function initScrollNavigation() {
+    // 前のハンドラーを削除
+    if (currentScrollHandler) {
+      window.removeEventListener("scroll", currentScrollHandler);
+      currentScrollHandler = null;
+    }
+
+    const currentPath = window.location.pathname;
+    const nextPage = scrollNavigationMap[currentPath];
+    const prePage = Object.keys(scrollNavigationMap).find((key) => scrollNavigationMap[key] === currentPath);
+
+    // 遷移先も前ページもない場合は何もしない
+    if (!nextPage && !prePage) return;
+
+    let hasNavigated = false;
+    let lastScrollTop = window.scrollY || 0;
+
+    currentScrollHandler = () => {
+      if (hasNavigated) return;
+
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      const scrollingUp = scrollTop < lastScrollTop;
+
+      // 最下部から100px以内に到達したら次のページへ
+      if (nextPage && scrollTop + clientHeight >= scrollHeight - 100) {
+        hasNavigated = true;
+        if ((window as any).swup) {
+          (window as any).swup.navigate(nextPage);
+        } else {
+          window.location.href = nextPage;
+        }
+      }
+      // 上にスクロールして最上部に到達したら前のページへ
+      else if (prePage && scrollTop <= 0 && scrollingUp) {
+        hasNavigated = true;
+        if ((window as any).swup) {
+          (window as any).swup.navigate(prePage);
+        } else {
+          window.location.href = prePage;
+        }
+      }
+
+      lastScrollTop = scrollTop;
+    };
+    window.addEventListener("scroll", currentScrollHandler);
+  }
+
+  // 初回実行
+  initScrollNavigation();
+  // Swupページ遷移後に再実行
+  window.addEventListener("swup:pageview", initScrollNavigation);
 </script>
 <style>
   .transition-overlay {
