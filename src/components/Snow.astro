@@ -1,0 +1,39 @@
+---
+// 雪エフェクトコンポーネント
+// 使用例: <Snow />
+import map_winter from "@assets/img/map_winter.png";
+import { Image } from "astro:assets";
+---
+
+<div class="snow-container">
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+</div>
+<div class="loop__x-wrap">
+  <div class="loop__x fixed bottom-0 left-0 right-0 flex max-w-max">
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_winter} alt="" />
+    </div>
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_winter} alt="" />
+    </div>
+  </div>
+</div>

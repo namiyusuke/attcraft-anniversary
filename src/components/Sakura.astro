@@ -1,0 +1,49 @@
+---
+// 桜エフェクトコンポーネント
+// 使用例: <Sakura />
+import map_spring from "@assets/img/map_spring.png";
+import { Image } from "astro:assets";
+---
+
+<div class="sakura-container">
+  <!-- 花びら（18個） -->
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <!-- 桜の花（10個） -->
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+</div>
+<div class="loop__x-wrap">
+  <div class="loop__x fixed bottom-0 left-0 right-0 flex max-w-max">
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_spring} alt="" />
+    </div>
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_spring} alt="" />
+    </div>
+  </div>
+</div>

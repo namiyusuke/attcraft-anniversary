@@ -1,0 +1,40 @@
+---
+// 紅葉エフェクトコンポーネント
+// 使用例: <Autumn />
+import map_autumn from "@assets/img/map_autumn.png";
+import { Image } from "astro:assets";
+---
+
+<div class="autumn-container">
+  <!-- 紅葉（20個） -->
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+  <div class="momiji"></div>
+</div>
+<div class="loop__x-wrap">
+  <div class="loop__x fixed bottom-0 left-0 right-0 flex max-w-max">
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_autumn} alt="" />
+    </div>
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_autumn} alt="" />
+    </div>
+  </div>
+</div>

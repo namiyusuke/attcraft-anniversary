@@ -1,13 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Sakura from "../components/Sakura.astro";
 import forth from "@assets/img/4th.png";
 import icon_kuu from "@assets/img/icon_kuu.png";
 import icon_nami from "@assets/img/icon_nami.png";
-import map_spring from "@assets/img/map_spring.png";
+
 import { Image } from "astro:assets";
 ---
 
 <Layout title="Astro テンプレート" transitionColors={["#D71E1E", "#FF4D4D", "#FFB3B3"]}>
+  <Sakura />
   <div class="relative min-h-screen bg-[#F0F0F0]">
     <div class="detail-content md:pb-32 md:pt-32">
       <div class="wrapper">
@@ -118,16 +120,6 @@ import { Image } from "astro:assets";
               <a class="bg-white px-8 py-1 font-black text-black" href="/">Topへ</a>
             </p>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="loop__x-wrap">
-      <div class="loop__x absolute bottom-0 left-0 right-0 flex max-w-max">
-        <div class="animate-loop_x loop__x-item">
-          <Image src={map_spring} alt="" />
-        </div>
-        <div class="animate-loop_x loop__x-item">
-          <Image src={map_spring} alt="" />
         </div>
       </div>
     </div>

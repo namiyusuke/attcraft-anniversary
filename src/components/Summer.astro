@@ -1,0 +1,40 @@
+---
+// 夏エフェクトコンポーネント（葉っぱ）
+// 使用例: <Summer />
+import map_summer from "@assets/img/map_summer.png";
+import { Image } from "astro:assets";
+---
+
+<div class="summer-container">
+  <!-- 葉っぱ（20個） -->
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+  <div class="leaf"></div>
+</div>
+<div class="loop__x-wrap">
+  <div class="loop__x fixed bottom-0 left-0 right-0 flex max-w-max">
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_summer} alt="" />
+    </div>
+    <div class="animate-loop_x loop__x-item">
+      <Image src={map_summer} alt="" />
+    </div>
+  </div>
+</div>
