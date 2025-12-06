@@ -38,7 +38,7 @@ a {
   text-decoration: none;
 }
 html{
-  color:#ffffff;
+  color:#000;
 }
 .message-kuu .message-text{
   transform:translateX(-20px);
