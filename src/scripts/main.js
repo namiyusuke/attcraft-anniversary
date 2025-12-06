@@ -40,9 +40,9 @@ class App3 {
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
       far: 20.0,
-      x: -1.0,
-      y: 1.0,
-      z: 3.0,
+      x: -5.0,
+      y: 0.0,
+      z: 0.0,
       lookAt: new THREE.Vector3(0.0, 0.0, 0.0),
     };
   }
@@ -135,6 +135,7 @@ class App3 {
     this.touchStartX = 0;
     this.isInitialAnimation = true; // 初期アニメーションフラグ
     this.initialAnimationProgress = 0; // 初期アニメーションの進捗
+    this.initialAnimationPhase = 1; // 初期アニメーションフェーズ（1: 真ん中に集合, 2: 横一列に展開）
     this.cameraTargetPosition = null; // カメラの目標位置
     this.isCameraAnimating = false;
     this.isCameraMoved = false; // カメラが移動済みかどうか
@@ -417,19 +418,23 @@ class App3 {
     for (let i = 0; i < this.materials.length; i++) {
       const mesh = new THREE.Mesh(this.planeGeometry, this.materials[i]);
       const targetX = i * this.width; // 最終的な目標位置
-      mesh.position.x = targetX + 10; // 初期位置は画面外（右側）から開始
+      // 初期位置は真ん中（カメラの前）に重ねて配置、画面外から開始
+      mesh.position.x = 0;
+      mesh.position.y = 0;
+      mesh.position.z = 10; // 画面外（奥）から開始
       mesh.rotation.y = Math.PI / 2;
 
       // userData はオブジェクトに任意のデータを保存できるプロパティ
       // ここではアニメーション用のデータを保存
       mesh.userData.targetX = targetX;  // 目標のX座標
       mesh.userData.currentX = targetX;  // 現在のX座標（スクロール用）
-      mesh.userData.originalY = mesh.position.y;      // 元のY座標
-      mesh.userData.originalZ = mesh.position.z;      // 元のZ座標（lerp の戻り先として使用）
+      mesh.userData.originalY = 0;      // 元のY座標
+      mesh.userData.originalZ = 0;      // 元のZ座標（lerp の戻り先として使用）
       mesh.userData.originalQuaternion = mesh.quaternion.clone();  // 元の角度
       mesh.userData.isHovered = false;  // ホバー状態のフラグ（mousemove で更新）
       mesh.userData.isClick = false;  // クリック状態のフラグ
-      mesh.userData.delay = i * 0.15;  // 各メッシュの遅延（先頭から順番にアニメーション）
+      mesh.userData.delay = (this.materials.length - 1 - i) * 0.2;  // 奥（最後）から順番にアニメーション
+      mesh.userData.phase2Delay = i * 0.15; // フェーズ2の遅延
       mesh.userData.url = urls[i];  // 遷移先URL
       this.meshes.push(mesh);
       this.scene.add(mesh);
@@ -456,24 +461,28 @@ class App3 {
         // lerpで滑らかに移動（0.05は補間係数、小さいほどゆっくり）
         this.camera.position.lerp(this.cameraTargetPosition, 0.09);
 
-        // カメラ移動中は正面を向ける
-        if (!this.isReturning) {
-          this.camera.lookAt(0, 0, -1);
+        // 初期アニメーション中はカメラだけ移動、メッシュの向きは変えない
+        if (!this.isInitialAnimation) {
+          // カメラ移動中は正面を向ける
+          if (!this.isReturning) {
+            this.camera.lookAt(0, 0, -1);
+          }
+
+          this.meshes.forEach((mesh) => {
+            if (this.isReturning) {
+              // 戻り中は元の回転（Math.PI / 2）へ滑らかに補間
+              mesh.rotation.x = 0;
+              mesh.rotation.z = 0;
+              mesh.rotation.y += (Math.PI / 2 - mesh.rotation.y) * 0.1;
+            } else {
+              // メッシュを正面（Z軸方向）に向ける
+              mesh.rotation.x = 0;
+              mesh.rotation.z = 0;
+              mesh.rotation.y += (0 - mesh.rotation.y) * 0.1;
+            }
+          });
         }
 
-        this.meshes.forEach((mesh) => {
-          if (this.isReturning) {
-            // 戻り中は元の回転（Math.PI / 2）へ滑らかに補間
-            mesh.rotation.x = 0;
-            mesh.rotation.z = 0;
-            mesh.rotation.y += (Math.PI / 2 - mesh.rotation.y) * 0.1;
-          } else {
-            // メッシュを正面（Z軸方向）に向ける
-            mesh.rotation.x = 0;
-            mesh.rotation.z = 0;
-            mesh.rotation.y += (0 - mesh.rotation.y) * 0.1;
-          }
-        });
         // 目標位置に十分近づいたらアニメーション終了
         if (this.camera.position.distanceTo(this.cameraTargetPosition) < 0.01) {
           this.isCameraAnimating = false;
@@ -496,37 +505,78 @@ class App3 {
     if (this.isInitialAnimation) {
       this.initialAnimationProgress += 0.016; // 約60fpsで1秒間で約1.0になる
 
-      let allCompleted = true;
-      this.meshes.forEach((mesh) => {
+      // イージング関数（easeOutCubic）を適用
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
-
-        // 各メッシュの遅延を考慮した進捗
-        const delayedProgress = Math.max(0, this.initialAnimationProgress - mesh.userData.delay);
-
-        if (delayedProgress > 0) {
-          // イージング関数（easeOutCubic）を適用
-          const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-          const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
-
-          // 初期位置から目標位置へ補間
-          const startX = mesh.userData.targetX + 10;
-          mesh.position.x = startX + (mesh.userData.targetX - startX) * easedProgress;
-
-          if (easedProgress < 1) {
-            allCompleted = false;
-          }
-        } else {
-          allCompleted = false;
-        }
-      });
-
-      // 全てのアニメーションが完了したら通常モードへ
-      if (allCompleted) {
-        this.isInitialAnimation = false;
+      if (this.initialAnimationPhase === 1) {
+        // フェーズ1: 画面外（奥）から真ん中に順番に並ぶ
+        let allPhase1Completed = true;
         this.meshes.forEach((mesh) => {
-          mesh.position.x = mesh.userData.targetX;
+          const delayedProgress = Math.max(0, this.initialAnimationProgress - mesh.userData.delay);
+
+          if (delayedProgress > 0) {
+            const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
+
+            // 下から上がってきて立ち上がる
+            const startY = -5;
+            const index = this.meshes.indexOf(mesh);
+            mesh.position.z = 0;// 後のカードほど手前（カメラに近い）
+            mesh.position.x =  index *.2;
+            mesh.position.y = startY + (0 - startY) * easedProgress;
+
+            // カメラを向く + 傾き（回転順序をZYXに変更）
+            const tiltAngle = Math.PI * 2 * (1 - easedProgress);
+            mesh.rotation.order = 'ZYX';
+            mesh.rotation.y = Math.PI / 2;  // カメラを向く
+            mesh.rotation.z = tiltAngle;    // 傾き（正面から見て回転）
+            mesh.rotation.x = 0;
+            if (easedProgress < 1) {
+              allPhase1Completed = false;
+            }
+          } else {
+            allPhase1Completed = false;
+          }
         });
+
+        // フェーズ1完了後、フェーズ2へ移行
+        if (allPhase1Completed) {
+          this.initialAnimationPhase = 2;
+          this.initialAnimationProgress = 0; // 進捗をリセット
+          // カメラを新しい位置へ移動開始
+
+          this.cameraTargetPosition = new THREE.Vector3(-1.0, 1.0, 3.0);
+          this.isCameraAnimating = true;
+        }
+      } else if (this.initialAnimationPhase === 2) {
+        // フェーズ2: 真ん中から横一列に展開
+        let allPhase2Completed = true;
+        this.meshes.forEach((mesh) => {
+          const delayedProgress = Math.max(0, this.initialAnimationProgress - mesh.userData.phase2Delay);
+
+          if (delayedProgress > 0) {
+            const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
+
+            // 真ん中(x=0)から目標位置へ
+            mesh.position.x = 0 + (mesh.userData.targetX - 0) * easedProgress;
+
+            if (easedProgress < 1) {
+              allPhase2Completed = false;
+            }
+          } else {
+            allPhase2Completed = false;
+          }
+        });
+
+        // 全てのアニメーションが完了したら通常モードへ
+        if (allPhase2Completed) {
+          this.isInitialAnimation = false;
+          this.meshes.forEach((mesh) => {
+            mesh.position.x = mesh.userData.targetX;
+            mesh.userData.currentX = mesh.userData.targetX;
+          });
+        }
       }
+
       this.renderer.render(this.scene, this.camera);
       return; // 初期アニメーション中はスクロール処理をスキップ
     }
