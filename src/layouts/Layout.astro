@@ -25,6 +25,9 @@ const { title, description = "Astro テンプレート" } = Astro.props;
       <path class="transition-path2" d="M 0 0 V 0 Q 50 0 100 0 V 0 z"></path>
       <path class="transition-path3" d="M 0 0 V 0 Q 50 0 100 0 V 0 z"></path>
     </svg>
+    <!-- detail間遷移用オーバーレイ -->
+    <div class="js-detail-page-out"></div>
+    <div class="js-detail-page-in"></div>
   </body>
 </html>
 
@@ -68,38 +71,42 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     path3.setAttribute("fill", colors[2]);
   }
 
-  // ページ番号を取得する関数
-  function getPageNumber(url: string): number {
-    const match = url.match(/\/detail\/page(\d+)/);
-    return match ? parseInt(match[1], 10) : 0;
-  }
-
-  // 遷移方向を保持（1: 次へ進む, -1: 前に戻る）
-  let transitionDirection = 1;
-
   const swup = new Swup({
     plugins: [
       new SwupHeadPlugin(),
       new SwupJsPlugin({
         animations: [
-          // detail配下のページ遷移: スライド
+          // detail配下のページ遷移: オーバーレイワイプ
           {
             from: "/detail/:path*",
             to: "/detail/:path*",
             out: async () => {
-              updatePathColors(["#f39c12", "#e67e22", "#d35400"]);
+              console.log("out animation start");
+              const overlay = document.querySelector(".js-detail-page-in") as HTMLElement;
+              console.log("overlay:", overlay);
+              if (!overlay) {
+                console.log("overlay not found!");
+                return;
+              }
               const tl = gsap.timeline();
-              // 進む: 左へ退場(-100%), 戻る: 右へ退場(100%)
-              const exitX = transitionDirection === 1 ? "-100%" : "100%";
-              await tl.to(".js-detail-page", { duration: 0.6, transform: `translateX(${exitX})`, ease: "power3.in" });
+              // 右から左へ広がって画面を覆う
+              await tl.set(overlay, { clipPath: "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)" }).to(overlay, {
+                duration: 0.6,
+                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                ease: "power3.out",
+              });
+              console.log("out animation end");
             },
             in: async () => {
+              const overlay = document.querySelector(".js-detail-page-in") as HTMLElement;
+              if (!overlay) return;
               const tl = gsap.timeline();
-              // 進む: 右から入場(100%→0%), 戻る: 左から入場(-100%→0%)
-              const enterX = transitionDirection === 1 ? "100%" : "-100%";
-              await tl
-                .set(".js-detail-page", { transform: `translateX(${enterX})` })
-                .to(".js-detail-page", { duration: 1.2, transform: "translateX(0%)", ease: "power3.out" });
+              // 左から右へ消えていく
+              await tl.set(overlay, { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }).to(overlay, {
+                duration: 1,
+                clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
+                ease: "power4.in",
+              });
             },
           },
 
@@ -142,29 +149,6 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   (window as any).swup = swup;
   swup.hooks.on("page:view", () => {
     window.dispatchEvent(new Event("swup:pageview"));
-  });
-
-  // 遷移開始時に方向を判定
-  swup.hooks.on("visit:start", (visit) => {
-    const fromPage = getPageNumber(visit.from.url);
-    const toPage = getPageNumber(visit.to.url);
-    // 進む(toPage > fromPage) = 1, 戻る(toPage < fromPage) = -1
-    transitionDirection = toPage > fromPage ? 1 : -1;
-  });
-
-  // detail間遷移時、コンテンツがDOMに挿入された直後に位置を設定（ちらつき防止）
-  swup.hooks.on("content:replace", (visit) => {
-    const fromDetail = visit.from.url.startsWith("/detail/");
-    const toDetail = visit.to.url.startsWith("/detail/");
-
-    if (fromDetail && toDetail) {
-      const newDetailPage = document.querySelector(".js-detail-page") as HTMLElement;
-      if (newDetailPage) {
-        // 進む: 右側(100%)に配置, 戻る: 左側(-100%)に配置
-        const enterX = transitionDirection === 1 ? "100%" : "-100%";
-        newDetailPage.style.transform = `translateX(${enterX})`;
-      }
-    }
   });
 
   import "../scripts/main.js";
