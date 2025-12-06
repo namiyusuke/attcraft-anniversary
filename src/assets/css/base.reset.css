@@ -517,3 +517,6 @@ html{
         transform: translateX(0) rotate(0deg);
       }
     }
+#detail-canvas-img{
+  opacity:0;
+}
