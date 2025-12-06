@@ -9,139 +9,143 @@ import Autumn from "@components/Autumn.astro";
 ---
 
 <Layout title="Astro テンプレート">
+  <a class="c-button-next text-slate-950" href="/detail/page2">次へ</a>
   <Autumn />
-  <div class="min-h-screen bg-[#F0F0F0]">
-    <div class="md:pb-32 md:pt-32">
-      <div class="wrapper">
-        <div class="relative z-10 flex justify-between">
-          <div class="w-lower-content-left">
-            <div class="sticky top-20">
-              <Image
-                class="absolute bottom-[calc(100%-30px)] left-0 w-[min(calc(128/1440*100vw),128px)] animate-wiggle01"
-                src={detail_kuu}
-                alt=""
-              />
-              <Image
-                class="absolute right-0 top-[calc(100%-60px)] w-[min(calc(128/1440*100vw),128px)] animate-wiggle02"
-                src={detail_nami}
-                alt=""
-              />
-              <div class="detail-canvas-wrap">
-                <img id="detail-canvas-img" src="/img/podcast.webp" alt="" class="w-full" />
-                <canvas id="detail-canvas"></canvas>
+  <div class="js-detail-page relative">
+    <div class="min-h-screen bg-[#F0F0F0]">
+      <div class="md:pb-32 md:pt-32">
+        <div class="wrapper">
+          <div class="relative z-10 flex justify-between">
+            <div class="w-lower-content-left">
+              <div class="sticky top-20">
+                <Image
+                  class="absolute bottom-[calc(100%-30px)] left-0 w-[min(calc(128/1440*100vw),128px)] animate-wiggle01"
+                  src={detail_kuu}
+                  alt=""
+                />
+                <Image
+                  class="absolute right-0 top-[calc(100%-60px)] w-[min(calc(128/1440*100vw),128px)] animate-wiggle02"
+                  src={detail_nami}
+                  alt=""
+                />
+                <div class="detail-canvas-wrap">
+                  <img id="detail-canvas-img" src="/img/podcast.webp" alt="" class="w-full" />
+                  <canvas id="detail-canvas"></canvas>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="w-lower-content-right">
-            <div class="js-detail">
-              <p class="message message-kuu">
-                <span class="message-icon">
-                  <Image src={icon_kuu} alt="" />
-                </span>
-                <span class="message-text">これはページ1です。</span>
-              </p>
-              <p class="message message-nami">
-                <span class="message-icon">
-                  <Image src={icon_nami} alt="" />
-                </span>
-                <span class="message-text"
-                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-                >
+            <div class="w-lower-content-right">
+              <div class="js-detail">
+                <p class="message message-kuu">
+                  <span class="message-icon">
+                    <Image src={icon_kuu} alt="" />
+                  </span>
+                  <span class="message-text">これはページ1です。</span>
+                </p>
+                <p class="message message-nami">
+                  <span class="message-icon">
+                    <Image src={icon_nami} alt="" />
+                  </span>
+                  <span class="message-text"
+                    >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                  >
+                </p>
+              </div>
+              <div class="js-detail">
+                <p class="message message-kuu">
+                  <span class="message-icon">
+                    <Image src={icon_kuu} alt="" />
+                  </span>
+                  <span class="message-text">これはページ1です。</span>
+                </p>
+                <p class="message message-nami">
+                  <span class="message-icon">
+                    <Image src={icon_nami} alt="" />
+                  </span>
+                  <span class="message-text"
+                    >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                  >
+                </p>
+              </div>
+              <div class="js-detail">
+                <p class="message message-kuu">
+                  <span class="message-icon">
+                    <Image src={icon_kuu} alt="" />
+                  </span>
+                  <span class="message-text">これはページ1です。</span>
+                </p>
+                <p class="message message-nami">
+                  <span class="message-icon">
+                    <Image src={icon_nami} alt="" />
+                  </span>
+                  <span class="message-text"
+                    >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                  >
+                </p>
+              </div>
+              <div class="js-detail">
+                <p class="message message-kuu">
+                  <span class="message-icon">
+                    <Image src={icon_kuu} alt="" />
+                  </span>
+                  <span class="message-text">これはページ1です。</span>
+                </p>
+                <p class="message message-nami">
+                  <span class="message-icon">
+                    <Image src={icon_nami} alt="" />
+                  </span>
+                  <span class="message-text"
+                    >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                  >
+                </p>
+              </div>
+              <div class="js-detail">
+                <p class="message message-kuu">
+                  <span class="message-icon">
+                    <Image src={icon_kuu} alt="" />
+                  </span>
+                  <span class="message-text">これはページ1です。</span>
+                </p>
+                <p class="message message-nami">
+                  <span class="message-icon">
+                    <Image src={icon_nami} alt="" />
+                  </span>
+                  <span class="message-text"
+                    >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                  >
+                </p>
+              </div>
+              <div class="js-detail">
+                <p class="message message-kuu">
+                  <span class="message-icon">
+                    <Image src={icon_kuu} alt="" />
+                  </span>
+                  <span class="message-text">これはページ1です。</span>
+                </p>
+                <p class="message message-nami">
+                  <span class="message-icon">
+                    <Image src={icon_nami} alt="" />
+                  </span>
+                  <span class="message-text"
+                    >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
+                  >
+                </p>
+              </div>
+              <p class="mt-8 flex justify-center">
+                <a class="bg-white px-8 py-1 font-black text-black" href="/">Topへ</a>
               </p>
             </div>
-            <div class="js-detail">
-              <p class="message message-kuu">
-                <span class="message-icon">
-                  <Image src={icon_kuu} alt="" />
-                </span>
-                <span class="message-text">これはページ1です。</span>
-              </p>
-              <p class="message message-nami">
-                <span class="message-icon">
-                  <Image src={icon_nami} alt="" />
-                </span>
-                <span class="message-text"
-                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-                >
-              </p>
-            </div>
-            <div class="js-detail">
-              <p class="message message-kuu">
-                <span class="message-icon">
-                  <Image src={icon_kuu} alt="" />
-                </span>
-                <span class="message-text">これはページ1です。</span>
-              </p>
-              <p class="message message-nami">
-                <span class="message-icon">
-                  <Image src={icon_nami} alt="" />
-                </span>
-                <span class="message-text"
-                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-                >
-              </p>
-            </div>
-            <div class="js-detail">
-              <p class="message message-kuu">
-                <span class="message-icon">
-                  <Image src={icon_kuu} alt="" />
-                </span>
-                <span class="message-text">これはページ1です。</span>
-              </p>
-              <p class="message message-nami">
-                <span class="message-icon">
-                  <Image src={icon_nami} alt="" />
-                </span>
-                <span class="message-text"
-                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-                >
-              </p>
-            </div>
-            <div class="js-detail">
-              <p class="message message-kuu">
-                <span class="message-icon">
-                  <Image src={icon_kuu} alt="" />
-                </span>
-                <span class="message-text">これはページ1です。</span>
-              </p>
-              <p class="message message-nami">
-                <span class="message-icon">
-                  <Image src={icon_nami} alt="" />
-                </span>
-                <span class="message-text"
-                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-                >
-              </p>
-            </div>
-            <div class="js-detail">
-              <p class="message message-kuu">
-                <span class="message-icon">
-                  <Image src={icon_kuu} alt="" />
-                </span>
-                <span class="message-text">これはページ1です。</span>
-              </p>
-              <p class="message message-nami">
-                <span class="message-icon">
-                  <Image src={icon_nami} alt="" />
-                </span>
-                <span class="message-text"
-                  >これはページ1です。これはページ1です。これはページ1です。これはページ1です。これはページ1です。</span
-                >
-              </p>
-            </div>
-            <p class="mt-8 flex justify-center">
-              <a class="bg-white px-8 py-1 font-black text-black" href="/">Topへ</a>
-            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script>
-    import * as THREE from "three";
+</Layout>
+<script>
+  import * as THREE from "three";
 
-    // 頂点シェーダー（紙めくりエフェクト - 斜め下から）
-    const vertexShader = `
+  // 頂点シェーダー（紙めくりエフェクト - 斜め下から）
+  const vertexShader = `
       uniform float uCurl;
       uniform float uRadius;
       uniform float uAspect;
@@ -189,8 +193,8 @@ import Autumn from "@components/Autumn.astro";
       }
     `;
 
-    // フラグメントシェーダー
-    const fragmentShader = `
+  // フラグメントシェーダー
+  const fragmentShader = `
       uniform sampler2D uTexture;
       uniform float uCurl;
 
@@ -210,229 +214,228 @@ import Autumn from "@components/Autumn.astro";
 
     `;
 
-    class DetailCanvas {
-      canvas: HTMLCanvasElement | null = null;
-      imgElement: HTMLImageElement | null = null;
-      scene: THREE.Scene | null = null;
-      camera: THREE.OrthographicCamera | null = null;
-      renderer: THREE.WebGLRenderer | null = null;
-      mesh: THREE.Mesh | null = null;
-      material: THREE.ShaderMaterial | null = null;
-      animationId: number | null = null;
-      isHovering: boolean = false;
-      targetCurl: number = 0;
-      currentCurl: number = 0;
-      aspect: number = 1;
+  class DetailCanvas {
+    canvas: HTMLCanvasElement | null = null;
+    imgElement: HTMLImageElement | null = null;
+    scene: THREE.Scene | null = null;
+    camera: THREE.OrthographicCamera | null = null;
+    renderer: THREE.WebGLRenderer | null = null;
+    mesh: THREE.Mesh | null = null;
+    material: THREE.ShaderMaterial | null = null;
+    animationId: number | null = null;
+    isHovering: boolean = false;
+    targetCurl: number = 0;
+    currentCurl: number = 0;
+    aspect: number = 1;
 
-      constructor() {
-        this.init();
-      }
+    constructor() {
+      this.init();
+    }
 
-      init() {
-        this.canvas = document.getElementById("detail-canvas") as HTMLCanvasElement;
-        this.imgElement = document.getElementById("detail-canvas-img") as HTMLImageElement;
-        if (!this.canvas || !this.imgElement) return;
+    init() {
+      this.canvas = document.getElementById("detail-canvas") as HTMLCanvasElement;
+      this.imgElement = document.getElementById("detail-canvas-img") as HTMLImageElement;
+      if (!this.canvas || !this.imgElement) return;
 
-        // シーン作成
-        this.scene = new THREE.Scene();
+      // シーン作成
+      this.scene = new THREE.Scene();
 
-        // カメラ作成（正投影）
-        this.camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 10);
-        this.camera.position.z = 1;
+      // カメラ作成（正投影）
+      this.camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 10);
+      this.camera.position.z = 1;
 
-        // レンダラー作成
-        this.renderer = new THREE.WebGLRenderer({
-          canvas: this.canvas,
-          antialias: true,
-          alpha: true,
-        });
-        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+      // レンダラー作成
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+        alpha: true,
+      });
+      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-        // img要素のsrcからテクスチャを読み込み
-        const loader = new THREE.TextureLoader();
-        loader.load(this.imgElement.src, (texture) => {
-          this.setupMesh(texture);
-          this.resize();
-          this.animate();
-        });
+      // img要素のsrcからテクスチャを読み込み
+      const loader = new THREE.TextureLoader();
+      loader.load(this.imgElement.src, (texture) => {
+        this.setupMesh(texture);
+        this.resize();
+        this.animate();
+      });
 
-        // ホバーイベント
-        this.canvas.addEventListener("mouseenter", () => {
-          this.isHovering = true;
-          this.targetCurl = 0.7; // 30%めくる
-        });
-        this.canvas.addEventListener("mouseleave", () => {
-          this.isHovering = false;
-          this.targetCurl = 0;
-        });
+      // ホバーイベント
+      this.canvas.addEventListener("mouseenter", () => {
+        this.isHovering = true;
+        this.targetCurl = 0.7; // 30%めくる
+      });
+      this.canvas.addEventListener("mouseleave", () => {
+        this.isHovering = false;
+        this.targetCurl = 0;
+      });
 
-        window.addEventListener("resize", () => this.resize());
-      }
+      window.addEventListener("resize", () => this.resize());
+    }
 
-      setupMesh(texture: THREE.Texture) {
-        if (!this.scene) return;
+    setupMesh(texture: THREE.Texture) {
+      if (!this.scene) return;
 
-        // 細かいセグメントでジオメトリを作成（曲げるため）
-        // 斜めに曲げるのでXとY両方にセグメントが必要
-        const geometry = new THREE.PlaneGeometry(1, 1, 64, 64);
+      // 細かいセグメントでジオメトリを作成（曲げるため）
+      // 斜めに曲げるのでXとY両方にセグメントが必要
+      const geometry = new THREE.PlaneGeometry(1, 1, 64, 64);
 
-        this.material = new THREE.ShaderMaterial({
-          vertexShader,
-          fragmentShader,
-          uniforms: {
-            uTexture: { value: texture },
-            uCurl: { value: 0 },
-            uRadius: { value: 0.15 },
-            uAspect: { value: 1 },
-            uAngle: { value: -Math.PI / 3 }, // 45度
-          },
-          side: THREE.DoubleSide,
-        });
+      this.material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: {
+          uTexture: { value: texture },
+          uCurl: { value: 0 },
+          uRadius: { value: 0.15 },
+          uAspect: { value: 1 },
+          uAngle: { value: -Math.PI / 3 }, // 45度
+        },
+        side: THREE.DoubleSide,
+      });
 
-        this.mesh = new THREE.Mesh(geometry, this.material);
-        this.scene.add(this.mesh);
-      }
+      this.mesh = new THREE.Mesh(geometry, this.material);
+      this.scene.add(this.mesh);
+    }
 
-      resize() {
-        if (!this.canvas || !this.renderer || !this.camera || !this.imgElement) return;
+    resize() {
+      if (!this.canvas || !this.renderer || !this.camera || !this.imgElement) return;
 
-        const width = this.imgElement.clientWidth;
-        const height = this.imgElement.clientHeight;
+      const width = this.imgElement.clientWidth;
+      const height = this.imgElement.clientHeight;
 
-        if (width === 0 || height === 0) return;
+      if (width === 0 || height === 0) return;
 
-        this.renderer.setSize(width, height);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      this.renderer.setSize(width, height);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        this.aspect = width / height;
-        this.camera.left = -0.5 * this.aspect;
-        this.camera.right = 0.5 * this.aspect;
-        this.camera.top = 0.5;
-        this.camera.bottom = -0.5;
-        this.camera.updateProjectionMatrix();
+      this.aspect = width / height;
+      this.camera.left = -0.5 * this.aspect;
+      this.camera.right = 0.5 * this.aspect;
+      this.camera.top = 0.5;
+      this.camera.bottom = -0.5;
+      this.camera.updateProjectionMatrix();
 
-        // シェーダーにアスペクト比を渡す
-        if (this.material) {
-          this.material.uniforms.uAspect.value = this.aspect;
-        }
-      }
-
-      animate() {
-        if (!this.renderer || !this.scene || !this.camera || !this.material) return;
-
-        // スムーズにめくり値を補間
-        this.currentCurl += (this.targetCurl - this.currentCurl) * 0.08;
-        this.material.uniforms.uCurl.value = this.currentCurl;
-
-        this.renderer.render(this.scene, this.camera);
-        this.animationId = requestAnimationFrame(() => this.animate());
-      }
-
-      destroy() {
-        if (this.animationId) {
-          cancelAnimationFrame(this.animationId);
-        }
-        if (this.mesh) {
-          this.mesh.geometry.dispose();
-        }
-        if (this.material) {
-          this.material.dispose();
-        }
-        if (this.renderer) {
-          this.renderer.dispose();
-        }
+      // シェーダーにアスペクト比を渡す
+      if (this.material) {
+        this.material.uniforms.uAspect.value = this.aspect;
       }
     }
 
-    // 初期化
-    let detailCanvas: DetailCanvas | null = null;
+    animate() {
+      if (!this.renderer || !this.scene || !this.camera || !this.material) return;
 
-    function initDetailCanvas() {
-      if (detailCanvas) {
-        detailCanvas.destroy();
+      // スムーズにめくり値を補間
+      this.currentCurl += (this.targetCurl - this.currentCurl) * 0.08;
+      this.material.uniforms.uCurl.value = this.currentCurl;
+
+      this.renderer.render(this.scene, this.camera);
+      this.animationId = requestAnimationFrame(() => this.animate());
+    }
+
+    destroy() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
       }
-      detailCanvas = new DetailCanvas();
-    }
-
-    initDetailCanvas();
-    window.addEventListener("swup:pageview", () => {
-      if (document.getElementById("detail-canvas")) {
-        initDetailCanvas();
+      if (this.mesh) {
+        this.mesh.geometry.dispose();
       }
-    });
-  </script>
-  <style>
-    body {
-      margin: 0;
+      if (this.material) {
+        this.material.dispose();
+      }
+      if (this.renderer) {
+        this.renderer.dispose();
+      }
     }
-    .detail-canvas-wrap {
-      position: relative;
-    }
-    .detail-canvas-wrap img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-    .detail-canvas-wrap canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .wrapper {
-      box-sizing: content-box;
-      max-inline-size: 1220px;
-      padding-inline: 5vi;
-      margin-inline: auto;
-    }
-    .message {
-      position: relative;
-      display: flex;
-      column-gap: calc(33 / 16 * 1rem);
-      align-items: center;
-      margin-top: 32px;
-      font-size: 24px;
-      line-height: 1.4;
-      color: #ffffff;
-    }
+  }
 
-    .message-nami {
-      flex-direction: row-reverse;
-      color: #262626;
+  // 初期化
+  let detailCanvas: DetailCanvas | null = null;
+
+  function initDetailCanvas() {
+    if (detailCanvas) {
+      detailCanvas.destroy();
     }
-    .message-icon {
-      width: calc(80 / 700 * 100%);
+    detailCanvas = new DetailCanvas();
+  }
+
+  initDetailCanvas();
+  window.addEventListener("swup:pageview", () => {
+    if (document.getElementById("detail-canvas")) {
+      initDetailCanvas();
     }
-    .message-text {
-      position: relative;
-      max-inline-size: 60%;
-      padding: 0.5em 1em;
-      font-size: calc(18 / 16 * 1rem);
-      border-radius: 1rem;
-    }
-    .message-nami .message-text {
-      background-color: #ffffff;
-    }
-    .message-kuu .message-text {
-      background-color: #262626;
-    }
-    .message-text::after {
-      position: absolute;
-      top: 0.1875em;
-      z-index: 1;
-      width: 1em;
-      height: 1em;
-      content: "";
-      background-color: inherit;
-    }
-    .message-kuu .message-text::after {
-      left: 0em;
-      transform: scale(1.5, 0.5) rotate(75deg);
-    }
-    .message-nami .message-text::after {
-      right: 0em;
-      transform: scale(1.5, 0.5) rotate(-75deg);
-    }
-  </style>
-</Layout>
+  });
+</script>
+<style>
+  body {
+    margin: 0;
+  }
+  .detail-canvas-wrap {
+    position: relative;
+  }
+  .detail-canvas-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .detail-canvas-wrap canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .wrapper {
+    box-sizing: content-box;
+    max-inline-size: 1220px;
+    padding-inline: 5vi;
+    margin-inline: auto;
+  }
+  .message {
+    position: relative;
+    display: flex;
+    column-gap: calc(33 / 16 * 1rem);
+    align-items: center;
+    margin-top: 32px;
+    font-size: 24px;
+    line-height: 1.4;
+    color: #ffffff;
+  }
+
+  .message-nami {
+    flex-direction: row-reverse;
+    color: #262626;
+  }
+  .message-icon {
+    width: calc(80 / 700 * 100%);
+  }
+  .message-text {
+    position: relative;
+    max-inline-size: 60%;
+    padding: 0.5em 1em;
+    font-size: calc(18 / 16 * 1rem);
+    border-radius: 1rem;
+  }
+  .message-nami .message-text {
+    background-color: #ffffff;
+  }
+  .message-kuu .message-text {
+    background-color: #262626;
+  }
+  .message-text::after {
+    position: absolute;
+    top: 0.1875em;
+    z-index: 1;
+    width: 1em;
+    height: 1em;
+    content: "";
+    background-color: inherit;
+  }
+  .message-kuu .message-text::after {
+    left: 0em;
+    transform: scale(1.5, 0.5) rotate(75deg);
+  }
+  .message-nami .message-text::after {
+    right: 0em;
+    transform: scale(1.5, 0.5) rotate(-75deg);
+  }
+</style>

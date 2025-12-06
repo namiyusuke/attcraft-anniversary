@@ -520,3 +520,24 @@ html{
 #detail-canvas-img{
   opacity:0;
 }
+
+/* Swupページ遷移用 - detail間遷移時のみJSで適用 */
+ .c-button-prev{
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:20px;
+  z-index:5;
+  height:max-content;
+  margin-block:auto;
+}
+
+.c-button-next{
+  position:fixed;
+  top:0;
+  right:20px;
+  bottom:0;
+  z-index:5;
+  height:max-content;
+  margin-block:auto;
+}

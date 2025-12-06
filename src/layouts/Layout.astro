@@ -80,11 +80,13 @@ const { title, description = "Astro テンプレート" } = Astro.props;
             out: async () => {
               updatePathColors(["#f39c12", "#e67e22", "#d35400"]);
               const tl = gsap.timeline();
-              await tl.to("main", { duration: 0.6, opacity: 0, ease: "power1.out" });
+              await tl.to(".js-detail-page", { duration: 0.6, transform: "translateX(-100%)", ease: "power1.out" });
             },
             in: async () => {
               const tl = gsap.timeline();
-              await tl.to("main", { duration: 1, opacity: 1, ease: "power1.in" });
+              await tl
+                .set(".js-detail-page", { transform: "translateX(100%)" })
+                .to(".js-detail-page", { duration: 0.6, transform: "translateX(0%)", ease: "power1.out" });
             },
           },
 
@@ -128,6 +130,21 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   swup.hooks.on("page:view", () => {
     window.dispatchEvent(new Event("swup:pageview"));
   });
+
+  // detail間遷移時、コンテンツがDOMに挿入される前に位置を設定（ちらつき防止）
+  swup.hooks.on("content:replace", (visit) => {
+    const fromDetail = visit.from.url.startsWith("/detail/");
+    const toDetail = visit.to.url.startsWith("/detail/");
+
+    if (fromDetail && toDetail) {
+      // 新しいコンテンツ内の.js-detail-pageを右側に配置
+      const newDetailPage = document.querySelector(".js-detail-page") as HTMLElement;
+      if (newDetailPage) {
+        newDetailPage.style.transform = "translateX(100%)";
+      }
+    }
+  });
+
   import "../scripts/main.js";
   import observer from "../assets/js/libs/Observer.js";
 
@@ -150,59 +167,59 @@ const { title, description = "Astro テンプレート" } = Astro.props;
 
   let currentScrollHandler: (() => void) | null = null;
 
-  function initScrollNavigation() {
-    // 前のハンドラーを削除
-    if (currentScrollHandler) {
-      window.removeEventListener("scroll", currentScrollHandler);
-      currentScrollHandler = null;
-    }
+  // function initScrollNavigation() {
+  //   // 前のハンドラーを削除
+  //   if (currentScrollHandler) {
+  //     window.removeEventListener("scroll", currentScrollHandler);
+  //     currentScrollHandler = null;
+  //   }
 
-    const currentPath = window.location.pathname;
-    const nextPage = scrollNavigationMap[currentPath];
-    const prePage = Object.keys(scrollNavigationMap).find((key) => scrollNavigationMap[key] === currentPath);
+  //   const currentPath = window.location.pathname;
+  //   const nextPage = scrollNavigationMap[currentPath];
+  //   const prePage = Object.keys(scrollNavigationMap).find((key) => scrollNavigationMap[key] === currentPath);
 
-    // 遷移先も前ページもない場合は何もしない
-    if (!nextPage && !prePage) return;
+  //   // 遷移先も前ページもない場合は何もしない
+  //   if (!nextPage && !prePage) return;
 
-    let hasNavigated = false;
-    let lastScrollTop = window.scrollY || 0;
+  //   let hasNavigated = false;
+  //   let lastScrollTop = window.scrollY || 0;
 
-    currentScrollHandler = () => {
-      if (hasNavigated) return;
+  //   currentScrollHandler = () => {
+  //     if (hasNavigated) return;
 
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = document.documentElement.clientHeight;
-      const scrollingUp = scrollTop < lastScrollTop;
+  //     const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  //     const scrollHeight = document.documentElement.scrollHeight;
+  //     const clientHeight = document.documentElement.clientHeight;
+  //     const scrollingUp = scrollTop < lastScrollTop;
 
-      // 最下部から100px以内に到達したら次のページへ
-      if (nextPage && scrollTop + clientHeight >= scrollHeight - 100) {
-        hasNavigated = true;
-        if ((window as any).swup) {
-          (window as any).swup.navigate(nextPage);
-        } else {
-          window.location.href = nextPage;
-        }
-      }
-      // 上にスクロールして最上部に到達したら前のページへ
-      else if (prePage && scrollTop <= 0 && scrollingUp) {
-        hasNavigated = true;
-        if ((window as any).swup) {
-          (window as any).swup.navigate(prePage);
-        } else {
-          window.location.href = prePage;
-        }
-      }
+  //     // 最下部から100px以内に到達したら次のページへ
+  //     if (nextPage && scrollTop + clientHeight >= scrollHeight - 100) {
+  //       hasNavigated = true;
+  //       if ((window as any).swup) {
+  //         (window as any).swup.navigate(nextPage);
+  //       } else {
+  //         window.location.href = nextPage;
+  //       }
+  //     }
+  //     // 上にスクロールして最上部に到達したら前のページへ
+  //     else if (prePage && scrollTop <= 0 && scrollingUp) {
+  //       hasNavigated = true;
+  //       if ((window as any).swup) {
+  //         (window as any).swup.navigate(prePage);
+  //       } else {
+  //         window.location.href = prePage;
+  //       }
+  //     }
 
-      lastScrollTop = scrollTop;
-    };
-    window.addEventListener("scroll", currentScrollHandler);
-  }
+  //     lastScrollTop = scrollTop;
+  //   };
+  //   window.addEventListener("scroll", currentScrollHandler);
+  // }
 
-  // 初回実行
-  initScrollNavigation();
-  // Swupページ遷移後に再実行
-  window.addEventListener("swup:pageview", initScrollNavigation);
+  // // 初回実行
+  // initScrollNavigation();
+  // // Swupページ遷移後に再実行
+  // window.addEventListener("swup:pageview", initScrollNavigation);
 </script>
 <style>
   .transition-overlay {
