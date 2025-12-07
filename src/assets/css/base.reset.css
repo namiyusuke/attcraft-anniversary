@@ -543,7 +543,18 @@ html{
 }
 
 /* ページ遷移用オーバーレイ */
-.js-detail-page-out,
+.js-detail-page-out {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  clip-path: ellipse(0% 100% at 0% 50%);
+  pointer-events: none;
+}
+
 .js-detail-page-in {
   position: fixed;
   top: 0;
@@ -551,15 +562,94 @@ html{
   z-index: 100;
   width: 100%;
   height: 100%;
+  clip-path: ellipse(0% 100% at 100% 50%);
   pointer-events: none;
-}
-
-.js-detail-page-out {
-  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
   background-color: #fff;
 }
 
-.js-detail-page-in {
-  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-  background-color: #fff;
+#swup {
+  position: relative;
+  z-index: 95;
+}
+
+/* Detail ページ共通スタイル */
+.detail-canvas-wrap {
+  position: relative;
+}
+
+.detail-canvas-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.detail-canvas-wrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper {
+  box-sizing: content-box;
+  max-inline-size: 1220px;
+  padding-inline: 5vi;
+  margin-inline: auto;
+}
+
+.message {
+  position: relative;
+  display: flex;
+  column-gap: calc(33 / 16 * 1rem);
+  align-items: center;
+  margin-top: 32px;
+  font-size: 24px;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.message-nami {
+  flex-direction: row-reverse;
+  color: #262626;
+}
+
+.message-icon {
+  width: calc(80 / 700 * 100%);
+}
+
+.message-text {
+  position: relative;
+  max-inline-size: 60%;
+  padding: 0.5em 1em;
+  font-size: calc(18 / 16 * 1rem);
+  border-radius: 1rem;
+}
+
+.message-nami .message-text {
+  background-color: #ffffff;
+}
+
+.message-kuu .message-text {
+  background-color: #262626;
+}
+
+.message-text::after {
+  position: absolute;
+  top: 0.1875em;
+  z-index: 1;
+  width: 1em;
+  height: 1em;
+  content: "";
+  background-color: inherit;
+}
+
+.message-kuu .message-text::after {
+  left: 0em;
+  transform: scale(1.5, 0.5) rotate(75deg);
+}
+
+.message-nami .message-text::after {
+  right: 0em;
+  transform: scale(1.5, 0.5) rotate(-75deg);
 }

@@ -71,42 +71,99 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     path3.setAttribute("fill", colors[2]);
   }
 
+  // 遷移方向の検出
+  let transitionDirection: "forward" | "backward" = "forward";
+  // スクロール位置を保存（out時に保存してin時に使用）
+  let savedScrollY = 0;
+
+  // capture: true でSwupより先にイベントをキャプチャ
+  document.addEventListener("click", (e) => {
+    const link = (e.target as HTMLElement).closest("a");
+    if (link && link.href.includes("/detail/")) {
+      // リンクのdata-direction属性を参照
+      const direction = link.dataset.direction as "forward" | "backward" | undefined;
+      transitionDirection = direction || "forward";
+    }
+  }, { capture: true });
+
   const swup = new Swup({
     plugins: [
       new SwupHeadPlugin(),
       new SwupJsPlugin({
         animations: [
-          // detail配下のページ遷移: オーバーレイワイプ
+          // detail配下のページ遷移: 前ページの上に次ページが半円で覆いかぶさる
           {
             from: "/detail/:path*",
             to: "/detail/:path*",
             out: async () => {
-              console.log("out animation start");
-              const overlay = document.querySelector(".js-detail-page-in") as HTMLElement;
-              console.log("overlay:", overlay);
-              if (!overlay) {
-                console.log("overlay not found!");
-                return;
-              }
-              const tl = gsap.timeline();
-              // 右から左へ広がって画面を覆う
-              await tl.set(overlay, { clipPath: "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)" }).to(overlay, {
-                duration: 0.6,
-                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                ease: "power3.out",
-              });
-              console.log("out animation end");
+              // 古いページをクローンして背景として保持
+              const page = document.querySelector("#swup") as HTMLElement;
+              if (!page) return;
+
+              // 現在のスクロール位置を保存
+              savedScrollY = window.scrollY;
+
+              // ページ全体をクローン
+              const clone = page.cloneNode(true) as HTMLElement;
+              clone.id = "swup-backdrop";
+              clone.style.cssText = `
+                position: fixed;
+                top: ${-savedScrollY}px;
+                left: 0;
+                width: 100%;
+                z-index: 90;
+                pointer-events: none;
+              `;
+              document.body.appendChild(clone);
             },
             in: async () => {
-              const overlay = document.querySelector(".js-detail-page-in") as HTMLElement;
-              if (!overlay) return;
+              const page = document.querySelector("#swup") as HTMLElement;
+              const backdrop = document.querySelector("#swup-backdrop") as HTMLElement;
+              if (!page) return;
+
+              // 画面の高さを基準にした半円の縦半径
+              const vh = window.innerHeight / 2;
+
+              // アニメーション中はposition: fixedでトップから表示
+              page.style.position = "fixed";
+              page.style.top = "0";
+              page.style.left = "0";
+              page.style.width = "100%";
+
+              // チラつき防止：即座にclip-pathを適用
+              const initialClipPath =
+                transitionDirection === "forward"
+                  ? `ellipse(0px ${vh}px at 0% ${vh}px)` // 次へ: 左端から
+                  : `ellipse(0px ${vh}px at 100% ${vh}px)`; // 前へ: 右端から
+              page.style.clipPath = initialClipPath;
+
               const tl = gsap.timeline();
-              // 左から右へ消えていく
-              await tl.set(overlay, { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }).to(overlay, {
-                duration: 1,
-                clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
-                ease: "power4.in",
-              });
+
+              if (transitionDirection === "forward") {
+                // 次へ: 左端から半円状に出現
+                await tl.to(page, {
+                  duration: 2,
+                  clipPath: `ellipse(150% ${vh + 300}px at 100% ${vh}px)`,
+                  ease: "power2.out",
+                });
+              } else {
+                // 前へ: 右端から半円状に出現
+                await tl.to(page, {
+                  duration: 2,
+                  clipPath: `ellipse(150% ${vh + 300}px at 0% ${vh}px)`,
+                  ease: "power2.out",
+                });
+              }
+
+              // アニメーション完了後、元のスタイルに戻す
+              page.style.position = "";
+              page.style.top = "";
+              page.style.left = "";
+              page.style.width = "";
+              page.style.clipPath = "";
+
+              // クローンを削除
+              if (backdrop) backdrop.remove();
             },
           },
 
