@@ -409,10 +409,11 @@ class App3 {
 
     // 各画像の遷移先URL
     const urls = [
-      '/detail/page1',
-      '/detail/page2',
-      '/detail/page3',
-      '/detail/page4',
+      '/detail/good_portforio',
+      '/detail/sakaba',
+      '/detail/sankou',
+      '/detail/podcast',
+      '/detail/app',
     ];
 
     for (let i = 0; i < this.materials.length; i++) {
