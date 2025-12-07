@@ -77,14 +77,18 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   let savedScrollY = 0;
 
   // capture: true でSwupより先にイベントをキャプチャ
-  document.addEventListener("click", (e) => {
-    const link = (e.target as HTMLElement).closest("a");
-    if (link && link.href.includes("/detail/")) {
-      // リンクのdata-direction属性を参照
-      const direction = link.dataset.direction as "forward" | "backward" | undefined;
-      transitionDirection = direction || "forward";
-    }
-  }, { capture: true });
+  document.addEventListener(
+    "click",
+    (e) => {
+      const link = (e.target as HTMLElement).closest("a");
+      if (link && link.href.includes("/detail/")) {
+        // リンクのdata-direction属性を参照
+        const direction = link.dataset.direction as "forward" | "backward" | undefined;
+        transitionDirection = direction || "forward";
+      }
+    },
+    { capture: true }
+  );
 
   const swup = new Swup({
     plugins: [
@@ -207,8 +211,15 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   swup.hooks.on("page:view", () => {
     window.dispatchEvent(new Event("swup:pageview"));
   });
+  // アニメーション開始時にis-activeを追加
+  swup.hooks.on("animation:in:start", () => {
+    document.querySelector(".js-detail-page")?.classList.add("is-active");
+  });
+  // 初回ロード時にもis-activeを追加
+  document.querySelector(".js-detail-page")?.classList.add("is-active");
 
   import "../scripts/main.js";
+  import "../scripts/detailCanvas";
   import observer from "../assets/js/libs/Observer.js";
 
   // observerを初期化する関数
@@ -219,7 +230,6 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   initDetailObserver();
   // swupページ遷移後に再実行
   window.addEventListener("swup:pageview", initDetailObserver);
-
   // スクロール遷移の設定
   const scrollNavigationMap: { [key: string]: string } = {
     "/detail/page1": "/detail/page2",

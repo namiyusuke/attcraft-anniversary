@@ -575,14 +575,31 @@ html{
 /* Detail ページ共通スタイル */
 .detail-canvas-wrap {
   position: relative;
+  opacity: 0;
+  transition: opacity .9s ease-in-out;
 }
-
+.is-active .detail-canvas-wrap {
+  opacity: 1;
+}
 .detail-canvas-wrap img {
   display: block;
   width: 100%;
   height: auto;
 }
-
+.detail-canvas-wrap canvas{
+  --ease-power1-out:
+cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  mask-image: radial-gradient(rgb(255, 255, 255) 0%, rgb(255, 255, 255) 25%, rgb(255, 255, 255) 30%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+  mask-repeat: no-repeat;
+  mask-position: 100% 100%;
+  mask-size: 500% 500%;
+  transition: mask-position 1600ms
+  ease-out, opacity 300ms 100ms, filter 1600ms 100ms, transform 1600ms 100ms var(--ease-power1-out), -webkit-mask-position 1600ms
+  ease-out;
+}
+.is-active .detail-canvas-wrap canvas{
+mask-position: 50% 50%;
+}
 .detail-canvas-wrap canvas {
   position: absolute;
   top: 0;

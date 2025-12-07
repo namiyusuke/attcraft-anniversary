@@ -15,21 +15,24 @@ import Snow from "../../components/Snow.astro";
     <div class="min-h-screen bg-[#F0F0F0]">
       <div class="md:pb-32 md:pt-32">
         <div class="wrapper">
-          <div class="relative z-10 flex justify-between">
-            <div class="w-lower-content-left">
+          <div class="relative z-10 justify-between md:flex">
+            <div class="md:w-lower-content-left">
               <div class="sticky top-20">
-                <Image src={good_portforio} alt="" />
+                <div class="detail-canvas-wrap">
+                  <img id="detail-canvas-img" src={good_portforio.src} alt="" class="w-full" />
+                  <canvas id="detail-canvas"></canvas>
+                </div>
               </div>
             </div>
-            <div class="w-lower-content-right">
+            <div class="md:w-lower-content-right">
               <div class="js-detail">
-                <p class="message message-kuu">
+                <p class="message-kuu message">
                   <span class="message-icon">
                     <Image src={icon_kuu} alt="" />
                   </span>
                   <span class="message-text">これはページ1です。</span>
                 </p>
-                <p class="message message-nami">
+                <p class="message-nami message">
                   <span class="message-icon">
                     <Image src={icon_nami} alt="" />
                   </span>
@@ -39,13 +42,13 @@ import Snow from "../../components/Snow.astro";
                 </p>
               </div>
               <div class="js-detail">
-                <p class="message message-kuu">
+                <p class="message-kuu message">
                   <span class="message-icon">
                     <Image src={icon_kuu} alt="" />
                   </span>
                   <span class="message-text">これはページ1です。</span>
                 </p>
-                <p class="message message-nami">
+                <p class="message-nami message">
                   <span class="message-icon">
                     <Image src={icon_nami} alt="" />
                   </span>
@@ -55,13 +58,13 @@ import Snow from "../../components/Snow.astro";
                 </p>
               </div>
               <div class="js-detail">
-                <p class="message message-kuu">
+                <p class="message-kuu message">
                   <span class="message-icon">
                     <Image src={icon_kuu} alt="" />
                   </span>
                   <span class="message-text">これはページ1です。</span>
                 </p>
-                <p class="message message-nami">
+                <p class="message-nami message">
                   <span class="message-icon">
                     <Image src={icon_nami} alt="" />
                   </span>
@@ -71,13 +74,13 @@ import Snow from "../../components/Snow.astro";
                 </p>
               </div>
               <div class="js-detail">
-                <p class="message message-kuu">
+                <p class="message-kuu message">
                   <span class="message-icon">
                     <Image src={icon_kuu} alt="" />
                   </span>
                   <span class="message-text">これはページ1です。</span>
                 </p>
-                <p class="message message-nami">
+                <p class="message-nami message">
                   <span class="message-icon">
                     <Image src={icon_nami} alt="" />
                   </span>
@@ -87,13 +90,13 @@ import Snow from "../../components/Snow.astro";
                 </p>
               </div>
               <div class="js-detail">
-                <p class="message message-kuu">
+                <p class="message-kuu message">
                   <span class="message-icon">
                     <Image src={icon_kuu} alt="" />
                   </span>
                   <span class="message-text">これはページ1です。</span>
                 </p>
-                <p class="message message-nami">
+                <p class="message-nami message">
                   <span class="message-icon">
                     <Image src={icon_nami} alt="" />
                   </span>
@@ -103,13 +106,13 @@ import Snow from "../../components/Snow.astro";
                 </p>
               </div>
               <div class="js-detail">
-                <p class="message message-kuu">
+                <p class="message-kuu message">
                   <span class="message-icon">
                     <Image src={icon_kuu} alt="" />
                   </span>
                   <span class="message-text">これはページ1です。</span>
                 </p>
-                <p class="message message-nami">
+                <p class="message-nami message">
                   <span class="message-icon">
                     <Image src={icon_nami} alt="" />
                   </span>
