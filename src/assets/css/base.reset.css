@@ -67,6 +67,12 @@ html{
 .detail-content{
   position:relative;
   z-index:1;
+  padding-top:calc(40 / 16 * 1rem);
+}
+@media (min-width: 768px) {
+  .detail-content{
+    padding-top:calc(0 / 16 * 1rem);
+  }
 }
 .loop__x img{
   width:auto;
@@ -522,13 +528,26 @@ html{
 }
 
 /* Swupページ遷移用 - detail間遷移時のみJSで適用 */
+.c-button-circle{
+  width:60px;
+  height:60px;
+  background-color:#262626;
+  border-radius:50%;
+}
+.c-button-circle svg {
+  position: absolute;
+  inset: 0;
+  display:grid;
+  place-items:center;
+  margin: auto;
+}
  .c-button-prev{
   position:fixed;
   top:0;
   bottom:0;
   left:20px;
-  z-index:5;
-  height:max-content;
+  z-index:20;
+
   margin-block:auto;
 }
 
@@ -537,8 +556,8 @@ html{
   top:0;
   right:20px;
   bottom:0;
-  z-index:5;
-  height:max-content;
+  z-index:20;
+
   margin-block:auto;
 }
 
@@ -575,8 +594,15 @@ html{
 /* Detail ページ共通スタイル */
 .detail-canvas-wrap {
   position: relative;
+  width: calc(260 / 336 * 100%);
+  margin-inline: auto;
   opacity: 0;
   transition: opacity .9s ease-in-out;
+}
+@media (min-width: 768px) {
+  .detail-canvas-wrap {
+    width: 100%;
+  }
 }
 .is-active .detail-canvas-wrap {
   opacity: 1;
@@ -620,35 +646,48 @@ mask-position: 50% 50%;
   display: flex;
   column-gap: calc(33 / 16 * 1rem);
   align-items: center;
-  margin-top: 32px;
+  margin-top: calc(16 / 16 * 1rem);
   font-size: 24px;
   line-height: 1.4;
   color: #ffffff;
 }
-
+@media (min-width: 768px) {
+  .message {
+   margin-top: 32px;
+  }
+}
 .message-nami {
   flex-direction: row-reverse;
   color: #262626;
 }
 
 .message-icon {
-  width: calc(80 / 700 * 100%);
+    width: calc(48 / 336 * 100%);
 }
+@media (min-width: 768px) {
+  .message-icon {
+      width: calc(80 / 700 * 100%);
 
+  }
+}
 .message-text {
   position: relative;
-  max-inline-size: 60%;
+  max-inline-size: calc(262 / 336 * 100%);
   padding: 0.5em 1em;
   font-size: calc(18 / 16 * 1rem);
   border-radius: 1rem;
 }
-
+@media (min-width: 768px) {
+  .message-text {
+  max-inline-size: 60%;
+  }
+}
 .message-nami .message-text {
   background-color: #ffffff;
 }
 
 .message-kuu .message-text {
-  background-color: #262626;
+  background-color: #686868;
 }
 
 .message-text::after {
@@ -669,4 +708,33 @@ mask-position: 50% 50%;
 .message-nami .message-text::after {
   right: 0em;
   transform: scale(1.5, 0.5) rotate(-75deg);
+}
+.js-mouse-stalker .js-mouse-stalker__cursor {
+  --width:166px;
+  --height:221px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+  cursor: none;
+  border-radius: 50%;
+}
+.js-mouse-stalker .js-mouse-stalker__cursor {
+  z-index: 9999;
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition-duration: 900ms;
+  transition-property: all;
+}
+.js-mouse-stalker.is-hover .js-mouse-stalker__cursor {
+  top: calc(var(--height) / 2 * -1);
+  left: calc(var(--width)/ 2 * -1);
+  width: var(--width);
+  height:var(--height);
+  border-radius: 0%;
+  opacity: 1;
 }

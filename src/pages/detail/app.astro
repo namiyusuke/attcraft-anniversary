@@ -4,17 +4,49 @@ import icon_kuu from "@assets/img/icon_kuu.png";
 import icon_nami from "@assets/img/icon_nami.png";
 import detail_kuu from "@assets/img/detail-kuu.png";
 import detail_nami from "@assets/img/detail-nami.png";
+import app from "@assets/img/app.png";
 import { Image } from "astro:assets";
 import Autumn from "@components/Autumn.astro";
+import forth from "@assets/img/4th.png";
 ---
 
 <Layout title="Astro テンプレート">
-  <a class="c-button-prev text-slate-950" href="/detail/podcast" data-direction="backward">前へ</a>
-  <a class="c-button-next text-slate-950" href="/detail/arcraft" data-direction="forward">次へ</a>
+  <a
+    class="js-link c-button-circle c-button-prev text-slate-950"
+    href="/detail/podcast"
+    data-direction="backward"
+    data-src="/img/podcast.png"
+  >
+    <svg width="17" height="5" viewBox="0 0 17 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line y1="-0.5" x2="16" y2="-0.5" transform="matrix(-1 0 0 1 16.0631 4.74341)" stroke="white"></line>
+      <line
+        y1="-0.5"
+        x2="5.07368"
+        y2="-0.5"
+        transform="matrix(-0.668965 0.743294 0.668965 0.743294 4.06308 0.743408)"
+        stroke="white"></line>
+    </svg>
+  </a>
+  <a
+    class="js-link c-button-circle c-button-next text-slate-950"
+    href="/detail/arcraft"
+    data-direction="forward"
+    data-src="/img/arcraft.png"
+  >
+    <svg width="17" height="5" viewBox="0 0 17 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line y1="4.24341" x2="16" y2="4.24341" stroke="white"></line>
+      <line
+        y1="-0.5"
+        x2="5.07368"
+        y2="-0.5"
+        transform="matrix(0.668965 0.743294 -0.668965 0.743294 12 0.743408)"
+        stroke="white"></line>
+    </svg>
+  </a>
   <Autumn />
   <div class="js-detail-page relative">
     <div class="min-h-screen bg-[#F0F0F0]">
-      <div class="md:pb-32 md:pt-32">
+      <div class="detail-content md:pb-32 md:pt-32">
         <div class="wrapper">
           <div class="relative z-10 justify-between md:flex">
             <div class="md:w-lower-content-left">
@@ -30,7 +62,7 @@ import Autumn from "@components/Autumn.astro";
                   alt=""
                 />
                 <div class="detail-canvas-wrap">
-                  <img id="detail-canvas-img" src="/img/good_portforio.png" alt="" class="w-full" />
+                  <img id="detail-canvas-img" src={app.src} alt="" class="w-full" />
                   <canvas id="detail-canvas"></canvas>
                 </div>
               </div>

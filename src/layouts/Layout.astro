@@ -28,6 +28,9 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     <!-- detail間遷移用オーバーレイ -->
     <div class="js-detail-page-out"></div>
     <div class="js-detail-page-in"></div>
+    <span class="js-mouse-stalker" style="opacity: 0;">
+      <span class="hero__work__thumbnail js-mouse-stalker__cursor"> </span>
+    </span>
   </body>
 </html>
 
@@ -220,8 +223,30 @@ const { title, description = "Astro テンプレート" } = Astro.props;
 
   import "../scripts/main.js";
   import "../scripts/detailCanvas";
+  import MouseStalker from "../assets/js/libs/Mosestalker";
   import observer from "../assets/js/libs/Observer.js";
 
+  // マウスストーカー初期化
+  function initMouseStalker() {
+    new MouseStalker();
+  }
+  // マウスストーカーの状態をリセット
+  function resetMouseStalker() {
+    const stalker = document.querySelector(".js-mouse-stalker");
+    const cursor = document.querySelector(".js-mouse-stalker__cursor") as HTMLElement;
+    if (stalker) {
+      stalker.classList.remove("is-hover");
+    }
+    if (cursor) {
+      cursor.style.backgroundImage = "";
+    }
+  }
+  initMouseStalker();
+  // swupページ遷移後に再初期化
+  window.addEventListener("swup:pageview", () => {
+    resetMouseStalker();
+    initMouseStalker();
+  });
   // observerを初期化する関数
   function initDetailObserver() {
     new observer(".js-detail", "detail-visible");
