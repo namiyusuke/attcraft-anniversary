@@ -311,7 +311,7 @@ class App3 {
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['/sample1.webp','/good_portforio.png','/4th.png','/sample4.webp','/sample4.webp'];
+    const imagePath = ['/good_portforio.png','img/sakaba.png','/4th.png','/sample4.webp','/sample4.webp'];
     const loader = new THREE.TextureLoader();
     this.textures = await Promise.all(imagePath.map((texture) => {
       return new Promise((resolve) => {
