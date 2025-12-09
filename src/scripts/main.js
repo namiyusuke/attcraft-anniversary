@@ -311,7 +311,7 @@ class App3 {
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['/good_portforio.png','img/sakaba.png','/4th.png','/sample4.webp','/sample4.webp'];
+    const imagePath = ['img/good_portforio.png','img/sakaba.png','img/sankou.webp','img/podcast.webp','img/app.png','img/arcraft.png','img/attcraft_4th.webp','img/x_post_nami.png','img/x_post_kuu.png'];
     const loader = new THREE.TextureLoader();
     this.textures = await Promise.all(imagePath.map((texture) => {
       return new Promise((resolve) => {
@@ -331,6 +331,10 @@ class App3 {
     this.texture3 = this.textures[2];
     this.texture4 = this.textures[3];
     this.texture5 = this.textures[4];
+    this.texture6 = this.textures[5];
+    this.texture7 = this.textures[6];
+    this.texture8 = this.textures[7];
+    this.texture9 = this.textures[8];
   }
 
   /**
@@ -391,12 +395,22 @@ class App3 {
       new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
       new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
       new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
-      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM)
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
     ];
     this.materials[0].map = this.texture1;
     this.materials[1].map = this.texture2;
     this.materials[2].map = this.texture3;
     this.materials[3].map = this.texture4;
+    this.materials[4].map = this.texture5;
+    this.materials[5].map = this.texture6;
+    this.materials[6].map = this.texture7;
+    this.materials[7].map = this.texture8;
+    this.materials[8].map = this.texture9;
     // 交差時に表示するためのマテリアルを定義 @@@
     this.hitMaterial = new THREE.MeshBasicMaterial(App3.INTERSECTION_MATERIAL_PARAM);
 
@@ -418,7 +432,7 @@ class App3 {
       '/detail/app',
     ];
 
-    const planeHeight = 2; // 高さを1.5に拡大
+    const planeHeight = 1.5; // 高さを1.5に拡大
     for (let i = 0; i < this.materials.length; i++) {
       // テクスチャのアスペクト比に合わせたジオメトリを作成
       const aspect = this.textures[i].userData.aspect || 1;
@@ -470,7 +484,8 @@ class App3 {
         this.camera.position.lerp(this.cameraTargetPosition, 0.09);
 
         // 初期アニメーション中はカメラだけ移動、メッシュの向きは変えない
-        if (!this.isInitialAnimation) {
+        // ボタンによるカメラ移動モード（isCameraMoved）の場合のみメッシュの回転を変更
+        if (!this.isInitialAnimation && this.isCameraMoved) {
           // カメラ移動中は正面を向ける
           if (!this.isReturning) {
             this.camera.lookAt(0, 0, -1);
@@ -550,16 +565,23 @@ class App3 {
         if (allPhase1Completed) {
           this.initialAnimationPhase = 2;
           this.initialAnimationProgress = 0; // 進捗をリセット
+          // 回転順序をデフォルトに戻し、回転を確定
+          this.meshes.forEach((mesh) => {
+            mesh.rotation.order = 'XYZ';
+            mesh.rotation.set(0, Math.PI / 2, 0);
+          });
           // カメラを新しい位置へ移動開始
-
-          this.cameraTargetPosition = new THREE.Vector3(-1.0, 1.0, 3.0);
+           this.cameraTargetPosition = new THREE.Vector3(-3.0, 1.0, 2.0);
           this.isCameraAnimating = true;
         }
       } else if (this.initialAnimationPhase === 2) {
         // フェーズ2: 真ん中から横一列に展開
         let allPhase2Completed = true;
         this.meshes.forEach((mesh) => {
-          const delayedProgress = Math.max(0, this.initialAnimationProgress - mesh.userData.phase2Delay);
+          const delayedProgress = Math.max(0, this.initialAnimationProgress);
+
+          // 回転を維持
+          mesh.rotation.y = Math.PI / 2;
 
           if (delayedProgress > 0) {
             const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
@@ -581,6 +603,11 @@ class App3 {
           this.meshes.forEach((mesh) => {
             mesh.position.x = mesh.userData.targetX;
             mesh.userData.currentX = mesh.userData.targetX;
+            // 回転順序をデフォルトに戻し、回転を確定
+            mesh.rotation.order = 'XYZ';
+            mesh.rotation.set(0, Math.PI / 2, 0);
+            // quaternionも更新（通常モードでslerpに使われる）
+            mesh.userData.originalQuaternion = mesh.quaternion.clone();
           });
         }
       }
@@ -666,8 +693,6 @@ this.scrollOffset += 0.01;
         mesh.position.x = mesh.userData.currentX;
         mesh.position.y += (mesh.userData.originalY - mesh.position.y) * 0.1;
         mesh.position.z += (mesh.userData.originalZ - mesh.position.z) * 0.1;
-        // quaternionを元に戻す
-        mesh.quaternion.slerp(mesh.userData.originalQuaternion, 0.1);
       }
       // カメラ移動モード中はメッシュをカメラ（原点）に向ける、それ以外は元の回転
       if (this.isCameraMoved && !this.isReturning) {
