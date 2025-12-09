@@ -51,7 +51,7 @@ class App3 {
    */
   static get RENDERER_PARAM() {
     return {
-      clearColor: 0x000000,
+      clearColor: 0xffffff,
       width: window.innerWidth,
       height: window.innerHeight,
     };
@@ -320,6 +320,8 @@ class App3 {
         tex.wrapS = THREE.RepeatWrapping;
         tex.repeat.x = -1;  // 水平反転
         tex.offset.x = 1;   // 反転後の位置調整
+        // テクスチャのアスペクト比を保存
+        tex.userData = { aspect: tex.image.width / tex.image.height };
         resolve(tex);
           });
        });
@@ -404,7 +406,7 @@ class App3 {
     this.scene.add(this.group);
 
     // メッシュを配列で管理
-    this.planeGeometry = new THREE.PlaneGeometry(1,1);
+    this.planeGeometries = []; // 各テクスチャ用のジオメトリ配列
     this.meshes = [];
 
     // 各画像の遷移先URL
@@ -416,8 +418,13 @@ class App3 {
       '/detail/app',
     ];
 
+    const planeHeight = 2; // 高さを1.5に拡大
     for (let i = 0; i < this.materials.length; i++) {
-      const mesh = new THREE.Mesh(this.planeGeometry, this.materials[i]);
+      // テクスチャのアスペクト比に合わせたジオメトリを作成
+      const aspect = this.textures[i].userData.aspect || 1;
+      const geometry = new THREE.PlaneGeometry(aspect * planeHeight, planeHeight);
+      this.planeGeometries.push(geometry);
+      const mesh = new THREE.Mesh(geometry, this.materials[i]);
       const targetX = i * this.width; // 最終的な目標位置
       // 初期位置は真ん中（カメラの前）に重ねて配置、画面外から開始
       mesh.position.x = 0;
@@ -701,9 +708,9 @@ this.scrollOffset += 0.01;
       this.renderer.domElement.remove();
     }
 
-    if (this.planeGeometry) {
-      this.planeGeometry.dispose();
-    }
+    this.planeGeometries?.forEach((geometry) => {
+      geometry.dispose();
+    });
 
     this.materials?.forEach((material) => {
       material.dispose();
