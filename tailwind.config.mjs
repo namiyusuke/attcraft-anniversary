@@ -63,7 +63,7 @@ export default {
       animation: {
         wiggle01: 'wiggle01 2s ease-in-out infinite',
         wiggle02: 'wiggle02 3s ease-in-out infinite',
-        loop_x: 'loop_x 50s linear infinite',
+        loop_x: 'loop_x 70s linear infinite',
     },
     keyframes: {
       wiggle01: {

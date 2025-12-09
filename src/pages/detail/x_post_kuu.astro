@@ -6,6 +6,8 @@ import detail_kuu from "@assets/img/detail-kuu.png";
 import detail_nami from "@assets/img/detail-nami.png";
 import { Image } from "astro:assets";
 import Autumn from "@components/Autumn.astro";
+import detail_kuu from "@assets/img/detail-kuu.png";
+import detail_nami from "@assets/img/detail-nami.png";
 ---
 
 <Layout title="Astro テンプレート">
@@ -33,6 +35,16 @@ import Autumn from "@components/Autumn.astro";
           <div class="relative z-10 justify-between md:flex">
             <div class="md:w-lower-content-left">
               <div class="sticky top-20">
+                <Image
+                  class="absolute bottom-[calc(100%-30px)] right-0 z-20 hidden w-[min(calc(128/1440*100vw),128px)] animate-wiggle01 md:block"
+                  src={detail_kuu}
+                  alt=""
+                />
+                <Image
+                  class="absolute -left-4 top-[calc(100%-30px)] z-20 hidden w-[min(calc(67/1440*100vw),128px)] animate-wiggle02 md:block"
+                  src={detail_nami}
+                  alt=""
+                />
                 <Image
                   class="absolute bottom-[calc(100%-30px)] left-0 w-[min(calc(128/1440*100vw),128px)] animate-wiggle01"
                   src={detail_kuu}
