@@ -637,7 +637,7 @@ mask-position: 50% 50%;
   display: flex;
   column-gap: calc(33 / 16 * 1rem);
   align-items: center;
-  margin-top: calc(16 / 16 * 1rem);
+  margin-top: calc(28 / 16 * 1rem);
   font-size: 24px;
   line-height: 1.4;
   color: #ffffff;
@@ -675,11 +675,13 @@ mask-position: 50% 50%;
   }
 }
 .message-nami .message-text {
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #686868;
 }
 
 .message-kuu .message-text {
-  background-color: #686868;
+    color: #000000;
+  background-color: #ffffff;
 }
 
 .message-text::after {
