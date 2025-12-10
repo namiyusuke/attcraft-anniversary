@@ -14,6 +14,36 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <script is:inline>
+      (function (d) {
+        var config = {
+            kitId: "lor3yjd",
+            scriptTimeout: 3000,
+            async: true,
+          },
+          h = d.documentElement,
+          t = setTimeout(function () {
+            h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
+          }, config.scriptTimeout),
+          tk = d.createElement("script"),
+          f = false,
+          s = d.getElementsByTagName("script")[0],
+          a;
+        h.className += " wf-loading";
+        tk.src = "https://use.typekit.net/" + config.kitId + ".js";
+        tk.async = true;
+        tk.onload = tk.onreadystatechange = function () {
+          a = this.readyState;
+          if (f || (a && a != "complete" && a != "loaded")) return;
+          f = true;
+          clearTimeout(t);
+          try {
+            Typekit.load(config);
+          } catch (e) {}
+        };
+        s.parentNode.insertBefore(tk, s);
+      })(document);
+    </script>
   </head>
   <body>
     <main id="swup">
@@ -249,7 +279,7 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   });
   // observerを初期化する関数
   function initDetailObserver() {
-    new observer(".js-detail", "detail-visible");
+    new observer(".js-detail", "detail-visible", false, {}, 1000);
   }
   // 初回実行
   initDetailObserver();

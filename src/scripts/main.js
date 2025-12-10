@@ -40,8 +40,8 @@ class App3 {
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
       far: 20.0,
-      x: -5.0,
-      y: 0.0,
+      x: -6.0,
+      y: 2,
       z: 0.0,
       lookAt: new THREE.Vector3(0.0, 0.0, 0.0),
     };
@@ -135,7 +135,8 @@ class App3 {
     this.touchStartX = 0;
     this.isInitialAnimation = true; // 初期アニメーションフラグ
     this.initialAnimationProgress = 0; // 初期アニメーションの進捗
-    this.initialAnimationPhase = 1; // 初期アニメーションフェーズ（1: 真ん中に集合, 2: 横一列に展開）
+    this.initialAnimationPhase = 1; // 初期アニメーションフェーズ（1: 真ん中に集合, 2: 円状展開, 3: 横一列に展開）
+    this.circleAnimationRotation = 0; // 円状配置時の回転角度
     this.cameraTargetPosition = null; // カメラの目標位置
     this.isCameraAnimating = false;
     this.isCameraMoved = false; // カメラが移動済みかどうか
@@ -526,7 +527,7 @@ class App3 {
 
     // 初期アニメーション処理
     if (this.isInitialAnimation) {
-      this.initialAnimationProgress += 0.016; // 約60fpsで1秒間で約1.0になる
+      this.initialAnimationProgress += 0.019; // 約60fpsで1秒間で約1.0になる
 
       // イージング関数（easeOutCubic）を適用
       const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
@@ -541,7 +542,7 @@ class App3 {
             const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
 
             // 下から上がってきて立ち上がる
-            const startY = -5;
+            const startY = -10;
             const index = this.meshes.indexOf(mesh);
             mesh.position.z = 0;// 後のカードほど手前（カメラに近い）
             mesh.position.x =  index *.2;
@@ -566,28 +567,46 @@ class App3 {
           this.initialAnimationPhase = 2;
           this.initialAnimationProgress = 0; // 進捗をリセット
           // 回転順序をデフォルトに戻し、回転を確定
-          this.meshes.forEach((mesh) => {
+          this.meshes.forEach((mesh, index) => {
             mesh.rotation.order = 'XYZ';
             mesh.rotation.set(0, Math.PI / 2, 0);
+            // 円状配置の目標位置を計算（X軸中心、YZ平面上の円）
+            const radius = 2.5;
+            const count = this.meshes.length;
+            const angle = (index / count) * Math.PI * 2;
+            mesh.userData.circleTargetX = 0; // X軸中心なのでX=0
+            mesh.userData.circleTargetY = Math.sin(angle) * radius;
+            mesh.userData.circleTargetZ = Math.cos(angle) * radius;
+            // 現在位置を保存（円状配置の開始位置）
+            mesh.userData.phase2StartX = mesh.position.x;
+            mesh.userData.phase2StartY = mesh.position.y;
+            mesh.userData.phase2StartZ = mesh.position.z;
           });
-          // カメラを新しい位置へ移動開始
-           this.cameraTargetPosition = new THREE.Vector3(-3.0, 1.0, 2.0);
+          // カメラを横から見る位置へ移動開始（X軸方向から）
+          this.cameraTargetPosition = new THREE.Vector3(-6.0, 0, 0);
           this.isCameraAnimating = true;
         }
       } else if (this.initialAnimationPhase === 2) {
-        // フェーズ2: 真ん中から横一列に展開
+        // フェーズ2: 重なった状態からX軸を起点に円状に展開（YZ平面上の円）
         let allPhase2Completed = true;
-        this.meshes.forEach((mesh) => {
-          const delayedProgress = Math.max(0, this.initialAnimationProgress);
+        const radius = 2.5;
+        const count = this.meshes.length;
 
-          // 回転を維持
-          mesh.rotation.y = Math.PI / 2;
+        this.meshes.forEach((mesh, index) => {
+          const delayedProgress = Math.max(0, this.initialAnimationProgress - index * 0.05);
 
           if (delayedProgress > 0) {
             const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
 
-            // 真ん中(x=0)から目標位置へ
-            mesh.position.x = 0 + (mesh.userData.targetX - 0) * easedProgress;
+            // 開始位置から円状配置の目標位置へ補間
+            mesh.position.x = mesh.userData.phase2StartX + (mesh.userData.circleTargetX - mesh.userData.phase2StartX) * easedProgress;
+            mesh.position.y = mesh.userData.phase2StartY + (mesh.userData.circleTargetY - mesh.userData.phase2StartY) * easedProgress;
+            mesh.position.z = mesh.userData.phase2StartZ + (mesh.userData.circleTargetZ - mesh.userData.phase2StartZ) * easedProgress;
+
+            // 現在位置から中心への角度を計算し、下辺が中心を向く
+            mesh.rotation.y = Math.PI / 2; // カメラ方向を向く
+            mesh.rotation.x = 0;
+            mesh.rotation.z = Math.atan2(mesh.position.z, mesh.position.y);
 
             if (easedProgress < 1) {
               allPhase2Completed = false;
@@ -597,11 +616,76 @@ class App3 {
           }
         });
 
-        // 全てのアニメーションが完了したら通常モードへ
+        // フェーズ2完了後、少し回転させてからフェーズ3へ
         if (allPhase2Completed) {
+          // 円状配置でX軸周りに回転させる
+          this.circleAnimationRotation += 0.01;
+
+          // X軸周りに回転しながら待機（テクスチャの下辺が中心を向く）
+          this.meshes.forEach((mesh, index) => {
+            const baseAngle = (index / count) * Math.PI * 2;
+            const currentAngle = baseAngle + this.circleAnimationRotation;
+            mesh.position.x = 0;
+            mesh.position.y = Math.sin(currentAngle) * radius;
+            mesh.position.z = Math.cos(currentAngle) * radius;
+            // 現在位置から中心への角度を計算し、下辺が中心を向く
+            mesh.rotation.y = Math.PI / 2;
+            mesh.rotation.x = 0;
+            mesh.rotation.z = Math.atan2(mesh.position.z, mesh.position.y);
+          });
+
+          // 一定量回転したらフェーズ3へ移行
+          if (this.circleAnimationRotation >= Math.PI * 0.5) { // 90度回転したら
+            this.initialAnimationPhase = 3;
+            this.initialAnimationProgress = 0;
+            // 円状配置の終了位置を保存
+            this.meshes.forEach((mesh) => {
+              mesh.userData.phase3StartX = mesh.position.x;
+              mesh.userData.phase3StartY = mesh.position.y;
+              mesh.userData.phase3StartZ = mesh.position.z;
+              mesh.userData.phase3StartRotationY = mesh.rotation.y;
+              mesh.userData.phase3StartRotationZ = mesh.rotation.z;
+            });
+            // カメラを横から見る位置へ移動
+            this.cameraTargetPosition = new THREE.Vector3(-3.0, 1.0, 2.0);
+            this.isCameraAnimating = true;
+          }
+        }
+      } else if (this.initialAnimationPhase === 3) {
+        // フェーズ3: 円状から横一列に展開
+        let allPhase3Completed = true;
+        this.meshes.forEach((mesh) => {
+          const delayedProgress = Math.max(0, this.initialAnimationProgress);
+
+          if (delayedProgress > 0) {
+            const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
+
+            // 円状配置から横一列へ補間
+            mesh.position.x = mesh.userData.phase3StartX + (mesh.userData.targetX - mesh.userData.phase3StartX) * easedProgress;
+            mesh.position.y = mesh.userData.phase3StartY + (0 - mesh.userData.phase3StartY) * easedProgress;
+            mesh.position.z = mesh.userData.phase3StartZ + (0 - mesh.userData.phase3StartZ) * easedProgress;
+
+            // 回転も横一列用に補間（Z軸回転を0に戻す）
+            const targetRotationY = Math.PI / 2;
+            const targetRotationZ = 0;
+            mesh.rotation.y = mesh.userData.phase3StartRotationY + (targetRotationY - mesh.userData.phase3StartRotationY) * easedProgress;
+            mesh.rotation.z = mesh.userData.phase3StartRotationZ + (targetRotationZ - mesh.userData.phase3StartRotationZ) * easedProgress;
+
+            if (easedProgress < 1) {
+              allPhase3Completed = false;
+            }
+          } else {
+            allPhase3Completed = false;
+          }
+        });
+
+        // 全てのアニメーションが完了したら通常モードへ
+        if (allPhase3Completed) {
           this.isInitialAnimation = false;
           this.meshes.forEach((mesh) => {
             mesh.position.x = mesh.userData.targetX;
+            mesh.position.y = 0;
+            mesh.position.z = 0;
             mesh.userData.currentX = mesh.userData.targetX;
             // 回転順序をデフォルトに戻し、回転を確定
             mesh.rotation.order = 'XYZ';

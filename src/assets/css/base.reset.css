@@ -10,10 +10,14 @@
 
 html {
   height: 100%;
+
 }
 
 body {
   min-height: 100%;
+  font-family: "vdl-penletter", sans-serif;
+  font-style: normal;
+  font-weight: 500;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -46,49 +50,37 @@ html{
  .message-nami .message-text{
   transform:translateX(20px);
  }
- .message-text{
+ /* .message-text{
   opacity:0;
   transition:opacity .6s cubic-bezier(0.33, 1, 0.68, 1) .6s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
- }
- .detail-visible .message-kuu .message-text,
+ } */
+ /* .detail-visible .message-kuu .message-text,
  .detail-visible .message-nami .message-text{
   opacity:1;
   transform:translateX(0);
-}
-.message-icon{
+} */
+  /* .detail-visible .message-icon{
+  opacity:1;
+  transform:translateY(0);
+} */
+
+.js-detail{
   opacity:0;
   transition:opacity .6s cubic-bezier(0.33, 1, 0.68, 1) .6s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
   transform:translateY(20px);
 }
- .detail-visible .message-icon{
+.js-detail.detail-visible{
   opacity:1;
   transform:translateY(0);
 }
-
 /* メッセージを順番に表示するdelay */
 .detail-visible .message:nth-child(1) .message-text,
 .detail-visible .message:nth-child(1) .message-icon {
-  transition-delay: 0s;
+  transition: opacity .6s cubic-bezier(0.33, 1, 0.68, 1) 0s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) 0s;
 }
 .detail-visible .message:nth-child(2) .message-text,
 .detail-visible .message:nth-child(2) .message-icon {
-  transition-delay: 0.5s;
-}
-.detail-visible .message:nth-child(3) .message-text,
-.detail-visible .message:nth-child(3) .message-icon {
-  transition-delay: 1s;
-}
-.detail-visible .message:nth-child(4) .message-text,
-.detail-visible .message:nth-child(4) .message-icon {
-  transition-delay: 1.5s;
-}
-.detail-visible .message:nth-child(5) .message-text,
-.detail-visible .message:nth-child(5) .message-icon {
-  transition-delay: 2s;
-}
-.detail-visible .message:nth-child(6) .message-text,
-.detail-visible .message:nth-child(6) .message-icon {
-  transition-delay: 2.5s;
+  transition: opacity .6s cubic-bezier(0.33, 1, 0.68, 1) 0.5s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) 0.5s;
 }
 
 .detail-content{
@@ -600,6 +592,7 @@ html{
 @media (min-width: 768px) {
   .detail-canvas-wrap {
     width: 100%;
+    max-width: 450px;
   }
 }
 .is-active .detail-canvas-wrap {
@@ -678,6 +671,7 @@ mask-position: 50% 50%;
 @media (min-width: 768px) {
   .message-text {
   max-inline-size: 60%;
+  padding:calc(20 / 16 * 1rem) calc(24 / 16 * 1rem);
   }
 }
 .message-nami .message-text {
