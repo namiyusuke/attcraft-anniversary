@@ -139,8 +139,8 @@ html{
     .petal {
       position: absolute;
       top: -60px;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       content: '';
       background-image: url('/img/detail_sakura-01.png');
       background-repeat: no-repeat;
@@ -151,21 +151,21 @@ html{
     }
 
     /* 花びらの個別設定 - 右側から開始して左へ流れる（8個） */
-    .petal:nth-child(1) { left: 75%; width: 22px; height: 22px; animation-duration: 22s, 7s; animation-delay: 0s, 0.2s; }
-    .petal:nth-child(2) { left: 90%; width: 28px; height: 28px; animation-duration: 20s, 6s; animation-delay: 3s, 0.8s; }
-    .petal:nth-child(3) { left: 105%; width: 32px; height: 32px; animation-duration: 18s, 5.5s; animation-delay: 6s, 1.5s; }
-    .petal:nth-child(4) { left: 82%; width: 24px; height: 24px; animation-duration: 24s, 8s; animation-delay: 1.5s, 0.3s; }
-    .petal:nth-child(5) { left: 115%; width: 30px; height: 30px; animation-duration: 21s, 6.5s; animation-delay: 9s, 2s; }
-    .petal:nth-child(6) { left: 98%; width: 26px; height: 26px; animation-duration: 19s, 5.8s; animation-delay: 4.5s, 1.2s; }
-    .petal:nth-child(7) { left: 110%; width: 35px; height: 35px; animation-duration: 17s, 5s; animation-delay: 12s, 2.5s; }
-    .petal:nth-child(8) { left: 85%; width: 23px; height: 23px; animation-duration: 25s, 8.5s; animation-delay: 7.5s, 0.5s; }
+    .petal:nth-child(1) { left: 75%; width: 15px; height: 15px; animation-duration: 22s, 7s; animation-delay: 0s, 0.2s; }
+    .petal:nth-child(2) { left: 90%; width: 18px; height: 18px; animation-duration: 20s, 6s; animation-delay: 3s, 0.8s; }
+    .petal:nth-child(3) { left: 105%; width: 21px; height: 21px; animation-duration: 18s, 5.5s; animation-delay: 6s, 1.5s; }
+    .petal:nth-child(4) { left: 82%; width: 16px; height: 16px; animation-duration: 24s, 8s; animation-delay: 1.5s, 0.3s; }
+    .petal:nth-child(5) { left: 115%; width: 20px; height: 20px; animation-duration: 21s, 6.5s; animation-delay: 9s, 2s; }
+    .petal:nth-child(6) { left: 98%; width: 17px; height: 17px; animation-duration: 19s, 5.8s; animation-delay: 4.5s, 1.2s; }
+    .petal:nth-child(7) { left: 110%; width: 23px; height: 23px; animation-duration: 17s, 5s; animation-delay: 12s, 2.5s; }
+    .petal:nth-child(8) { left: 85%; width: 15px; height: 15px; animation-duration: 25s, 8.5s; animation-delay: 7.5s, 0.5s; }
 
     /* 桜の花（全体） */
     .flower {
       position: absolute;
       top: -80px;
-      width: 45px;
-      height: 45px;
+      width: 15px;
+      height: 15px;
       content: '';
       background-image: url('/img/detail_sakura-02.png');
       background-repeat: no-repeat;
@@ -176,10 +176,10 @@ html{
     }
 
     /* 桜の花の個別設定 - 右側から開始（4個：9〜12番目） */
-    .flower:nth-child(9) { left: 80%; width: 40px; height: 40px; animation-duration: 32s, 11s; animation-delay: 0s, 0.5s; }
-    .flower:nth-child(10) { left: 100%; width: 50px; height: 50px; animation-duration: 28s, 9s; animation-delay: 8s, 2s; }
-    .flower:nth-child(11) { left: 115%; width: 42px; height: 42px; animation-duration: 35s, 12s; animation-delay: 16s, 1s; }
-    .flower:nth-child(12) { left: 90%; width: 48px; height: 48px; animation-duration: 30s, 10s; animation-delay: 4s, 3s; }
+    .flower:nth-child(9) { left: 80%; width: 28px; height: 28px; animation-duration: 32s, 11s; animation-delay: 0s, 0.5s; }
+    .flower:nth-child(10) { left: 100%; width: 35px; height: 35px; animation-duration: 28s, 9s; animation-delay: 8s, 2s; }
+    .flower:nth-child(11) { left: 115%; width: 30px; height: 30px; animation-duration: 35s, 12s; animation-delay: 16s, 1s; }
+    .flower:nth-child(12) { left: 90%; width: 32px; height: 32px; animation-duration: 30s, 10s; animation-delay: 4s, 3s; }
 
     @keyframes fall {
       0% {
@@ -270,15 +270,15 @@ html{
     }
 
     /* 花びら個別設定 */
-    .petal:nth-child(1) { left: 3%; width: 25px; height: 25px; animation-duration: 8s, 3s; animation-delay: 0s; }
-    .petal:nth-child(2) { left: 10%; width: 35px; height: 35px; animation-duration: 10s, 4s; animation-delay: 1s; }
+    .petal:nth-child(1) { left: 3%; width: 16px; height: 16px; animation-duration: 8s, 3s; animation-delay: 0s; }
+    .petal:nth-child(2) { left: 10%; width: 23px; height: 23px; animation-duration: 10s, 4s; animation-delay: 1s; }
     .petal:nth-child(3) { left: 15%; animation-duration: 9s, 3.5s; animation-delay: 0.5s; }
 
 
     /* 桜の花個別設定 */
-    .flower:nth-child(26) { left: 5%; width: 40px; height: 40px; animation-duration: 14s, 6s; animation-delay: 0s; }
-    .flower:nth-child(27) { left: 20%; width: 50px; height: 50px; animation-duration: 16s, 7s; animation-delay: 2s; }
-    .flower:nth-child(28) { left: 38%; width: 45px; height: 45px; animation-duration: 15s, 6.5s; animation-delay: 1s; }
+    .flower:nth-child(26) { left: 5%; width: 12px; height: 12px; animation-duration: 14s, 6s; animation-delay: 0s; }
+    .flower:nth-child(27) { left: 20%; width: 16px; height: 16px; animation-duration: 16s, 7s; animation-delay: 2s; }
+    .flower:nth-child(28) { left: 38%; width: 14px; height: 14px; animation-duration: 15s, 6.5s; animation-delay: 1s; }
 
     /* ========== 雪エフェクト ========== */
     .snow-container {
@@ -294,8 +294,8 @@ html{
     .snowflake {
       position: absolute;
       top: -40px;
-      width: 20px;
-      height: 20px;
+      width: 28px;
+      height: 28px;
       background-image: url('/img/detail_snow.png');
       background-repeat: no-repeat;
       background-position: center;
@@ -305,16 +305,38 @@ html{
     }
 
     /* 雪の個別設定 - 右側から開始（10個） */
-    .snowflake:nth-child(1) { left: 75%; width: 12px; height: 12px; animation-duration: 20s, 6s; animation-delay: 0s, 0.2s; }
-    .snowflake:nth-child(2) { left: 90%; width: 18px; height: 18px; animation-duration: 18s, 5s; animation-delay: 4s, 0.8s; }
-    .snowflake:nth-child(3) { left: 105%; width: 14px; height: 14px; animation-duration: 22s, 7s; animation-delay: 8s, 1.2s; }
-    .snowflake:nth-child(4) { left: 82%; width: 20px; height: 20px; animation-duration: 16s, 4.5s; animation-delay: 2s, 0.5s; }
-    .snowflake:nth-child(5) { left: 115%; width: 10px; height: 10px; animation-duration: 24s, 7.5s; animation-delay: 12s, 1.8s; }
-    .snowflake:nth-child(6) { left: 95%; width: 16px; height: 16px; animation-duration: 19s, 5.5s; animation-delay: 6s, 0.3s; }
-    .snowflake:nth-child(7) { left: 110%; width: 22px; height: 22px; animation-duration: 15s, 4s; animation-delay: 14s, 2s; }
-    .snowflake:nth-child(8) { left: 78%; width: 13px; height: 13px; animation-duration: 23s, 7s; animation-delay: 1s, 1s; }
-    .snowflake:nth-child(9) { left: 100%; width: 19px; height: 19px; animation-duration: 17s, 5s; animation-delay: 10s, 1.5s; }
-    .snowflake:nth-child(10) { left: 85%; width: 15px; height: 15px; animation-duration: 21s, 6.5s; animation-delay: 5s, 0.7s; }
+    .snowflake:nth-child(1) { left: 75%; width: 18px; height: 18px; animation-duration: 20s, 6s; animation-delay: 0s, 0.2s; }
+    .snowflake:nth-child(2) { left: 90%; width: 26px; height: 26px; animation-duration: 18s, 5s; animation-delay: 4s, 0.8s; }
+    .snowflake:nth-child(3) { left: 105%; width: 20px; height: 20px; animation-duration: 22s, 7s; animation-delay: 8s, 1.2s; }
+    .snowflake:nth-child(4) { left: 82%; width: 28px; height: 28px; animation-duration: 16s, 4.5s; animation-delay: 2s, 0.5s; }
+    .snowflake:nth-child(5) { left: 115%; width: 15px; height: 15px; animation-duration: 24s, 7.5s; animation-delay: 12s, 1.8s; }
+    .snowflake:nth-child(6) { left: 95%; width: 22px; height: 22px; animation-duration: 19s, 5.5s; animation-delay: 6s, 0.3s; }
+    .snowflake:nth-child(7) { left: 110%; width: 30px; height: 30px; animation-duration: 15s, 4s; animation-delay: 14s, 2s; }
+    .snowflake:nth-child(8) { left: 78%; width: 19px; height: 19px; animation-duration: 23s, 7s; animation-delay: 1s, 1s; }
+    .snowflake:nth-child(9) { left: 100%; width: 27px; height: 27px; animation-duration: 17s, 5s; animation-delay: 10s, 1.5s; }
+    .snowflake:nth-child(10) { left: 85%; width: 21px; height: 21px; animation-duration: 21s, 6.5s; animation-delay: 5s, 0.7s; }
+
+    /* 雪2（detail_snow-02.png） */
+    .snowflake2 {
+      position: absolute;
+      top: -40px;
+      width: 18px;
+      height: 18px;
+      background-image: url('/img/detail_snow-02.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      opacity: 0.85;
+      animation: snowFall 18s linear infinite, snowSway 5s ease-in-out infinite;
+    }
+
+    /* 雪2の個別設定（6個） */
+    .snowflake2:nth-child(11) { left: 72%; width: 14px; height: 14px; animation-duration: 21s, 6s; animation-delay: 2s, 0.4s; }
+    .snowflake2:nth-child(12) { left: 88%; width: 20px; height: 20px; animation-duration: 17s, 5s; animation-delay: 7s, 1s; }
+    .snowflake2:nth-child(13) { left: 102%; width: 16px; height: 16px; animation-duration: 23s, 7s; animation-delay: 3s, 1.6s; }
+    .snowflake2:nth-child(14) { left: 80%; width: 12px; height: 12px; animation-duration: 19s, 5.5s; animation-delay: 9s, 0.6s; }
+    .snowflake2:nth-child(15) { left: 108%; width: 18px; height: 18px; animation-duration: 20s, 6.5s; animation-delay: 5s, 1.3s; }
+    .snowflake2:nth-child(16) { left: 93%; width: 15px; height: 15px; animation-duration: 22s, 5.8s; animation-delay: 11s, 0.9s; }
 
     @keyframes snowFall {
       0% {
@@ -451,8 +473,8 @@ html{
     .leaf {
       position: absolute;
       top: -50px;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       background-image: url('/img/detail_leaf.png');
       background-repeat: no-repeat;
       background-position: center;
@@ -462,16 +484,16 @@ html{
     }
 
     /* 葉っぱの個別設定 - 右側から開始（10個） */
-    .leaf:nth-child(1) { left: 75%; width: 25px; height: 25px; animation-duration: 24s, 8s; animation-delay: 0s, 0.2s; }
-    .leaf:nth-child(2) { left: 95%; width: 35px; height: 35px; animation-duration: 20s, 6s; animation-delay: 5s, 0.8s; }
-    .leaf:nth-child(3) { left: 110%; width: 28px; height: 28px; animation-duration: 26s, 8.5s; animation-delay: 10s, 1.2s; }
-    .leaf:nth-child(4) { left: 82%; width: 38px; height: 38px; animation-duration: 18s, 5.5s; animation-delay: 2s, 0.5s; }
-    .leaf:nth-child(5) { left: 115%; width: 22px; height: 22px; animation-duration: 28s, 9s; animation-delay: 14s, 1.8s; }
-    .leaf:nth-child(6) { left: 88%; width: 32px; height: 32px; animation-duration: 22s, 7s; animation-delay: 7s, 0.3s; }
-    .leaf:nth-child(7) { left: 105%; width: 26px; height: 26px; animation-duration: 25s, 8s; animation-delay: 16s, 2s; }
-    .leaf:nth-child(8) { left: 100%; width: 36px; height: 36px; animation-duration: 17s, 5s; animation-delay: 1s, 1s; }
-    .leaf:nth-child(9) { left: 78%; width: 30px; height: 30px; animation-duration: 23s, 7.5s; animation-delay: 11s, 1.5s; }
-    .leaf:nth-child(10) { left: 92%; width: 24px; height: 24px; animation-duration: 27s, 8.5s; animation-delay: 6s, 0.7s; }
+    .leaf:nth-child(1) { left: 75%; width: 17px; height: 17px; animation-duration: 24s, 8s; animation-delay: 0s, 0.2s; }
+    .leaf:nth-child(2) { left: 95%; width: 24px; height: 24px; animation-duration: 20s, 6s; animation-delay: 5s, 0.8s; }
+    .leaf:nth-child(3) { left: 110%; width: 19px; height: 19px; animation-duration: 26s, 8.5s; animation-delay: 10s, 1.2s; }
+    .leaf:nth-child(4) { left: 82%; width: 26px; height: 26px; animation-duration: 18s, 5.5s; animation-delay: 2s, 0.5s; }
+    .leaf:nth-child(5) { left: 115%; width: 15px; height: 15px; animation-duration: 28s, 9s; animation-delay: 14s, 1.8s; }
+    .leaf:nth-child(6) { left: 88%; width: 22px; height: 22px; animation-duration: 22s, 7s; animation-delay: 7s, 0.3s; }
+    .leaf:nth-child(7) { left: 105%; width: 18px; height: 18px; animation-duration: 25s, 8s; animation-delay: 16s, 2s; }
+    .leaf:nth-child(8) { left: 100%; width: 25px; height: 25px; animation-duration: 17s, 5s; animation-delay: 1s, 1s; }
+    .leaf:nth-child(9) { left: 78%; width: 20px; height: 20px; animation-duration: 23s, 7.5s; animation-delay: 11s, 1.5s; }
+    .leaf:nth-child(10) { left: 92%; width: 16px; height: 16px; animation-duration: 27s, 8.5s; animation-delay: 6s, 0.7s; }
 
     @keyframes leafFall {
       0% {
@@ -664,7 +686,7 @@ mask-position: 50% 50%;
 .message-text {
   position: relative;
   max-inline-size: calc(262 / 336 * 100%);
-  padding: 0.5em 1em;
+  padding: 0.75em 1.25em;
   font-size: calc(18 / 16 * 1rem);
   border-radius: 1rem;
 }

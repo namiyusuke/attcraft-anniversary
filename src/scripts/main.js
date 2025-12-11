@@ -565,16 +565,17 @@ class App3 {
         // フェーズ1完了後、フェーズ2へ移行
         if (allPhase1Completed) {
           this.initialAnimationPhase = 2;
-          this.initialAnimationProgress = 0; // 進捗をリセット
+          this.initialAnimationProgress = -0.3; // 少し待機してから開始
           // 回転順序をデフォルトに戻し、回転を確定
           this.meshes.forEach((mesh, index) => {
             mesh.rotation.order = 'XYZ';
             mesh.rotation.set(0, Math.PI / 2, 0);
             // 円状配置の目標位置を計算（X軸中心、YZ平面上の円）
-            const radius = 2.5;
+            const radius = 1.5;
             const count = this.meshes.length;
             const angle = (index / count) * Math.PI * 2;
-            mesh.userData.circleTargetX = 0; // X軸中心なのでX=0
+            // Zファイティング防止：各カードに微妙なX方向オフセット
+            mesh.userData.circleTargetX = index * 0.02;
             mesh.userData.circleTargetY = Math.sin(angle) * radius;
             mesh.userData.circleTargetZ = Math.cos(angle) * radius;
             // 現在位置を保存（円状配置の開始位置）
@@ -589,14 +590,17 @@ class App3 {
       } else if (this.initialAnimationPhase === 2) {
         // フェーズ2: 重なった状態からX軸を起点に円状に展開（YZ平面上の円）
         let allPhase2Completed = true;
-        const radius = 2.5;
+        const radius = 1.5;
         const count = this.meshes.length;
 
+        // よりスムーズなイージング関数（ゆっくり開始）
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
         this.meshes.forEach((mesh, index) => {
-          const delayedProgress = Math.max(0, this.initialAnimationProgress - index * 0.05);
+          const delayedProgress = Math.max(0, this.initialAnimationProgress - index * 0.02);
 
           if (delayedProgress > 0) {
-            const easedProgress = easeOutCubic(Math.min(delayedProgress, 1));
+            const easedProgress = easeOutQuart(Math.min(delayedProgress, 1));
 
             // 開始位置から円状配置の目標位置へ補間
             mesh.position.x = mesh.userData.phase2StartX + (mesh.userData.circleTargetX - mesh.userData.phase2StartX) * easedProgress;
@@ -618,14 +622,22 @@ class App3 {
 
         // フェーズ2完了後、少し回転させてからフェーズ3へ
         if (allPhase2Completed) {
-          // 円状配置でX軸周りに回転させる
-          this.circleAnimationRotation += 0.01;
+          // 回転進捗を更新（イージング用）
+          if (!this.circleRotationProgress) this.circleRotationProgress = 0;
+          this.circleRotationProgress += 0.008;
+
+          // イージング関数を適用してスムーズに加速・減速
+          const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
+          const targetRotation = Math.PI * 0.5; // 90度
+          const easedProgress = easeInOutSine(Math.min(this.circleRotationProgress, 1));
+          this.circleAnimationRotation = easedProgress * targetRotation;
 
           // X軸周りに回転しながら待機（テクスチャの下辺が中心を向く）
           this.meshes.forEach((mesh, index) => {
             const baseAngle = (index / count) * Math.PI * 2;
             const currentAngle = baseAngle + this.circleAnimationRotation;
-            mesh.position.x = 0;
+            // Zファイティング防止：オフセットを維持
+            mesh.position.x = index * 0.02;
             mesh.position.y = Math.sin(currentAngle) * radius;
             mesh.position.z = Math.cos(currentAngle) * radius;
             // 現在位置から中心への角度を計算し、下辺が中心を向く
@@ -635,9 +647,10 @@ class App3 {
           });
 
           // 一定量回転したらフェーズ3へ移行
-          if (this.circleAnimationRotation >= Math.PI * 0.5) { // 90度回転したら
+          if (this.circleRotationProgress >= 1) {
             this.initialAnimationPhase = 3;
             this.initialAnimationProgress = 0;
+            this.circleRotationProgress = 0; // リセット
             // 円状配置の終了位置を保存
             this.meshes.forEach((mesh) => {
               mesh.userData.phase3StartX = mesh.position.x;
