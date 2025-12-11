@@ -312,7 +312,7 @@ class App3 {
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['img/good_portforio.png','img/sakaba.png','img/sankou.webp','img/podcast.webp','img/app.png','img/arcraft.png','img/attcraft_4th.webp','img/x_post_nami.png','img/x_post_kuu.png'];
+    const imagePath = ['img/good_portforio.png','img/sakaba.png','img/sankou.webp','img/podcast.webp','img/app.png','img/arcraft.png','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png'];
     const loader = new THREE.TextureLoader();
     this.textures = await Promise.all(imagePath.map((texture) => {
       return new Promise((resolve) => {

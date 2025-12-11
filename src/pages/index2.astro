@@ -1,16 +1,21 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import sankou from "../../public/img/sankou.webp";
+import attcraft_4th from "@assets/img/attcraft_4th.png";
 ---
 
 <Layout title="Astro テンプレート" transitionColors={["#dddddd", "#000000", "#ffffff"]}>
-  <div id="webgl"></div>
-  <button id="camera-move-btn">カメラ移動</button>
-  <button id="camera-reset-btn">元に戻る</button>
+  <Image src={attcraft_4th} alt="" />
 </Layout>
 
 <style>
+  img {
+    width: 50%;
+    height: auto;
+  }
   #camera-move-btn {
-    posdition: fixed;
+    position: fixed;
     top: 20px;
     left: 20px;
   }
