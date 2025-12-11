@@ -344,8 +344,8 @@ class App3 {
 
   init() {
     // レンダラー
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setClearColor(new THREE.Color(App3.RENDERER_PARAM.clearColor));
+    this.renderer = new THREE.WebGLRenderer({ alpha: true });
+    this.renderer.setClearColor(new THREE.Color(App3.RENDERER_PARAM.clearColor), 0);
     this.renderer.setSize(App3.RENDERER_PARAM.width, App3.RENDERER_PARAM.height);
     const wrapper = document.querySelector('#webgl');
     wrapper.appendChild(this.renderer.domElement);

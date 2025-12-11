@@ -19,6 +19,7 @@ body {
   font-style: normal;
   font-weight: 500;
   line-height: 1.6;
+  background: linear-gradient(106.14deg, rgba(255, 228, 143, 0.1) 9.19%, rgba(255, 255, 255, 0.1) 92.13%);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -538,6 +539,7 @@ html{
 #detail-canvas-img{
   opacity:0;
 }
+
 
 /* Swupページ遷移用 - detail間遷移時のみJSで適用 */
 .c-button-circle{
