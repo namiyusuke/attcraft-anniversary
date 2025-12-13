@@ -1,0 +1,92 @@
+---
+import Layout from "../layouts/Layout.astro";
+import icon_kuu from "@assets/img/icon_kuu.png";
+import icon_nami from "@assets/img/icon_nami.png";
+import detail_kuu from "@assets/img/detail-kuu.png";
+import detail_nami from "@assets/img/detail-nami.png";
+import spotify_icon from "@assets/img/spotify-icon.svg";
+import x_icon from "@assets/img/x-icon.svg";
+import about from "@assets/img/about.jpg";
+import { Image } from "astro:assets";
+import Summer from "@components/Summer.astro";
+---
+
+<Layout title="Astro テンプレート">
+  <a
+    class="js-link c-button-circle c-button-next text-slate-950"
+    href="/detail/arcraft"
+    data-direction="forward"
+    data-src="/img/arcraft.png"
+  >
+    <svg width="17" height="5" viewBox="0 0 17 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line y1="4.24341" x2="16" y2="4.24341" stroke="white"></line>
+      <line
+        y1="-0.5"
+        x2="5.07368"
+        y2="-0.5"
+        transform="matrix(0.668965 0.743294 -0.668965 0.743294 12 0.743408)"
+        stroke="white"></line>
+    </svg>
+  </a>
+  <div class="js-detail-page relative">
+    <div class="min-h-screen bg-[#262626]">
+      <div class="detail-content pt-20">
+        <div class="wrapper">
+          <div class="about-content-wrap relative z-10 justify-between md:flex">
+            <div class="md:w-lower-content-left">
+              <div class="sticky top-0 md:top-36">
+                <div class="detail-canvas-wrap">
+                  <img id="detail-canvas-img" src={about.src} alt="" class="w-full" />
+                  <canvas id="detail-canvas"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="about-content-right md:mt-16">
+              <div class="about-item-circle">
+                <picture class="about-item-circle__picture--01">
+                  <source media="(min-width: 768px)" srcset={detail_nami.src} />
+                  <img src={detail_kuu.src} alt="" class="about-item-circle__bg" />
+                </picture>
+                <div class="about-item-circle__inner">
+                  <p class="">Plan:Attcraft</p>
+                  <p class="">Programing:nami</p>
+                  <p class="">Direction/Design:くうみん</p>
+                  <div class="about-item-circle__copy text-center">
+                    <p>
+                      「ひとりではできないことも<br aria-hidden="true" />ふたりならできる」
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="about-item-circle about-item-circle--second">
+                <picture class="about-item-circle__picture--02">
+                  <source media="(min-width: 768px)" srcset={detail_kuu.src} />
+                  <img src={detail_nami.src} alt="" class="about-item-circle__bg" />
+                </picture>
+                <div class="about-item-circle__inner">
+                  <p class="">ポッドキャスト<br aria-hidden="true" />『あっ！とーく』配信中</p>
+                  <div class="about-item-circle__icons">
+                    <a href="##">
+                      <Image src={x_icon} alt="" />
+                    </a>
+                    <a href="##">
+                      <Image src={spotify_icon} alt="" />
+                    </a>
+                  </div>
+                  <p class="about-item-circle__link text-white">
+                    <a href="##">
+                      <span class="about-item-circle__link-icon">
+                        お問い合わせ<br class="md:hidden" />フォーム
+                      </span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="about-item-circle__copyRight text-center text-white">Attcraft2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

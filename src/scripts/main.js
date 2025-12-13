@@ -39,7 +39,7 @@ class App3 {
       fovy: 60,
       aspect: window.innerWidth / window.innerHeight,
       near: 0.1,
-      far: 20.0,
+      far: 10.0,
       x: -6.0,
       y: 2,
       z: 0.0,
@@ -126,10 +126,13 @@ class App3 {
     // Raycaster のインスタンスを生成する @@@
     // Raycaster は「光線（Ray）を飛ばして、3D空間内のオブジェクトとの交差判定を行う」仕組み
     this.raycaster = new THREE.Raycaster();
+    // 再利用可能なベクトル（パフォーマンス最適化）
+    this._tempVec2 = new THREE.Vector2();
+    this._tempVec3 = new THREE.Vector3();
 
     this.isDown = false;
     this.speed = 0.01; // 移動速度
-    this.width = 1; // メッシュ間の幅
+    this.width = 1.5; // メッシュ間の幅
     this.meshTilt = 0.4; // メッシュのY軸傾き角度
     this.scrollOffset = 0; // スクロールオフセットを保存
     this.render = this.render.bind(this);
@@ -159,9 +162,9 @@ class App3 {
     const handlePointerMove = (clientX, clientY) => {
       const x = clientX / window.innerWidth * 2.0 - 1.0;
       const y = clientY / window.innerHeight * 2.0 - 1.0;
-      const v = new THREE.Vector2(x, -y);
+      this._tempVec2.set(x, -y);
 
-      this.raycaster.setFromCamera(v, this.camera);
+      this.raycaster.setFromCamera(this._tempVec2, this.camera);
       const intersects = this.raycaster.intersectObjects(this.meshes);
 
       this.meshes.forEach((mesh, index) => {
@@ -183,8 +186,8 @@ class App3 {
 
       const x = clientX / window.innerWidth * 2.0 - 1.0;
       const y = clientY / window.innerHeight * 2.0 - 1.0;
-      const v = new THREE.Vector2(x, -y);
-      this.raycaster.setFromCamera(v, this.camera);
+      this._tempVec2.set(x, -y);
+      this.raycaster.setFromCamera(this._tempVec2, this.camera);
       const intersects = this.raycaster.intersectObjects(this.meshes);
 
       this.meshes.forEach((mesh, index) => {
@@ -465,7 +468,7 @@ class App3 {
     }
     // コントロール
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enabled = true;
+    this.controls.enabled = false;
 
     // ヘルパー
     const axesBarLength = 5.0;
@@ -661,7 +664,7 @@ class App3 {
               mesh.userData.phase3StartRotationZ = mesh.rotation.z;
             });
             // カメラを横から見る位置へ移動
-            this.cameraTargetPosition = new THREE.Vector3(-1.0, .8, 3.0);
+            this.cameraTargetPosition = new THREE.Vector3(-2.0, .8, 3.0);
             this.isCameraAnimating = true;
           }
         }
@@ -811,7 +814,7 @@ this.scrollOffset += 0.01;
       // 戻り中は上のカメラアニメーション部分で回転を処理
       // クリック時にスケールも拡大
       const targetScale = mesh.userData.isClick ? 3.0 : 1.0;
-      mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+      mesh.scale.lerp(this._tempVec3.set(targetScale, targetScale, targetScale), 0.1);
     });
 
     this.renderer.render(this.scene, this.camera);
