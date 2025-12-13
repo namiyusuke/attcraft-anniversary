@@ -129,7 +129,8 @@ class App3 {
 
     this.isDown = false;
     this.speed = 0.01; // 移動速度
-    this.width = 3; // メッシュ間の幅
+    this.width = 1; // メッシュ間の幅
+    this.meshTilt = 0.4; // メッシュのY軸傾き角度
     this.scrollOffset = 0; // スクロールオフセットを保存
     this.render = this.render.bind(this);
     this.touchStartX = 0;
@@ -445,7 +446,7 @@ class App3 {
       mesh.position.x = 0;
       mesh.position.y = 0;
       mesh.position.z = 10; // 画面外（奥）から開始
-      mesh.rotation.y = Math.PI / 2;
+      mesh.rotation.y = Math.PI / 2 + this.meshTilt;
 
       // userData はオブジェクトに任意のデータを保存できるプロパティ
       // ここではアニメーション用のデータを保存
@@ -464,12 +465,12 @@ class App3 {
     }
     // コントロール
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enabled = true;
+    this.controls.enabled = false;
 
     // ヘルパー
     const axesBarLength = 5.0;
     this.axesHelper = new THREE.AxesHelper(axesBarLength);
-    this.scene.add(this.axesHelper);
+    // this.scene.add(this.axesHelper);
 
     // イベントリスナーを設定（カメラとメッシュの初期化後に実行）
     this.setupEventListeners();
@@ -494,10 +495,10 @@ class App3 {
 
           this.meshes.forEach((mesh) => {
             if (this.isReturning) {
-              // 戻り中は元の回転（Math.PI / 2）へ滑らかに補間
+              // 戻り中は元の回転へ滑らかに補間
               mesh.rotation.x = 0;
               mesh.rotation.z = 0;
-              mesh.rotation.y += (Math.PI / 2 - mesh.rotation.y) * 0.1;
+              mesh.rotation.y += (Math.PI / 2 + this.meshTilt - mesh.rotation.y) * 0.1;
             } else {
               // メッシュを正面（Z軸方向）に向ける
               mesh.rotation.x = 0;
@@ -660,7 +661,7 @@ class App3 {
               mesh.userData.phase3StartRotationZ = mesh.rotation.z;
             });
             // カメラを横から見る位置へ移動
-            this.cameraTargetPosition = new THREE.Vector3(-3.0, 1.0, 2.0);
+            this.cameraTargetPosition = new THREE.Vector3(-1.0, .8, 3.0);
             this.isCameraAnimating = true;
           }
         }
@@ -679,7 +680,7 @@ class App3 {
             mesh.position.z = mesh.userData.phase3StartZ + (0 - mesh.userData.phase3StartZ) * easedProgress;
 
             // 回転も横一列用に補間（Z軸回転を0に戻す）
-            const targetRotationY = Math.PI / 2;
+            const targetRotationY = Math.PI / 2 + this.meshTilt;
             const targetRotationZ = 0;
             mesh.rotation.y = mesh.userData.phase3StartRotationY + (targetRotationY - mesh.userData.phase3StartRotationY) * easedProgress;
             mesh.rotation.z = mesh.userData.phase3StartRotationZ + (targetRotationZ - mesh.userData.phase3StartRotationZ) * easedProgress;
@@ -699,10 +700,11 @@ class App3 {
             mesh.position.x = mesh.userData.targetX;
             mesh.position.y = 0;
             mesh.position.z = 0;
+
             mesh.userData.currentX = mesh.userData.targetX;
             // 回転順序をデフォルトに戻し、回転を確定
             mesh.rotation.order = 'XYZ';
-            mesh.rotation.set(0, Math.PI / 2, 0);
+            mesh.rotation.set(0, Math.PI / 2 + this.meshTilt, 0);
             // quaternionも更新（通常モードでslerpに使われる）
             mesh.userData.originalQuaternion = mesh.quaternion.clone();
           });
@@ -720,7 +722,7 @@ this.scrollOffset += 0.01;
 
       // 無限ループの処理（左端を超えたら右端に移動）
       const totalWidth = this.width * this.meshes.length;
-      while (mesh.userData.currentX < -this.width) {
+      while (mesh.userData.currentX < -this.width - 3) {
         mesh.userData.currentX += totalWidth;
       }
       // 右端を超えたら左端に移動（逆スクロール対応）
@@ -802,7 +804,7 @@ this.scrollOffset += 0.01;
         mesh.rotation.z = 0;
         mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.1;
       } else if (!this.isReturning) {
-        const Rotate = mesh.userData.isClick ? 0 : Math.PI / 2;
+        const Rotate = mesh.userData.isClick ? 0 : Math.PI / 2 + this.meshTilt;
         // Y軸の回転を滑らかに補間
         mesh.rotation.y += (Rotate - mesh.rotation.y) * 0.1;
       }
