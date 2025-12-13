@@ -465,7 +465,7 @@ class App3 {
     }
     // コントロール
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enabled = false;
+    this.controls.enabled = true;
 
     // ヘルパー
     const axesBarLength = 5.0;
