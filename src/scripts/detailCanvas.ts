@@ -65,6 +65,8 @@ const fragmentShader = `
 class DetailCanvas {
   canvas: HTMLCanvasElement | null = null;
   imgElement: HTMLImageElement | null = null;
+  videoElement: HTMLVideoElement | null = null;
+  mediaElement: HTMLElement | null = null; // サイズ取得用の要素
   scene: THREE.Scene | null = null;
   camera: THREE.OrthographicCamera | null = null;
   renderer: THREE.WebGLRenderer | null = null;
@@ -76,6 +78,7 @@ class DetailCanvas {
   currentCurl: number = 0.7;
   aspect: number = 1;
   resizeHandler: (() => void) | null = null;
+  isVideo: boolean = false;
 
   constructor() {
     this.init();
@@ -83,8 +86,8 @@ class DetailCanvas {
 
   init() {
     this.canvas = document.getElementById("detail-canvas") as HTMLCanvasElement;
-    this.imgElement = document.getElementById("detail-canvas-img") as HTMLImageElement;
-    if (!this.canvas || !this.imgElement) return;
+    this.mediaElement = document.getElementById("detail-canvas-img");
+    if (!this.canvas || !this.mediaElement) return;
 
     // シーン作成
     this.scene = new THREE.Scene();
@@ -101,17 +104,86 @@ class DetailCanvas {
     });
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    // img要素のsrcからテクスチャを読み込み
-    const loader = new THREE.TextureLoader();
-    loader.load(this.imgElement.src, (texture) => {
-      this.setupMesh(texture);
-      this.resize();
-      this.animate();
-      // ページ遷移後、少し遅延してから紙を開くアニメーション
-      setTimeout(() => {
-        this.targetCurl = 0;
-      }, 500);
-    });
+    // 要素がvideoタグかimgタグかを判定
+    const isVideoElement = this.mediaElement.tagName.toLowerCase() === 'video';
+
+    if (isVideoElement) {
+      // video要素の場合、そのまま使用
+      this.isVideo = true;
+      const video = this.mediaElement as HTMLVideoElement;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.autoplay = true;
+      this.videoElement = video;
+      this.imgElement = null;
+
+      const setupVideoTexture = () => {
+        video.play();
+        const texture = new THREE.VideoTexture(video);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        this.setupMesh(texture);
+        this.resize();
+        this.animate();
+        // ページ遷移後、少し遅延してから紙を開くアニメーション
+        setTimeout(() => {
+          this.targetCurl = 0;
+        }, 500);
+      };
+
+      // source要素を使っている場合も含めて読み込みを開始
+      video.load();
+
+      if (video.readyState >= 2) {
+        // 既に読み込み済み
+        setupVideoTexture();
+      } else {
+        video.addEventListener('loadeddata', setupVideoTexture, { once: true });
+      }
+    } else {
+      // img要素の場合
+      this.imgElement = this.mediaElement as HTMLImageElement;
+      const src = this.imgElement.src;
+      const isVideoSrc = src.endsWith('.mp4') || src.endsWith('.webm');
+
+      if (isVideoSrc) {
+        // imgのsrcが動画の場合、video要素を作成
+        this.isVideo = true;
+        const video = document.createElement('video');
+        video.src = src;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.load();
+        this.videoElement = video;
+
+        video.addEventListener('loadeddata', () => {
+          video.play();
+          const texture = new THREE.VideoTexture(video);
+          texture.colorSpace = THREE.SRGBColorSpace;
+          this.setupMesh(texture);
+          this.resize();
+          this.animate();
+          // ページ遷移後、少し遅延してから紙を開くアニメーション
+          setTimeout(() => {
+            this.targetCurl = 0;
+          }, 500);
+        });
+      } else {
+        // 画像の場合
+        const loader = new THREE.TextureLoader();
+        loader.load(src, (texture) => {
+          this.setupMesh(texture);
+          this.resize();
+          this.animate();
+          // ページ遷移後、少し遅延してから紙を開くアニメーション
+          setTimeout(() => {
+            this.targetCurl = 0;
+          }, 500);
+        });
+      }
+    }
 
     // ホバーイベント(確認用)
     // this.canvas.addEventListener("mouseenter", () => {
@@ -150,10 +222,10 @@ class DetailCanvas {
   }
 
   resize() {
-    if (!this.canvas || !this.renderer || !this.camera || !this.imgElement) return;
+    if (!this.canvas || !this.renderer || !this.camera || !this.mediaElement) return;
 
-    const width = this.imgElement.clientWidth;
-    const height = this.imgElement.clientHeight;
+    const width = this.mediaElement.clientWidth;
+    const height = this.mediaElement.clientHeight;
 
     if (width === 0 || height === 0) return;
 
@@ -197,6 +269,13 @@ class DetailCanvas {
     }
     if (this.resizeHandler) {
       window.removeEventListener("resize", this.resizeHandler);
+    }
+    // 動画要素の破棄
+    if (this.videoElement) {
+      this.videoElement.pause();
+      this.videoElement.src = '';
+      this.videoElement.load();
+      this.videoElement = null;
     }
   }
 }

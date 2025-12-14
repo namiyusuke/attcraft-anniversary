@@ -65,7 +65,9 @@ import Autumn from "@components/Autumn.astro";
                   alt=""
                 />
                 <div class="detail-canvas-wrap">
-                  <img id="detail-canvas-img" src={arcraft.src} alt="" class="w-full" />
+                  <video id="detail-canvas-img" class="w-full">
+                    <source src="/video/arcraft.mp4" type="video/mp4" />
+                  </video>
                   <canvas id="detail-canvas"></canvas>
                 </div>
               </div>

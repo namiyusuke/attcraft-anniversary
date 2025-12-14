@@ -316,19 +316,45 @@ class App3 {
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['img/good_portforio.png','img/sakaba.png','img/sankou.webp','img/podcast.webp','img/app.png','img/arcraft.png','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png','img/about.jpg'];
+    const imagePath = ['img/good_portforio.png','video/sakaba.mp4','img/sankou.webp','img/podcast.webp','img/app.png','video/arcraft.mp4','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png','img/about.jpg'];
     const loader = new THREE.TextureLoader();
-    this.textures = await Promise.all(imagePath.map((texture) => {
+    this.videoElements = []; // 動画要素を保持
+    this.textures = await Promise.all(imagePath.map((path) => {
       return new Promise((resolve) => {
-        loader.load(texture, (tex) => {
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.wrapS = THREE.RepeatWrapping;
-        tex.repeat.x = -1;  // 水平反転
-        tex.offset.x = 1;   // 反転後の位置調整
-        // テクスチャのアスペクト比を保存
-        tex.userData = { aspect: tex.image.width / tex.image.height };
-        resolve(tex);
+        // 動画ファイルの場合
+        if (path.endsWith('.mp4') || path.endsWith('.webm')) {
+          const video = document.createElement('video');
+          video.src = path;
+          video.loop = true;
+          video.muted = true;
+          video.playsInline = true;
+          video.autoplay = true;
+          video.load();
+
+          video.addEventListener('loadeddata', () => {
+            video.play();
+            const tex = new THREE.VideoTexture(video);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.repeat.x = -1;  // 水平反転
+            tex.offset.x = 1;   // 反転後の位置調整
+            // テクスチャのアスペクト比を保存
+            tex.userData = { aspect: video.videoWidth / video.videoHeight };
+            this.videoElements.push(video);
+            resolve(tex);
           });
+        } else {
+          // 画像ファイルの場合
+          loader.load(path, (tex) => {
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.repeat.x = -1;  // 水平反転
+            tex.offset.x = 1;   // 反転後の位置調整
+            // テクスチャのアスペクト比を保存
+            tex.userData = { aspect: tex.image.width / tex.image.height };
+            resolve(tex);
+          });
+        }
        });
     }));
     this.texture1 = this.textures[0];
@@ -853,6 +879,13 @@ this.scrollOffset += 0.01;
 
     this.textures?.forEach((texture) => {
       texture.dispose();
+    });
+
+    // 動画要素の破棄
+    this.videoElements?.forEach((video) => {
+      video.pause();
+      video.src = '';
+      video.load();
     });
 
     if (this.hitMaterial) {
