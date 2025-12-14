@@ -8,6 +8,8 @@ import spotify_icon from "@assets/img/spotify-icon.svg";
 import x_icon from "@assets/img/x-icon.svg";
 import about from "@assets/img/about.jpg";
 import { Image } from "astro:assets";
+import about_decorate_01 from "@assets/img/about-decorate-01.png";
+import about_decorate_02 from "@assets/img/about-decorate-02.png";
 import Summer from "@components/Summer.astro";
 ---
 
@@ -28,9 +30,21 @@ import Summer from "@components/Summer.astro";
         stroke="white"></line>
     </svg>
   </a>
-  <div class="js-detail-page relative">
+  <div class="js-detail-page about-wrap relative">
+    <div class="about-decorate-wrap about-decorate-wrap--01">
+      <Image src={about_decorate_01} alt="" class="about-decorate-01" />
+      <Image src={about_decorate_02} alt="" class="about-decorate-02" />
+    </div>
+    <div class="about-decorate-wrap about-decorate-wrap--02">
+      <Image src={about_decorate_01} alt="" class="about-decorate-01" />
+      <Image src={about_decorate_02} alt="" class="about-decorate-02" />
+    </div>
+    <div class="about-decorate-wrap about-decorate-wrap--03">
+      <Image src={about_decorate_01} alt="" class="about-decorate-01" />
+      <Image src={about_decorate_02} alt="" class="about-decorate-02" />
+    </div>
     <div class="min-h-screen bg-[#262626]">
-      <div class="detail-content pt-20">
+      <div class="detail-content about-body">
         <div class="wrapper">
           <div class="about-content-wrap relative z-10 justify-between md:flex">
             <div class="md:w-lower-content-left">
@@ -43,7 +57,7 @@ import Summer from "@components/Summer.astro";
             </div>
             <div class="about-content-right md:mt-16">
               <div class="about-item-circle">
-                <picture class="about-item-circle__picture--01">
+                <picture class="about-item-circle__picture--01 animate-wiggle01">
                   <source media="(min-width: 768px)" srcset={detail_nami.src} />
                   <img src={detail_kuu.src} alt="" class="about-item-circle__bg" />
                 </picture>
@@ -59,7 +73,7 @@ import Summer from "@components/Summer.astro";
                 </div>
               </div>
               <div class="about-item-circle about-item-circle--second">
-                <picture class="about-item-circle__picture--02">
+                <picture class="about-item-circle__picture--02 animate-wiggle02">
                   <source media="(min-width: 768px)" srcset={detail_kuu.src} />
                   <img src={detail_nami.src} alt="" class="about-item-circle__bg" />
                 </picture>
