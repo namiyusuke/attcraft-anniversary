@@ -158,8 +158,17 @@ class App3 {
    * イベントリスナーを設定
    */
   setupEventListeners() {
+    // マウスストーカー要素を取得
+    const mouseStalker = document.querySelector('.js-mouse-stalker');
+
+    // 遷移中フラグ（二重遷移防止・ホバー処理停止用）
+    let isNavigating = false;
+
     // ホバー/タッチ処理を共通化する関数
     const handlePointerMove = (clientX, clientY) => {
+      // 遷移中はホバー処理をスキップ
+      if (isNavigating) return;
+
       const x = clientX / window.innerWidth * 2.0 - 1.0;
       const y = clientY / window.innerHeight * 2.0 - 1.0;
       this._tempVec2.set(x, -y);
@@ -174,11 +183,20 @@ class App3 {
 
       if (intersects.length > 0) {
         intersects[0].object.userData.isHovered = true;
+
+        // マウスストーカーにテクスチャホバー状態を追加
+        if (mouseStalker) {
+          mouseStalker.classList.add('is-texture-hover');
+        }
+      } else {
+        // ホバーが外れたらマウスストーカーのテクスチャホバー状態を解除
+        if (mouseStalker) {
+          mouseStalker.classList.remove('is-texture-hover');
+        }
       }
     };
 
     // クリック/タッチ処理を共通化する関数
-    let isNavigating = false; // 遷移中フラグ（二重遷移防止）
 
     const handlePointerClick = (clientX, clientY) => {
       // 既に遷移中なら何もしない
@@ -202,6 +220,10 @@ class App3 {
         // ページ遷移
         if (clickedMesh.userData.url) {
           isNavigating = true; // 遷移中フラグをON
+          // マウスストーカーのテクスチャホバー状態を即座にリセット
+          if (mouseStalker) {
+            mouseStalker.classList.remove('is-texture-hover');
+          }
           if (window.swup) {
              window.swup.navigate(clickedMesh.userData.url);
           } else {
@@ -869,6 +891,12 @@ this.scrollOffset += 0.01;
   dispose() {
     // アニメーションループを停止
     this.isDisposed = true;
+
+    // マウスストーカーのテクスチャホバー状態をリセット
+    const mouseStalker = document.querySelector('.js-mouse-stalker');
+    if (mouseStalker) {
+      mouseStalker.classList.remove('is-texture-hover');
+    }
 
     // イベントリスナーは自動的にページ遷移で破棄される
 

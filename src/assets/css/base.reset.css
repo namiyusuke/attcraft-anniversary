@@ -731,12 +731,14 @@ mask-position: 50% 50%;
   transform: scale(1.5, 0.5) rotate(-75deg);
 }
 .js-mouse-stalker .js-mouse-stalker__cursor {
-  --width:166px;
-  --height:221px;
+  --size: 100px;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   pointer-events: none;
   cursor: none;
@@ -746,18 +748,48 @@ mask-position: 50% 50%;
   z-index: 9999;
   width: 0px;
   height: 0px;
+  background-color: #000;
   opacity: 0;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  transition-duration: 900ms;
-  transition-property: all;
+  transition-duration: 400ms;
+  transition-property: width, height, opacity, top, left;
 }
+.js-mouse-stalker .js-mouse-stalker__cursor::after {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #fff;
+  white-space: nowrap;
+  content: 'view more';
+  opacity: 0;
+  transition: opacity 300ms ease, transform 300ms ease;
+  transform: scale(0.8);
+}
+.js-mouse-stalker.is-texture-hover .js-mouse-stalker__cursor {
+  top: calc(var(--size) / 2 * -1);
+  left: calc(var(--size) / 2 * -1);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  opacity: 1;
+}
+.js-mouse-stalker.is-texture-hover .js-mouse-stalker__cursor::after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* 既存のis-hover用スタイル（画像表示用） */
 .js-mouse-stalker.is-hover .js-mouse-stalker__cursor {
+  --width: 166px;
+  --height: 221px;
   top: calc(var(--height) / 2 * -1);
-  left: calc(var(--width)/ 2 * -1);
+  left: calc(var(--width) / 2 * -1);
   width: var(--width);
-  height:var(--height);
+  height: var(--height);
   border-radius: 0%;
   opacity: 1;
+}
+.js-mouse-stalker.is-hover .js-mouse-stalker__cursor::after {
+  display: none;
 }
 .about-item-circle{
   position:relative;

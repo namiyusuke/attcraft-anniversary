@@ -247,6 +247,16 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   swup.hooks.on("page:view", () => {
     window.dispatchEvent(new Event("swup:pageview"));
   });
+  // 離脱アニメーション開始時にマウスストーカーをリセット
+  swup.hooks.on("animation:out:start", () => {
+    const stalker = document.querySelector(".js-mouse-stalker");
+    if (stalker) {
+      console.log("reset mouse stalker");
+      stalker.classList.remove("is-hover");
+      console.log(stalker);
+      stalker.classList.remove("is-texture-hover");
+    }
+  });
   // アニメーション開始時にis-activeを追加
   swup.hooks.on("animation:in:start", () => {
     document.querySelector(".js-detail-page")?.classList.add("is-active");
@@ -268,7 +278,9 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     const stalker = document.querySelector(".js-mouse-stalker");
     const cursor = document.querySelector(".js-mouse-stalker__cursor") as HTMLElement;
     if (stalker) {
+      console.log("reset mouse stalker");
       stalker.classList.remove("is-hover");
+      stalker.classList.remove("is-texture-hover");
     }
     if (cursor) {
       cursor.style.backgroundImage = "";
