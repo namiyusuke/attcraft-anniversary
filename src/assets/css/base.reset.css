@@ -548,6 +548,9 @@ html{
   background-color:#262626;
   border-radius:50%;
 }
+.c-button-circle--about{
+  background-color:#fff;
+}
 .c-button-circle svg {
   position: absolute;
   inset: 0;
@@ -1002,6 +1005,8 @@ mask-position: 50% 50%;
 }
 .about-body{
   padding-top:calc(60 / 375 * 100cqw);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight:500;
 }
 @media (min-width: 768px) {
   .about-body{
