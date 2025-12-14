@@ -338,6 +338,10 @@ class App3 {
             tex.wrapS = THREE.RepeatWrapping;
             tex.repeat.x = -1;  // 水平反転
             tex.offset.x = 1;   // 反転後の位置調整
+            // テクスチャ品質向上（ぼやけ防止）
+            tex.minFilter = THREE.LinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            tex.generateMipmaps = false;
             // テクスチャのアスペクト比を保存
             tex.userData = { aspect: video.videoWidth / video.videoHeight };
             this.videoElements.push(video);
@@ -350,6 +354,9 @@ class App3 {
             tex.wrapS = THREE.RepeatWrapping;
             tex.repeat.x = -1;  // 水平反転
             tex.offset.x = 1;   // 反転後の位置調整
+            // テクスチャ品質向上（ぼやけ防止）
+            tex.minFilter = THREE.LinearFilter;
+            tex.magFilter = THREE.LinearFilter;
             // テクスチャのアスペクト比を保存
             tex.userData = { aspect: tex.image.width / tex.image.height };
             resolve(tex);
@@ -375,9 +382,11 @@ class App3 {
 
   init() {
     // レンダラー
-    this.renderer = new THREE.WebGLRenderer({ alpha: true });
+    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     this.renderer.setClearColor(new THREE.Color(App3.RENDERER_PARAM.clearColor), 0);
     this.renderer.setSize(App3.RENDERER_PARAM.width, App3.RENDERER_PARAM.height);
+    // 高解像度ディスプレイ対応（スマホでぼやけ防止）
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     const wrapper = document.querySelector('#webgl');
     wrapper.appendChild(this.renderer.domElement);
 
