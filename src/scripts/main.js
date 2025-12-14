@@ -316,7 +316,7 @@ class App3 {
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['img/good_portforio.png','img/sakaba.png','img/sankou.webp','img/podcast.webp','img/app.png','img/arcraft.png','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png'];
+    const imagePath = ['img/good_portforio.png','img/sakaba.png','img/sankou.webp','img/podcast.webp','img/app.png','img/arcraft.png','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png','img/about.jpg'];
     const loader = new THREE.TextureLoader();
     this.textures = await Promise.all(imagePath.map((texture) => {
       return new Promise((resolve) => {
@@ -340,6 +340,7 @@ class App3 {
     this.texture7 = this.textures[6];
     this.texture8 = this.textures[7];
     this.texture9 = this.textures[8];
+    this.texture10 = this.textures[9];
   }
 
   /**
@@ -406,6 +407,7 @@ class App3 {
       new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
       new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
       new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
+      new THREE.MeshBasicMaterial(App3.MATERIAL_PARAM),
     ];
     this.materials[0].map = this.texture1;
     this.materials[1].map = this.texture2;
@@ -416,6 +418,7 @@ class App3 {
     this.materials[6].map = this.texture7;
     this.materials[7].map = this.texture8;
     this.materials[8].map = this.texture9;
+    this.materials[9].map = this.texture10;
     // 交差時に表示するためのマテリアルを定義 @@@
     this.hitMaterial = new THREE.MeshBasicMaterial(App3.INTERSECTION_MATERIAL_PARAM);
 
@@ -435,6 +438,11 @@ class App3 {
       '/detail/sankou',
       '/detail/podcast',
       '/detail/app',
+      '/detail/arcraft',
+      '/detail/attcraft_4th',
+      '/detail/x_post_nami',
+      '/detail/x_post_kuu',
+      '/about',
     ];
 
     const planeHeight = 1.5; // 高さを1.5に拡大

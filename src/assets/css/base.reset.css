@@ -707,7 +707,7 @@ mask-position: 50% 50%;
 }
 
 .message-kuu .message-text {
-    color: #000000;
+  color: #000000;
   background-color: #ffffff;
 }
 
@@ -1012,4 +1012,24 @@ mask-position: 50% 50%;
   .about-body{
     padding-top:calc(100 / 1440 * 100cqw);
   }
+}
+.detail-top-btn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:30;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:calc(68 / 16 * 1rem);
+  height:calc(68 / 16 * 1rem);
+  font-family:"Zen Kaku Gothic New", sans-serif;
+  font-size:calc(16 / 16 * 1rem);
+  color:#fff;
+  background-color:#262626;
+  border-radius:50%;
+}
+.detail-top-btn--white{
+  color:#262626;
+  background-color:#fff;
 }
