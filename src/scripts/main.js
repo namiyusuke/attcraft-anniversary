@@ -158,8 +158,49 @@ class App3 {
    * イベントリスナーを設定
    */
   setupEventListeners() {
-    // マウスストーカー要素を取得
-    const mouseStalker = document.querySelector('.js-mouse-stalker');
+    // SVGマウスストーカー要素を取得
+    const textureStalker = document.querySelector('.js-texture-stalker');
+    const outerCircle = document.getElementById('texture-outer-circle');
+    const stalkerText = document.getElementById('texture-stalker-text');
+
+    // SVGマウスストーカーの状態
+    const stalkerState = {
+      current: { x: 0, y: 0 },
+      target: { x: 0, y: 0 },
+      delta: { x: 0, y: 0 },
+      isHovering: false,
+      animationId: null
+    };
+
+    // SVGマウスストーカーのアニメーション
+    const animateStalker = () => {
+      stalkerState.delta.x = stalkerState.target.x - stalkerState.current.x;
+      stalkerState.delta.y = stalkerState.target.y - stalkerState.current.y;
+      stalkerState.current.x += stalkerState.delta.x * 0.15;
+      stalkerState.current.y += stalkerState.delta.y * 0.15;
+
+      // 速度に応じて変形
+      let distort = Math.sqrt(Math.pow(stalkerState.delta.x, 2) + Math.pow(stalkerState.delta.y, 2)) / 300;
+      distort = Math.min(distort, 0.4);
+      const scaleX = 1 + distort;
+      const scaleY = 1 - distort;
+      const rotate = (Math.atan2(stalkerState.delta.y, stalkerState.delta.x) / Math.PI) * 180;
+
+      if (outerCircle) {
+        outerCircle.setAttribute('cx', stalkerState.current.x);
+        outerCircle.setAttribute('cy', stalkerState.current.y);
+        outerCircle.style.transformOrigin = `${stalkerState.current.x}px ${stalkerState.current.y}px`;
+        outerCircle.style.transform = `rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
+      }
+      if (stalkerText) {
+        stalkerText.setAttribute('x', stalkerState.current.x);
+        stalkerText.setAttribute('y', stalkerState.current.y);
+      }
+
+      if (stalkerState.isHovering) {
+        stalkerState.animationId = requestAnimationFrame(animateStalker);
+      }
+    };
 
     // 遷移中フラグ（二重遷移防止・ホバー処理停止用）
     let isNavigating = false;
@@ -168,6 +209,10 @@ class App3 {
     const handlePointerMove = (clientX, clientY) => {
       // 遷移中はホバー処理をスキップ
       if (isNavigating) return;
+
+      // SVGマウスストーカーのターゲット位置を更新
+      stalkerState.target.x = clientX;
+      stalkerState.target.y = clientY;
 
       const x = clientX / window.innerWidth * 2.0 - 1.0;
       const y = clientY / window.innerHeight * 2.0 - 1.0;
@@ -184,14 +229,22 @@ class App3 {
       if (intersects.length > 0) {
         intersects[0].object.userData.isHovered = true;
 
-        // マウスストーカーにテクスチャホバー状態を追加
-        if (mouseStalker) {
-          mouseStalker.classList.add('is-texture-hover');
+        // SVGマウスストーカーを表示
+        if (textureStalker && !stalkerState.isHovering) {
+          stalkerState.isHovering = true;
+          stalkerState.current.x = clientX;
+          stalkerState.current.y = clientY;
+          textureStalker.classList.add('is-active');
+          animateStalker();
         }
       } else {
-        // ホバーが外れたらマウスストーカーのテクスチャホバー状態を解除
-        if (mouseStalker) {
-          mouseStalker.classList.remove('is-texture-hover');
+        // ホバーが外れたらSVGマウスストーカーを非表示
+        if (textureStalker && stalkerState.isHovering) {
+          stalkerState.isHovering = false;
+          textureStalker.classList.remove('is-active');
+          if (stalkerState.animationId) {
+            cancelAnimationFrame(stalkerState.animationId);
+          }
         }
       }
     };
@@ -220,9 +273,13 @@ class App3 {
         // ページ遷移
         if (clickedMesh.userData.url) {
           isNavigating = true; // 遷移中フラグをON
-          // マウスストーカーのテクスチャホバー状態を即座にリセット
-          if (mouseStalker) {
-            mouseStalker.classList.remove('is-texture-hover');
+          // SVGマウスストーカーを即座に非表示
+          if (textureStalker) {
+            stalkerState.isHovering = false;
+            textureStalker.classList.remove('is-active');
+            if (stalkerState.animationId) {
+              cancelAnimationFrame(stalkerState.animationId);
+            }
           }
           if (window.swup) {
              window.swup.navigate(clickedMesh.userData.url);
@@ -892,10 +949,10 @@ this.scrollOffset += 0.01;
     // アニメーションループを停止
     this.isDisposed = true;
 
-    // マウスストーカーのテクスチャホバー状態をリセット
-    const mouseStalker = document.querySelector('.js-mouse-stalker');
-    if (mouseStalker) {
-      mouseStalker.classList.remove('is-texture-hover');
+    // SVGマウスストーカーを非表示
+    const textureStalker = document.querySelector('.js-texture-stalker');
+    if (textureStalker) {
+      textureStalker.classList.remove('is-active');
     }
 
     // イベントリスナーは自動的にページ遷移で破棄される

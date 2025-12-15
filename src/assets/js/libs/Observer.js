@@ -7,7 +7,7 @@ export default class Observer {
     this.stagger = stagger; // 各要素間のディレイ（ミリ秒）
     this.options = {
       root: null,
-      rootMargin: "0px",
+      rootMargin: "0 0 -20% 0",
       threshold: 0.5,
       ...options  // 外部から渡されたオプションでデフォルト値を上書き
     };
@@ -24,6 +24,7 @@ export default class Observer {
         if (this.stagger > 0) {
           const index = entry.target._observerIndex || 0;
           setTimeout(() => {
+            console.log(this.stagger);
             entry.target.classList.add(this.elem);
           }, index * this.stagger);
         } else {

@@ -64,6 +64,11 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     <span class="js-mouse-stalker" style="opacity: 0;">
       <span class="hero__work__thumbnail js-mouse-stalker__cursor"> </span>
     </span>
+    <!-- テクスチャホバー用SVGマウスストーカー -->
+    <svg id="texture-mouse-stalker" class="js-texture-stalker">
+      <circle id="texture-outer-circle" r="50" fill="#212121" stroke="#212121" stroke-width="1" />
+      <text id="texture-stalker-text" text-anchor="middle" dominant-baseline="middle" fill="#fff">view more</text>
+    </svg>
   </body>
 </html>
 
@@ -251,10 +256,13 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   swup.hooks.on("animation:out:start", () => {
     const stalker = document.querySelector(".js-mouse-stalker");
     if (stalker) {
-      console.log("reset mouse stalker");
       stalker.classList.remove("is-hover");
-      console.log(stalker);
       stalker.classList.remove("is-texture-hover");
+    }
+    // SVGマウスストーカーも非表示
+    const textureStalker = document.querySelector(".js-texture-stalker");
+    if (textureStalker) {
+      textureStalker.classList.remove("is-active");
     }
   });
   // アニメーション開始時にis-activeを追加
@@ -278,12 +286,16 @@ const { title, description = "Astro テンプレート" } = Astro.props;
     const stalker = document.querySelector(".js-mouse-stalker");
     const cursor = document.querySelector(".js-mouse-stalker__cursor") as HTMLElement;
     if (stalker) {
-      console.log("reset mouse stalker");
       stalker.classList.remove("is-hover");
       stalker.classList.remove("is-texture-hover");
     }
     if (cursor) {
       cursor.style.backgroundImage = "";
+    }
+    // SVGマウスストーカーもリセット
+    const textureStalker = document.querySelector(".js-texture-stalker");
+    if (textureStalker) {
+      textureStalker.classList.remove("is-active");
     }
   }
   initMouseStalker();
@@ -294,7 +306,7 @@ const { title, description = "Astro テンプレート" } = Astro.props;
   });
   // observerを初期化する関数
   function initDetailObserver() {
-    new observer(".js-detail", "detail-visible", false, {}, 1000);
+    new observer(".js-detail", "detail-visible", false, {}, 200);
   }
   // 初回実行
   initDetailObserver();

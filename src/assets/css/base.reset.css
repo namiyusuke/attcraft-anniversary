@@ -66,22 +66,31 @@ html{
 } */
 
 .js-detail{
-  opacity:0;
+  opacity:1;
   transition:opacity .6s cubic-bezier(0.33, 1, 0.68, 1) .6s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
   transform:translateY(20px);
 }
 .js-detail.detail-visible{
   opacity:1;
+}
+.message-icon{
+  opacity:0;
+  transition:opacity 1s ease, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
+  transform:translateY(3px);
+}
+.detail-visible .message-icon{
+  opacity:1;
   transform:translateY(0);
 }
+
 /* メッセージを順番に表示するdelay */
 .detail-visible .message:nth-child(1) .message-text,
 .detail-visible .message:nth-child(1) .message-icon {
-  transition: opacity .6s cubic-bezier(0.33, 1, 0.68, 1) 0s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) 0s;
+  transition: opacity .6s cubic-bezier(0.33, 1, 0.68, 1) 0s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) 0s,clip-path 0.9s ease 0s;
 }
 .detail-visible .message:nth-child(2) .message-text,
 .detail-visible .message:nth-child(2) .message-icon {
-  transition: opacity .6s cubic-bezier(0.33, 1, 0.68, 1) 0.5s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) 0.5s;
+  transition: opacity .6s cubic-bezier(0.33, 1, 0.68, 1) 0.5s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) 0.5s, clip-path 0.9s ease 0s;
 }
 
 .detail-content{
@@ -702,13 +711,19 @@ mask-position: 50% 50%;
   }
 }
 .message-nami .message-text {
+  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
   color: #ffffff;
   background-color: #686868;
 }
 
 .message-kuu .message-text {
+  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
   color: #000000;
   background-color: #ffffff;
+}
+.detail-visible .message-nami .message-text,
+.detail-visible .message-kuu .message-text {
+clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
 .message-text::after {
@@ -755,10 +770,11 @@ mask-position: 50% 50%;
   transition-property: width, height, opacity, top, left;
 }
 .js-mouse-stalker .js-mouse-stalker__cursor::after {
+  font-family:"Zen Kaku Gothic New", sans-serif;
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.05em;
   color: #fff;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   content: 'view more';
   opacity: 0;
@@ -790,6 +806,34 @@ mask-position: 50% 50%;
 }
 .js-mouse-stalker.is-hover .js-mouse-stalker__cursor::after {
   display: none;
+}
+/* テクスチャホバー用SVGマウスストーカー */
+.js-texture-stalker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.js-texture-stalker.is-active {
+  opacity: 1;
+}
+.js-texture-stalker #texture-outer-circle {
+  transition: r 0.3s ease, stroke-width 0.3s ease;
+}
+.js-texture-stalker #texture-stalker-text {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.js-texture-stalker.is-active #texture-stalker-text {
+  opacity: 1;
 }
 .about-item-circle{
   position:relative;
