@@ -45,12 +45,7 @@ a {
 html{
   color:#000;
 }
-.message-kuu .message-text{
-  transform:translateX(-20px);
- }
- .message-nami .message-text{
-  transform:translateX(20px);
- }
+
  /* .message-text{
   opacity:0;
   transition:opacity .6s cubic-bezier(0.33, 1, 0.68, 1) .6s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
@@ -66,22 +61,15 @@ html{
 } */
 
 .js-detail{
-  opacity:1;
+  opacity:0;
   transition:opacity .6s cubic-bezier(0.33, 1, 0.68, 1) .6s, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
   transform:translateY(20px);
 }
 .js-detail.detail-visible{
   opacity:1;
+  transform:translateY(0px);
 }
-.message-icon{
-  opacity:0;
-  transition:opacity 1s ease, transform .6s cubic-bezier(0.33, 1, 0.68, 1) .6s;
-  transform:translateY(3px);
-}
-.detail-visible .message-icon{
-  opacity:1;
-  transform:translateY(0);
-}
+
 
 /* メッセージを順番に表示するdelay */
 .detail-visible .message:nth-child(1) .message-text,
@@ -118,14 +106,7 @@ html{
 .loop__x-item{
   padding-inline:calc(120 /1600 * 100vw);
 }
-.loop__x-wrap{
-  /* position:fixed;
-  right:0;
-  bottom:0;
-  left:0;
-  z-index:3;
-  overflow:hidden; */
-}
+
 .loop__x{
   z-index:3;
   overflow:hidden;
@@ -711,20 +692,19 @@ mask-position: 50% 50%;
   }
 }
 .message-nami .message-text {
-  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
   color: #ffffff;
   background-color: #686868;
 }
 
 .message-kuu .message-text {
-  clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+
   color: #000000;
   background-color: #ffffff;
 }
-.detail-visible .message-nami .message-text,
+/* .detail-visible .message-nami .message-text,
 .detail-visible .message-kuu .message-text {
 clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
+} */
 
 .message-text::after {
   position: absolute;
@@ -788,6 +768,7 @@ clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   height: var(--size);
   border-radius: 50%;
   opacity: 1;
+  transform: scale(0);
 }
 .js-mouse-stalker.is-texture-hover .js-mouse-stalker__cursor::after {
   opacity: 1;
@@ -817,23 +798,15 @@ clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   height: 100%;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .js-texture-stalker.is-active {
   opacity: 1;
-}
-.js-texture-stalker #texture-outer-circle {
-  transition: r 0.3s ease, stroke-width 0.3s ease;
 }
 .js-texture-stalker #texture-stalker-text {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.05em;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.js-texture-stalker.is-active #texture-stalker-text {
-  opacity: 1;
 }
 .about-item-circle{
   position:relative;
@@ -1104,6 +1077,15 @@ clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   color:#fff;
   background-color:#262626;
   border-radius:50%;
+}
+@media (min-width: 768px) {
+  .detail-top-btn{
+      bottom:60px;
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .detail-top-btn:hover{
+      transform: scale(1.2);
+  }
 }
 .detail-top-btn--white{
   color:#262626;

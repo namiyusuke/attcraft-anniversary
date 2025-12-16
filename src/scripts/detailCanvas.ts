@@ -57,7 +57,10 @@ const fragmentShader = `
   varying vec2 vUv;
 
   void main() {
-    vec4 color = texture2D(uTexture, vUv);
+    // 動画の端の黒線をクロップ（UVを少し内側に縮小）
+    float cropAmount = 0.02; // 2%クロップ
+    vec2 croppedUv = vUv * (1.0 - cropAmount * 2.0) + cropAmount;
+    vec4 color = texture2D(uTexture, croppedUv);
     gl_FragColor = vec4(color.rgb, 1.0);
   }
 `;
@@ -186,14 +189,15 @@ class DetailCanvas {
     }
 
     // ホバーイベント(確認用)
-    // this.canvas.addEventListener("mouseenter", () => {
-    //   this.isHovering = true;
-    //   this.targetCurl = 0;
-    // });
-    // this.canvas.addEventListener("mouseleave", () => {
-    //   this.isHovering = false;
-    //   this.targetCurl = 0.7;
-    // });
+    this.canvas.addEventListener("mouseenter", () => {
+      this.isHovering = true;
+
+       this.targetCurl = 0.7;
+    });
+    this.canvas.addEventListener("mouseleave", () => {
+      this.isHovering = false;
+      this.targetCurl = 0;
+    });
 
     this.resizeHandler = () => this.resize();
     window.addEventListener("resize", this.resizeHandler);

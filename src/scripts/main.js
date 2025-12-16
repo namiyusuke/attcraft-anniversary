@@ -395,7 +395,7 @@ class App3 {
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['img/good_portforio.png','video/sakaba.mp4','img/sankou.webp','img/podcast.webp','img/app.png','video/arcraft.mp4','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png','img/about.jpg'];
+    const imagePath = ['img/good_portforio.png','video/sakaba.mp4','img/sankou.webp','img/podcast.png','img/app.png','video/arcraft.mp4','img/attcraft_4th.png','img/x_post_nami.webp','img/x_post_kuu.webp','img/about.jpg'];
     const loader = new THREE.TextureLoader();
     this.videoElements = []; // 動画要素を保持
     this.textures = await Promise.all(imagePath.map((path) => {
@@ -414,13 +414,17 @@ class App3 {
             video.play();
             const tex = new THREE.VideoTexture(video);
             tex.colorSpace = THREE.SRGBColorSpace;
-            tex.wrapS = THREE.RepeatWrapping;
-            tex.repeat.x = -1;  // 水平反転
-            tex.offset.x = 1;   // 反転後の位置調整
+            // ClampToEdgeWrappingで端の黒線を防止
+            tex.wrapS = THREE.ClampToEdgeWrapping;
+            tex.wrapT = THREE.ClampToEdgeWrapping;
             // テクスチャ品質向上（ぼやけ防止）
             tex.minFilter = THREE.LinearFilter;
             tex.magFilter = THREE.LinearFilter;
             tex.generateMipmaps = false;
+            // 動画の端の黒線をクロップ（UVを少し内側に縮小）
+            const cropAmount = 0.02; // 2%クロップ
+            tex.offset.set(cropAmount, cropAmount);
+            tex.repeat.set(1 - cropAmount * 2, 1 - cropAmount * 2);
             // テクスチャのアスペクト比を保存
             tex.userData = { aspect: video.videoWidth / video.videoHeight };
             this.videoElements.push(video);
@@ -430,9 +434,9 @@ class App3 {
           // 画像ファイルの場合
           loader.load(path, (tex) => {
             tex.colorSpace = THREE.SRGBColorSpace;
-            tex.wrapS = THREE.RepeatWrapping;
-            tex.repeat.x = -1;  // 水平反転
-            tex.offset.x = 1;   // 反転後の位置調整
+            // ClampToEdgeWrappingで端の黒線を防止
+            tex.wrapS = THREE.ClampToEdgeWrapping;
+            tex.wrapT = THREE.ClampToEdgeWrapping;
             // テクスチャ品質向上（ぼやけ防止）
             tex.minFilter = THREE.LinearFilter;
             tex.magFilter = THREE.LinearFilter;
