@@ -35,7 +35,9 @@ export default class Stalker {
       globalEventsInitialized = true;
 
       document.addEventListener("mousemove", (e) => {
-        stalker.style.opacity = 1;
+        // stalker.style.opacity = 1;
+        stalker.style.transform = "scale(" + 1 + ")";
+        stalker.style.transformOrigin = e.clientX + "px " + e.clientY + "px";
         mouseX = e.clientX;
         mouseY = e.clientY;
 
@@ -44,11 +46,15 @@ export default class Stalker {
       });
 
       document.addEventListener("mouseleave", (e) => {
-        stalker.style.opacity = 0;
+        // stalker.style.opacity = 0;
+        stalker.style.transform = "scale(" + 0 + ")";
+                stalker.style.transformOrigin = e.clientX + "px " + e.clientY + "px";
       });
 
       document.addEventListener("mouseenter", (e) => {
-        stalker.style.opacity = 1;
+        // stalker.style.opacity = 1;
+        stalker.style.transform = "scale(" + 1 + ")";
+        stalker.style.transformOrigin = e.clientX + "px " + e.clientY + "px";
       });
     }
 

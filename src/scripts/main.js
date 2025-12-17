@@ -187,6 +187,7 @@ class App3 {
       const rotate = (Math.atan2(stalkerState.delta.y, stalkerState.delta.x) / Math.PI) * 180;
 
       if (outerCircle) {
+textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerState.current.y}px`;
         outerCircle.setAttribute('cx', stalkerState.current.x);
         outerCircle.setAttribute('cy', stalkerState.current.y);
         outerCircle.style.transformOrigin = `${stalkerState.current.x}px ${stalkerState.current.y}px`;
@@ -433,6 +434,7 @@ class App3 {
         } else {
           // 画像ファイルの場合
           loader.load(path, (tex) => {
+
             tex.colorSpace = THREE.SRGBColorSpace;
             // ClampToEdgeWrappingで端の黒線を防止
             tex.wrapS = THREE.ClampToEdgeWrapping;
@@ -440,6 +442,9 @@ class App3 {
             // テクスチャ品質向上（ぼやけ防止）
             tex.minFilter = THREE.LinearFilter;
             tex.magFilter = THREE.LinearFilter;
+            // テクスチャを水平反転（裏向き対策）
+            tex.repeat.x = -1;
+            tex.offset.x = 1;
             // テクスチャのアスペクト比を保存
             tex.userData = { aspect: tex.image.width / tex.image.height };
             resolve(tex);
