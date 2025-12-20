@@ -456,6 +456,7 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     // テクスチャをシェーダーに設定
     this.rippleMaterial.uniforms.uTexture1.value = this.textures[this.currentSlideIndex];
     this.rippleMaterial.uniforms.uTexture1Aspect.value = currentAspect;
+    this.rippleMaterial.uniforms.uTexture1Flipped.value = this.textures[this.currentSlideIndex]?.userData?.isVideo ? 0.0 : 1.0;
     this.rippleMaterial.uniforms.uProgress.value = 0;
 
     // ボタンのテキストを変更
@@ -520,6 +521,8 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     this.rippleMaterial.uniforms.uTexture2.value = this.textures[this.nextSlideIndex];
     this.rippleMaterial.uniforms.uTexture1Aspect.value = this.textures[this.currentSlideIndex]?.userData?.aspect || 1;
     this.rippleMaterial.uniforms.uTexture2Aspect.value = this.textures[this.nextSlideIndex]?.userData?.aspect || 1;
+    this.rippleMaterial.uniforms.uTexture1Flipped.value = this.textures[this.currentSlideIndex]?.userData?.isVideo ? 0.0 : 1.0;
+    this.rippleMaterial.uniforms.uTexture2Flipped.value = this.textures[this.nextSlideIndex]?.userData?.isVideo ? 0.0 : 1.0;
     this.rippleMaterial.uniforms.uProgress.value = 0;
 
     this.isRippleTransitioning = true;
@@ -561,8 +564,8 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
             const cropAmount = 0.02; // 2%クロップ
             tex.offset.set(cropAmount, cropAmount);
             tex.repeat.set(1 - cropAmount * 2, 1 - cropAmount * 2);
-            // テクスチャのアスペクト比を保存
-            tex.userData = { aspect: video.videoWidth / video.videoHeight };
+            // テクスチャのアスペクト比と動画フラグを保存
+            tex.userData = { aspect: video.videoWidth / video.videoHeight, isVideo: true };
             this.videoElements.push(video);
             resolve(tex);
           });
@@ -580,8 +583,8 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
             // テクスチャを水平反転（裏向き対策）
             tex.repeat.x = -1;
             tex.offset.x = 1;
-            // テクスチャのアスペクト比を保存
-            tex.userData = { aspect: tex.image.width / tex.image.height };
+            // テクスチャのアスペクト比と動画フラグを保存
+            tex.userData = { aspect: tex.image.width / tex.image.height, isVideo: false };
             resolve(tex);
           });
         }
@@ -770,6 +773,8 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
       uniform vec2 uResolution;
       uniform float uTexture1Aspect;
       uniform float uTexture2Aspect;
+      uniform float uTexture1Flipped; // 1.0 = 画像（反転必要）, 0.0 = 動画（反転不要）
+      uniform float uTexture2Flipped;
 
       varying vec2 vUv;
 
@@ -807,9 +812,9 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
         vec2 uv1 = distortedUv;
         vec2 uv2 = distortedUv;
 
-        // 既存テクスチャのX反転に合わせる（repeat.x = -1対応）
-        uv1.x = 1.0 - uv1.x;
-        uv2.x = 1.0 - uv2.x;
+        // 画像テクスチャのみX反転（動画は反転不要）
+        if (uTexture1Flipped > 0.5) uv1.x = 1.0 - uv1.x;
+        if (uTexture2Flipped > 0.5) uv2.x = 1.0 - uv2.x;
 
         // テクスチャサンプリング
         vec4 tex1 = texture2D(uTexture1, uv1);
@@ -821,11 +826,17 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
         float mixFactor = smoothstep(radius - 0.3, radius, dist);
         mixFactor = 1.0 - mixFactor; // 中心が1、外側が0
 
+        // 画像テクスチャにのみガンマ補正を適用（動画は適用しない）
+        // 画像の場合: uTextureXFlipped > 0.5 なのでガンマ補正を適用
+        if (uTexture1Flipped > 0.5) {
+          tex1.rgb = pow(tex1.rgb, vec3(1.0 / 2.2));
+        }
+        if (uTexture2Flipped > 0.5) {
+          tex2.rgb = pow(tex2.rgb, vec3(1.0 / 2.2));
+        }
+
         // 色を混合（tex1が古い画像、tex2が新しい画像）
         vec4 finalColor = mix(tex1, tex2, mixFactor);
-
-        // リニア空間からsRGB空間へ変換（Three.jsのcolorSpace設定に合わせる）
-        finalColor.rgb = pow(finalColor.rgb, vec3(1.0 / 2.2));
 
         gl_FragColor = finalColor;
       }
@@ -843,6 +854,8 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
         uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
         uTexture1Aspect: { value: this.textures[0]?.userData?.aspect || 1 },
         uTexture2Aspect: { value: this.textures[1]?.userData?.aspect || 1 },
+        uTexture1Flipped: { value: this.textures[0]?.userData?.isVideo ? 0.0 : 1.0 },
+        uTexture2Flipped: { value: this.textures[1]?.userData?.isVideo ? 0.0 : 1.0 },
       },
       transparent: true,
     });
@@ -864,14 +877,17 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     const maxHeight = 2 * distance * Math.tan(fovRad / 2);
     const maxWidth = maxHeight * (window.innerWidth / window.innerHeight);
 
+    // サイズのスケール（0.0〜1.0、1.0で画面いっぱい）
+    const scale = 0.8;
+
     let planeWidth, planeHeight;
     if (textureAspect > maxWidth / maxHeight) {
       // 画像が横長の場合、幅を画面に合わせる
-      planeWidth = maxWidth;
+      planeWidth = maxWidth * scale;
       planeHeight = planeWidth / textureAspect;
     } else {
       // 画像が縦長の場合、高さを画面に合わせる
-      planeHeight = maxHeight;
+      planeHeight = maxHeight * scale;
       planeWidth = planeHeight * textureAspect;
     }
 
@@ -954,6 +970,7 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
           const newAspect = this.textures[this.currentSlideIndex]?.userData?.aspect || 1;
           this.rippleMaterial.uniforms.uTexture1.value = this.textures[this.currentSlideIndex];
           this.rippleMaterial.uniforms.uTexture1Aspect.value = newAspect;
+          this.rippleMaterial.uniforms.uTexture1Flipped.value = this.textures[this.currentSlideIndex]?.userData?.isVideo ? 0.0 : 1.0;
 
           // プレーンのサイズを新しい画像のアスペクト比に合わせて更新
           this.updateFullscreenPlaneSize(newAspect);
