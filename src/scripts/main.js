@@ -152,6 +152,17 @@ class App3 {
       App3.CAMERA_PARAM.y,
       App3.CAMERA_PARAM.z
     );
+
+    // 波紋トランジション用の状態
+    this.isFullscreenMode = false; // フルスクリーンモード
+    this.fullscreenMesh = null; // フルスクリーン用メッシュ
+    this.rippleMaterial = null; // 波紋シェーダーマテリアル
+    this.currentSlideIndex = 0; // 現在のスライドインデックス
+    this.nextSlideIndex = 1; // 次のスライドインデックス
+    this.isRippleTransitioning = false; // 波紋トランジション中
+    this.rippleProgress = 0; // 波紋の進行度
+    this.rippleScrollAccumulator = 0; // スクロール蓄積量
+    this.rippleScrollThreshold = 150; // トランジション開始に必要なスクロール量
   }
 
   /**
@@ -359,23 +370,12 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
     }, false);
-    // カメラ移動ボタン
+    // カメラ移動ボタン → フルスクリーン波紋モードに切り替え
     const cameraMoveBtn = document.querySelector('#camera-move-btn');
     if (cameraMoveBtn) {
       cameraMoveBtn.addEventListener('click', () => {
-        // 目標位置を原点の上に設定（メッシュを見下ろす）
-        this.cameraTargetPosition = new THREE.Vector3(0, 0, 0);
-        this.isCameraAnimating = true;
-        this.isCameraMoved = true; // カメラ移動モードON
-        // 円状配置の目標位置を計算
-        const radius = 2; // 円の半径
-        const count = this.meshes.length;
-        this.meshes.forEach((mesh, i) => {
-          const angle = (i / count) * Math.PI * 2; // 360度を均等に分割
-          mesh.userData.circleX = Math.sin(angle) * radius;
-          mesh.userData.circleZ = Math.cos(angle) * radius;
-          mesh.userData.circleY = 0;
-        });
+        // フルスクリーンモードに入る
+        this.enterFullscreenMode();
       });
     }
 
@@ -383,12 +383,147 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     const cameraResetBtn = document.querySelector('#camera-reset-btn');
     if (cameraResetBtn) {
       cameraResetBtn.addEventListener('click', () => {
-        // 初期位置に戻す
-        this.cameraTargetPosition = this.cameraInitialPosition.clone();
-        this.isCameraAnimating = true;
-        this.isReturning = true; // 戻り中フラグ
+        // フルスクリーンモードから戻る
+        this.exitFullscreenMode();
       });
     }
+
+    // フルスクリーンモード時のスクロールイベント
+    window.addEventListener('wheel', (event) => {
+      if (!this.isFullscreenMode || this.isRippleTransitioning) return;
+
+      this.rippleScrollAccumulator += Math.abs(event.deltaY);
+
+      if (this.rippleScrollAccumulator >= this.rippleScrollThreshold) {
+        this.rippleScrollAccumulator = 0;
+        const direction = event.deltaY > 0 ? 1 : -1;
+        this.startRippleTransition(direction);
+      }
+    }, { passive: true });
+
+    // タッチスクロール対応
+    let rippleTouchStartY = 0;
+    window.addEventListener('touchstart', (event) => {
+      if (!this.isFullscreenMode) return;
+      if (event.touches.length > 0) {
+        rippleTouchStartY = event.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (event) => {
+      if (!this.isFullscreenMode || this.isRippleTransitioning) return;
+      if (event.touches.length > 0) {
+        const deltaY = rippleTouchStartY - event.touches[0].clientY;
+        this.rippleScrollAccumulator += Math.abs(deltaY);
+        rippleTouchStartY = event.touches[0].clientY;
+
+        if (this.rippleScrollAccumulator >= this.rippleScrollThreshold) {
+          this.rippleScrollAccumulator = 0;
+          const direction = deltaY > 0 ? 1 : -1;
+          this.startRippleTransition(direction);
+        }
+      }
+    }, { passive: true });
+  }
+
+  /**
+   * フルスクリーンモードに入る
+   */
+  enterFullscreenMode() {
+    this.isFullscreenMode = true;
+    this.isCameraMoved = true;
+
+    // 既存のメッシュを非表示
+    this.meshes.forEach(mesh => {
+      mesh.visible = false;
+    });
+
+    // 最初のテクスチャを設定
+    this.currentSlideIndex = 0;
+    const currentAspect = this.textures[this.currentSlideIndex]?.userData?.aspect || 1;
+
+    // プレーンのサイズを画像のアスペクト比に合わせて更新
+    this.updateFullscreenPlaneSize(currentAspect);
+
+    // フルスクリーンメッシュを表示
+    this.fullscreenMesh.visible = true;
+    this.fullscreenMesh.position.set(0, 0, 0);
+
+    // カメラを正面に移動
+    this.cameraTargetPosition = new THREE.Vector3(0, 0, 3);
+    this.isCameraAnimating = true;
+
+    // テクスチャをシェーダーに設定
+    this.rippleMaterial.uniforms.uTexture1.value = this.textures[this.currentSlideIndex];
+    this.rippleMaterial.uniforms.uTexture1Aspect.value = currentAspect;
+    this.rippleMaterial.uniforms.uProgress.value = 0;
+
+    // ボタンのテキストを変更
+    const cameraMoveBtn = document.querySelector('#camera-move-btn');
+    if (cameraMoveBtn) {
+      cameraMoveBtn.style.display = 'none';
+    }
+    const cameraResetBtn = document.querySelector('#camera-reset-btn');
+    if (cameraResetBtn) {
+      cameraResetBtn.style.display = 'block';
+    }
+  }
+
+  /**
+   * フルスクリーンモードから戻る
+   */
+  exitFullscreenMode() {
+    // フルスクリーンメッシュを非表示
+    this.fullscreenMesh.visible = false;
+
+    // 既存のメッシュを表示
+    this.meshes.forEach(mesh => {
+      mesh.visible = true;
+    });
+
+    // カメラを通常モードの位置に戻す
+    this.cameraTargetPosition = new THREE.Vector3(-2.0, 0.8, 3.0);
+    this.isCameraAnimating = true;
+
+    // フラグをリセット（順序が重要）
+    this.isFullscreenMode = false;
+    this.isReturning = true;
+    // isCameraMovedはカメラアニメーション完了時にfalseにする
+
+    // ボタンを元に戻す
+    const cameraMoveBtn = document.querySelector('#camera-move-btn');
+    if (cameraMoveBtn) {
+      cameraMoveBtn.style.display = 'block';
+    }
+    const cameraResetBtn = document.querySelector('#camera-reset-btn');
+    if (cameraResetBtn) {
+      cameraResetBtn.style.display = 'none';
+    }
+  }
+
+  /**
+   * 波紋トランジションを開始
+   */
+  startRippleTransition(direction) {
+    if (this.isRippleTransitioning) return;
+
+    // 次のインデックスを計算
+    this.nextSlideIndex = this.currentSlideIndex + direction;
+    if (this.nextSlideIndex >= this.textures.length) {
+      this.nextSlideIndex = 0;
+    } else if (this.nextSlideIndex < 0) {
+      this.nextSlideIndex = this.textures.length - 1;
+    }
+
+    // テクスチャを設定
+    this.rippleMaterial.uniforms.uTexture1.value = this.textures[this.currentSlideIndex];
+    this.rippleMaterial.uniforms.uTexture2.value = this.textures[this.nextSlideIndex];
+    this.rippleMaterial.uniforms.uTexture1Aspect.value = this.textures[this.currentSlideIndex]?.userData?.aspect || 1;
+    this.rippleMaterial.uniforms.uTexture2Aspect.value = this.textures[this.nextSlideIndex]?.userData?.aspect || 1;
+    this.rippleMaterial.uniforms.uProgress.value = 0;
+
+    this.isRippleTransitioning = true;
+    this.rippleProgress = 0;
   }
 
   /**
@@ -606,8 +741,143 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     this.axesHelper = new THREE.AxesHelper(axesBarLength);
     // this.scene.add(this.axesHelper);
 
+    // 波紋トランジション用のシェーダーマテリアルとメッシュを作成
+    this.createRippleFullscreen();
+
     // イベントリスナーを設定（カメラとメッシュの初期化後に実行）
     this.setupEventListeners();
+  }
+
+  /**
+   * 波紋トランジション用のフルスクリーンメッシュを作成
+   */
+  createRippleFullscreen() {
+    // 波紋シェーダーの頂点シェーダー
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `;
+
+    // 波紋シェーダーのフラグメントシェーダー
+    const fragmentShader = `
+      uniform sampler2D uTexture1;
+      uniform sampler2D uTexture2;
+      uniform float uProgress;
+      uniform float uTime;
+      uniform vec2 uResolution;
+      uniform float uTexture1Aspect;
+      uniform float uTexture2Aspect;
+
+      varying vec2 vUv;
+
+      void main() {
+        // 中心からの距離を計算
+        vec2 center = vec2(0.5, 0.5);
+        vec2 diff = vUv - center;
+        float dist = length(diff);
+
+        // 波紋のパラメータ
+        float rippleWidth = 0.82;
+        float maxDist = 0.75;
+        float rippleEdge = uProgress * maxDist * 1.8;
+
+        // 波紋の形状を計算（uProgressが0のときは完全に0）
+        float ripple = uProgress > 0.0
+          ? smoothstep(rippleEdge - rippleWidth, rippleEdge, dist)
+            * (1.0 - smoothstep(rippleEdge, rippleEdge + rippleWidth * 0.3, dist))
+          : 0.0;
+
+        // 波紋による歪み（uProgressが0のときは歪みなし）
+        // ゼロ除算防止のため小さな値を追加
+        vec2 dir = length(diff) > 0.001 ? normalize(diff) : vec2(0.0);
+
+        // 波の揺らぎを作成
+        float wave1 = sin(uTime * 10.0 + dist * 20.0) * 2.0;
+        float combinedWave = wave1;
+
+        // 揺らぎを終盤で減衰させる（進行度が高くなるほど揺らぎが弱くなる）
+        float fadeOut = 1.0 - smoothstep(0.6, 1.0, uProgress);
+        float distortion = uProgress > 0.0 ? ripple * 0.16 * combinedWave * fadeOut : 0.0;
+        vec2 distortedUv = vUv + dir * distortion;
+
+        // UVをそのまま使用（元の画像のアスペクト比を維持）
+        vec2 uv1 = distortedUv;
+        vec2 uv2 = distortedUv;
+
+        // 既存テクスチャのX反転に合わせる（repeat.x = -1対応）
+        uv1.x = 1.0 - uv1.x;
+        uv2.x = 1.0 - uv2.x;
+
+        // テクスチャサンプリング
+        vec4 tex1 = texture2D(uTexture1, uv1);
+        vec4 tex2 = texture2D(uTexture2, uv2);
+
+        // 中心から外側に向かって徐々に切り替わる
+        // progressが進むにつれて、より外側まで新しい画像が広がる
+        float radius = uProgress * 1.2; // 切り替わりの半径（progressに比例）
+        float mixFactor = smoothstep(radius - 0.3, radius, dist);
+        mixFactor = 1.0 - mixFactor; // 中心が1、外側が0
+
+        // 色を混合（tex1が古い画像、tex2が新しい画像）
+        vec4 finalColor = mix(tex1, tex2, mixFactor);
+
+        // リニア空間からsRGB空間へ変換（Three.jsのcolorSpace設定に合わせる）
+        finalColor.rgb = pow(finalColor.rgb, vec3(1.0 / 2.2));
+
+        gl_FragColor = finalColor;
+      }
+    `;
+
+    // シェーダーマテリアルを作成
+    this.rippleMaterial = new THREE.ShaderMaterial({
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      uniforms: {
+        uTexture1: { value: this.textures[0] },
+        uTexture2: { value: this.textures[1] },
+        uProgress: { value: 0 },
+        uTime: { value: 0 },
+        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+        uTexture1Aspect: { value: this.textures[0]?.userData?.aspect || 1 },
+        uTexture2Aspect: { value: this.textures[1]?.userData?.aspect || 1 },
+      },
+      transparent: true,
+    });
+
+    // 初期プレーンジオメトリ（後で画像に合わせてサイズ更新）
+    const fullscreenGeometry = new THREE.PlaneGeometry(1, 1); // 仮のサイズ
+    this.fullscreenMesh = new THREE.Mesh(fullscreenGeometry, this.rippleMaterial);
+    this.fullscreenMesh.position.set(0, 0, 0);
+    this.fullscreenMesh.visible = false; // 初期は非表示
+    this.scene.add(this.fullscreenMesh);
+  }
+
+  /**
+   * フルスクリーンプレーンのサイズを画像のアスペクト比に合わせて更新
+   */
+  updateFullscreenPlaneSize(textureAspect) {
+    const distance = 3; // カメラからプレーンまでの距離
+    const fovRad = (App3.CAMERA_PARAM.fovy * Math.PI) / 180;
+    const maxHeight = 2 * distance * Math.tan(fovRad / 2);
+    const maxWidth = maxHeight * (window.innerWidth / window.innerHeight);
+
+    let planeWidth, planeHeight;
+    if (textureAspect > maxWidth / maxHeight) {
+      // 画像が横長の場合、幅を画面に合わせる
+      planeWidth = maxWidth;
+      planeHeight = planeWidth / textureAspect;
+    } else {
+      // 画像が縦長の場合、高さを画面に合わせる
+      planeHeight = maxHeight;
+      planeWidth = planeHeight * textureAspect;
+    }
+
+    // ジオメトリを更新
+    this.fullscreenMesh.geometry.dispose();
+    this.fullscreenMesh.geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
   }
 
   /**
@@ -619,26 +889,27 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
         // lerpで滑らかに移動（0.05は補間係数、小さいほどゆっくり）
         this.camera.position.lerp(this.cameraTargetPosition, 0.09);
 
+        // 戻り中はカメラを原点に向ける
+        if (this.isReturning) {
+          this.camera.lookAt(App3.CAMERA_PARAM.lookAt);
+          // メッシュの回転を元に戻す
+          this.meshes.forEach((mesh) => {
+            mesh.rotation.x = 0;
+            mesh.rotation.z = 0;
+            mesh.rotation.y += (Math.PI / 2 + this.meshTilt - mesh.rotation.y) * 0.1;
+          });
+        }
         // 初期アニメーション中はカメラだけ移動、メッシュの向きは変えない
         // ボタンによるカメラ移動モード（isCameraMoved）の場合のみメッシュの回転を変更
-        if (!this.isInitialAnimation && this.isCameraMoved) {
+        else if (!this.isInitialAnimation && this.isCameraMoved && !this.isFullscreenMode) {
           // カメラ移動中は正面を向ける
-          if (!this.isReturning) {
-            this.camera.lookAt(0, 0, -1);
-          }
+          this.camera.lookAt(0, 0, -1);
 
           this.meshes.forEach((mesh) => {
-            if (this.isReturning) {
-              // 戻り中は元の回転へ滑らかに補間
-              mesh.rotation.x = 0;
-              mesh.rotation.z = 0;
-              mesh.rotation.y += (Math.PI / 2 + this.meshTilt - mesh.rotation.y) * 0.1;
-            } else {
-              // メッシュを正面（Z軸方向）に向ける
-              mesh.rotation.x = 0;
-              mesh.rotation.z = 0;
-              mesh.rotation.y += (0 - mesh.rotation.y) * 0.1;
-            }
+            // メッシュを正面（Z軸方向）に向ける
+            mesh.rotation.x = 0;
+            mesh.rotation.z = 0;
+            mesh.rotation.y += (0 - mesh.rotation.y) * 0.1;
           });
         }
 
@@ -648,9 +919,48 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
           if (this.isReturning) {
             this.isCameraMoved = false;
             this.isReturning = false;
+            // カメラの向きを完全に元に戻す
+            this.camera.lookAt(App3.CAMERA_PARAM.lookAt);
           }
         }
       }
+
+    // 波紋トランジションのアニメーション処理
+    if (this.isFullscreenMode && this.rippleMaterial) {
+      // 時間を更新
+      this.rippleMaterial.uniforms.uTime.value += 0.016;
+      this.rippleMaterial.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+
+      // カメラをフルスクリーンメッシュに向ける
+      this.camera.lookAt(this.fullscreenMesh.position);
+
+      // トランジション中
+      if (this.isRippleTransitioning) {
+        this.rippleProgress += 0.009; // トランジション速度
+
+        // イージング関数を適用（easeOutQuad: 滑らかに減速）
+        const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
+        const easedProgress = easeOutQuad(Math.min(this.rippleProgress, 1));
+        this.rippleMaterial.uniforms.uProgress.value = easedProgress;
+
+        if (this.rippleProgress >= 1) {
+          // トランジション完了
+          this.isRippleTransitioning = false;
+          this.rippleProgress = 0;
+          this.rippleMaterial.uniforms.uProgress.value = 0;
+          this.currentSlideIndex = this.nextSlideIndex;
+
+          // 現在のテクスチャを更新
+          const newAspect = this.textures[this.currentSlideIndex]?.userData?.aspect || 1;
+          this.rippleMaterial.uniforms.uTexture1.value = this.textures[this.currentSlideIndex];
+          this.rippleMaterial.uniforms.uTexture1Aspect.value = newAspect;
+
+          // プレーンのサイズを新しい画像のアスペクト比に合わせて更新
+          this.updateFullscreenPlaneSize(newAspect);
+        }
+      }
+    }
+
     // 破棄済みならアニメーションループを停止
     if (this.isDisposed) return;
 
@@ -848,7 +1158,14 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
       this.renderer.render(this.scene, this.camera);
       return; // 初期アニメーション中はスクロール処理をスキップ
     }
-this.scrollOffset += 0.01;
+
+    // フルスクリーンモード中はスクロール処理をスキップ
+    if (this.isFullscreenMode) {
+      this.renderer.render(this.scene, this.camera);
+      return;
+    }
+
+    this.scrollOffset += 0.01;
     // ホイールスクロールに合わせて位置を更新
     this.meshes.forEach((mesh, index) => {
       // スクロールオフセットに基づいてX座標を更新
@@ -993,6 +1310,16 @@ this.scrollOffset += 0.01;
 
     if (this.hitMaterial) {
       this.hitMaterial.dispose();
+    }
+
+    // 波紋シェーダーマテリアルの破棄
+    if (this.rippleMaterial) {
+      this.rippleMaterial.dispose();
+    }
+
+    // フルスクリーンメッシュのジオメトリ破棄
+    if (this.fullscreenMesh) {
+      this.fullscreenMesh.geometry.dispose();
     }
   }
 }
