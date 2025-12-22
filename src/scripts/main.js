@@ -267,6 +267,28 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
       // 既に遷移中なら何もしない
       if (isNavigating) return;
 
+      // フルスクリーンモード時の処理
+      if (this.isFullscreenMode) {
+        const x = clientX / window.innerWidth * 2.0 - 1.0;
+        const y = clientY / window.innerHeight * 2.0 - 1.0;
+        this._tempVec2.set(x, -y);
+        this.raycaster.setFromCamera(this._tempVec2, this.camera);
+        const intersects = this.raycaster.intersectObjects([this.fullscreenMesh]);
+
+        if (intersects.length > 0) {
+          const url = this.urls[this.currentSlideIndex];
+          if (url) {
+            isNavigating = true;
+            if (window.swup) {
+              window.swup.navigate(url);
+            } else {
+              window.location.href = url;
+            }
+          }
+        }
+        return;
+      }
+
       const x = clientX / window.innerWidth * 2.0 - 1.0;
       const y = clientY / window.innerHeight * 2.0 - 1.0;
       this._tempVec2.set(x, -y);
@@ -459,15 +481,6 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     this.rippleMaterial.uniforms.uTexture1Flipped.value = this.textures[this.currentSlideIndex]?.userData?.isVideo ? 0.0 : 1.0;
     this.rippleMaterial.uniforms.uProgress.value = 0;
 
-    // ボタンのテキストを変更
-    const cameraMoveBtn = document.querySelector('#camera-move-btn');
-    if (cameraMoveBtn) {
-      cameraMoveBtn.style.display = 'none';
-    }
-    const cameraResetBtn = document.querySelector('#camera-reset-btn');
-    if (cameraResetBtn) {
-      cameraResetBtn.style.display = 'block';
-    }
   }
 
   /**
@@ -491,15 +504,6 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     this.isReturning = true;
     // isCameraMovedはカメラアニメーション完了時にfalseにする
 
-    // ボタンを元に戻す
-    const cameraMoveBtn = document.querySelector('#camera-move-btn');
-    if (cameraMoveBtn) {
-      cameraMoveBtn.style.display = 'block';
-    }
-    const cameraResetBtn = document.querySelector('#camera-reset-btn');
-    if (cameraResetBtn) {
-      cameraResetBtn.style.display = 'none';
-    }
   }
 
   /**
@@ -534,7 +538,7 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
    */
   async load() {
     // 読み込む画像のパス
-    const imagePath = ['img/good_portforio.png','video/sakaba.mp4','img/sankou.webp','img/podcast.png','img/app.png','video/arcraft.mp4','img/attcraft_4th.png','img/x_post_nami.webp','img/x_post_kuu.webp','img/about.jpg'];
+    const imagePath = ['img/good_portforio.png','video/sakaba.mp4','img/sankou.webp','img/podcast.png','img/app.png','video/arcraft.mp4','img/attcraft_4th.png','img/x_post_nami.png','img/x_post_kuu.png','img/about.jpg'];
     const loader = new THREE.TextureLoader();
     this.videoElements = []; // 動画要素を保持
     this.textures = await Promise.all(imagePath.map((path) => {
@@ -560,10 +564,10 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
             tex.minFilter = THREE.LinearFilter;
             tex.magFilter = THREE.LinearFilter;
             tex.generateMipmaps = false;
-            // 動画の端の黒線をクロップ（UVを少し内側に縮小）
+            // 動画の端の黒線をクロップ（UVを少し内側に縮小）+ 水平反転
             const cropAmount = 0.02; // 2%クロップ
-            tex.offset.set(cropAmount, cropAmount);
-            tex.repeat.set(1 - cropAmount * 2, 1 - cropAmount * 2);
+            tex.offset.set(1 - cropAmount, cropAmount);
+            tex.repeat.set(-(1 - cropAmount * 2), 1 - cropAmount * 2);
             // テクスチャのアスペクト比と動画フラグを保存
             tex.userData = { aspect: video.videoWidth / video.videoHeight, isVideo: true };
             this.videoElements.push(video);
@@ -692,8 +696,8 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
     this.planeGeometries = []; // 各テクスチャ用のジオメトリ配列
     this.meshes = [];
 
-    // 各画像の遷移先URL
-    const urls = [
+    // 各画像の遷移先URL（クラスプロパティとして保存）
+    this.urls = [
       '/detail/good_portforio',
       '/detail/sakaba',
       '/detail/sankou',
@@ -731,7 +735,7 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
       mesh.userData.isClick = false;  // クリック状態のフラグ
       mesh.userData.delay = (this.materials.length - 1 - i) * 0.2;  // 奥（最後）から順番にアニメーション
       mesh.userData.phase2Delay = i * 0.15; // フェーズ2の遅延
-      mesh.userData.url = urls[i];  // 遷移先URL
+      mesh.userData.url = this.urls[i];  // 遷移先URL
       this.meshes.push(mesh);
       this.scene.add(mesh);
     }
@@ -808,13 +812,9 @@ textureStalker.style.transformOrigin = `${stalkerState.current.x}px ${stalkerSta
         float distortion = uProgress > 0.0 ? ripple * 0.16 * combinedWave * fadeOut : 0.0;
         vec2 distortedUv = vUv + dir * distortion;
 
-        // UVをそのまま使用（元の画像のアスペクト比を維持）
+        // UVをそのまま使用（テクスチャ側で反転済み）
         vec2 uv1 = distortedUv;
         vec2 uv2 = distortedUv;
-
-        // 画像テクスチャのみX反転（動画は反転不要）
-        if (uTexture1Flipped > 0.5) uv1.x = 1.0 - uv1.x;
-        if (uTexture2Flipped > 0.5) uv2.x = 1.0 - uv2.x;
 
         // テクスチャサンプリング
         vec4 tex1 = texture2D(uTexture1, uv1);
