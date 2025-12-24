@@ -88,7 +88,7 @@ html{
 }
 @media (min-width: 768px) {
   .detail-content{
-    padding-top:calc(0 / 16 * 1rem);
+    padding-top:calc(180 / 16 * 1rem);
   }
 }
 .loop__x img{
