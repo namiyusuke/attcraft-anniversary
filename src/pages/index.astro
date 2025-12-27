@@ -1,23 +1,279 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import icon_kuu from "@assets/img/icon_kuu.png";
+import icon_nami from "@assets/img/icon_nami.png";
+import { Image } from "astro:assets";
 ---
 
 <Layout title="Astro テンプレート" transitionColors={["#dddddd", "#000000", "#ffffff"]}>
   <div id="webgl"></div>
   <button id="camera-move-btn">モードA</button>
   <button id="camera-reset-btn">モードB</button>
+
+  <!-- スライドごとのメッセージ -->
+  <div id="slide-messages">
+    <!-- スライド0: good_portforio -->
+    <div class="slide-message" data-slide="0">
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">いいポートフォリオ.comを立ち上げたよ！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">いろんな人のポートフォリオが見れるサイト！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド1: sakaba -->
+    <div class="slide-message" data-slide="1">
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">サカバを作ったね！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">みんなが気軽に集まれる場所！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド2: sankou -->
+    <div class="slide-message" data-slide="2">
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">参考サイト集のSANKOUだね！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">デザインの参考に！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド3: podcast -->
+    <div class="slide-message" data-slide="3">
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">ポッドキャストも始めたね！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">ゲストとおしゃべり楽しい！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド4: app -->
+    <div class="slide-message" data-slide="4">
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">アプリも作ったよ！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">便利に使ってね！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド5: arcraft -->
+    <div class="slide-message" data-slide="5">
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">ARCRAFTのサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">かっこいいでしょ！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド6: attcraft_4th -->
+    <div class="slide-message" data-slide="6">
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">4周年のサイト！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">もう4年もやってるんだね！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド7: x_post_nami -->
+    <div class="slide-message" data-slide="7">
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">俺のX投稿！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">いつも面白いよね！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド8: x_post_kuu -->
+    <div class="slide-message" data-slide="8">
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">私のX投稿！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">くうちゃんらしいね！</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- スライド9: about -->
+    <div class="slide-message" data-slide="9">
+      <div class="js-detail">
+        <p class="message-nami message">
+          <span class="message-icon">
+            <Image src={icon_nami} alt="" />
+          </span>
+          <span class="message-text">私たちについて！</span>
+        </p>
+      </div>
+      <div class="js-detail">
+        <p class="message-kuu message">
+          <span class="message-icon">
+            <Image src={icon_kuu} alt="" />
+          </span>
+          <span class="message-text">よろしくね！</span>
+        </p>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <style>
-  #camera-move-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-  }
+  #camera-move-btn,
   #camera-reset-btn {
-    position: fixed;
-    top: 60px;
-    left: 20px;
+    display: none;
   }
   body {
     margin: 0;
@@ -31,5 +287,60 @@ import Layout from "../layouts/Layout.astro";
 
   #webgl canvas {
     display: block;
+  }
+
+  /* スライドメッセージのスタイル */
+  #slide-messages {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    pointer-events: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .slide-message {
+    display: none;
+  }
+
+  .slide-message.active {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+  }
+
+  .slide-message .js-detail {
+    max-width: 350px;
+    pointer-events: auto;
+    margin-bottom: 20px;
+  }
+
+  /* くうちゃんのメッセージは左側 */
+  .slide-message .message-kuu {
+    margin: 0;
+  }
+
+  .slide-message .js-detail:has(.message-kuu) {
+    align-self: flex-start;
+    margin-left: 3%;
+  }
+
+  /* なみのメッセージは右側 */
+  .slide-message .message-nami {
+    margin: 0;
+  }
+
+  .slide-message .js-detail:has(.message-nami) {
+    align-self: flex-end;
+    margin-right: 3%;
+  }
+
+  .slide-message .message {
+    pointer-events: auto;
   }
 </style>
